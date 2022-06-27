@@ -23,7 +23,7 @@
     </template>
     <template v-else>
       <RouterLink 
-        to="/login"
+        to="/"
         class="top-nav__link"
         @click="authStore.signOut">
         로그아웃
