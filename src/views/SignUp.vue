@@ -116,8 +116,9 @@ export default {
   },
   methods: {
     checkEmail() {
-      //이메일 형식이 빈칸 또는, 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우
+      // 이메일 형식 체크
       const validateEmail = /^[A-Za-z0-9_\\.\\-]+@[A-Za-z0-9\\-]+\.[A-Za-z0-9\\-]+/
+
       if (!validateEmail.test(this.email) || !this.email) {
         this.valid.email = true
         this.emailHasError = true
@@ -125,14 +126,19 @@ export default {
       } this.valid.email = false
         this.emailHasError = false
     },
+    
     checkPassword() {
-        if (!this.password) {
+      // 비밀번호 형식 체크(영문, 숫자, 특수문자)
+      const validatePassword = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/
+
+        if (!validatePassword.test(this.password) || !this.password) {
         this.valid.password = true
         this.passwordHasError = true
         return
       } this.valid.password = false
         this.passwordHasError = false
     },
+
     checkDisplayName() {
         if (!this.displayName) {
         this.valid.displayName = true
@@ -219,13 +225,13 @@ export default {
   .input-error {
     line-height: 16px;
     font-size: 11px;
-    color: #f15746;
+    color: $color-error;
   }
   .title-danger {
-    color: #f15746;
+    color: $color-error;
   }
   .input-danger {
-    border-bottom: 1px solid #f15746 !important;
+    border-bottom: 1px solid $color-error !important;
   }
 }
 }
