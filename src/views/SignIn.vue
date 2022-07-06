@@ -100,7 +100,7 @@ export default {
       } this.valid.email = false
         this.emailHasError = false
     },
-        checkPassword() {
+    checkPassword() {
       // 비밀번호 형식 검사(영문, 숫자, 특수문자)
       const validatePassword = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/
 
