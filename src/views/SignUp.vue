@@ -116,7 +116,7 @@ export default {
   },
   methods: {
     checkEmail() {
-      // 이메일 형식 체크
+      // 이메일 형식 검사
       const validateEmail = /^[A-Za-z0-9_\\.\\-]+@[A-Za-z0-9\\-]+\.[A-Za-z0-9\\-]+/
 
       if (!validateEmail.test(this.email) || !this.email) {
@@ -128,7 +128,7 @@ export default {
     },
     
     checkPassword() {
-      // 비밀번호 형식 체크(영문, 숫자, 특수문자)
+      // 비밀번호 형식 검사(영문, 숫자, 특수문자)
       const validatePassword = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/
 
         if (!validatePassword.test(this.password) || !this.password) {

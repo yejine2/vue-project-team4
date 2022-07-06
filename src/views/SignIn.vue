@@ -3,26 +3,47 @@
     <div class="login-area">
       <h2 class="login-title">
       </h2>
+      
+      <!-- 이메일 입력 -->
       <div class="input-box">
-        <h3 class="input-title">
+        <h3
+          class="input-title"
+          :class="{ 'title-danger': emailHasError }">
           이메일 주소
         </h3>
         <input
           v-model="email"
           class="input-item"
           type="text"
-          placeholder="Email" />
+          placeholder="예) kream@kream.co.kr"
+          :class="{ 'input-danger': emailHasError }" />
+        <p
+          v-show="valid.email"
+          class="input-error">
+          이메일 주소를 정확히 입력해주세요.
+        </p>
       </div>
+
+      <!-- 비밀번호 입력 -->
       <div class="input-box">
-        <h3 class="input-title">
+        <h3
+          class="input-title"
+          :class="{ 'title-danger': passwordHasError }">
           비밀번호
         </h3>
         <input
           v-model="password"
+          :class="{ 'input-danger': passwordHasError }"
           class="input-item"
           type="text"
-          placeholder="Password" />
+          placeholder="영문, 숫자, 특수문자 조합 8-16자" />
+        <p
+          v-show="valid.password"
+          class="input-error">
+          영문, 숫자, 특수문자를 조합하여 입력해주세요. (8-16자)
+        </p>
       </div>
+
       <div class="login-btn-box">
         <button @click="signIn">
           로그인
@@ -48,18 +69,60 @@ export default {
     return {
       email: 'user_test1@gmail.com',
       password: '1234qwer',
+      valid: {
+        email: false,
+        password: false,
+      },
+        emailHasError: false,
+        passwordHasError: false,
     }
   }, 
   computed: {
     ...mapStores(useAuthStore)
-  },  
+  },
+  watch: {
+    'email': function() {
+      this.checkEmail()
+    },
+    'password': function() {
+      this.checkPassword()
+    },
+  },
   methods: {
-    signIn() {
+    checkEmail() {
+      // 이메일 형식 검사
+      const validateEmail = /^[A-Za-z0-9_\\.\\-]+@[A-Za-z0-9\\-]+\.[A-Za-z0-9\\-]+/
+
+      if (!validateEmail.test(this.email) || !this.email) {
+        this.valid.email = true
+        this.emailHasError = true
+        return
+      } this.valid.email = false
+        this.emailHasError = false
+    },
+    checkPassword() {
+      // 비밀번호 형식 검사(영문, 숫자, 특수문자)
+      const validatePassword = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/
+
+        if (!validatePassword.test(this.password) || !this.password) {
+        this.valid.password = true
+        this.passwordHasError = true
+        return
+      } this.valid.password = false
+        this.passwordHasError = false
+    },
+
+    async signIn() {
+      if (!this.email.trim() && !this.password.trim()) return
+      try {
         this.authStore.signIn({
         email: this.email,
         password: this.password
       })
       this.$router.push('/')
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
@@ -105,6 +168,10 @@ export default {
       outline: none;
       border-bottom: 2px solid $color-black;
     }
+    &::placeholder {
+      color: #cdcdcd;
+      font-weight: 400;
+    }
     }
   }
   .login-btn-box {
@@ -128,6 +195,18 @@ export default {
       color: $color-black;
       font-size: 13px;
     }
+  }
+  // Error
+  .input-error {
+    line-height: 16px;
+    font-size: 11px;
+    color: $color-error;
+  }
+  .title-danger {
+    color: $color-error;
+  }
+  .input-danger {
+    border-bottom: 1px solid $color-error !important;
   }
 }
 }
