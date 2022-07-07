@@ -25,6 +25,10 @@ export default createRouter({
       component: () => import('~/views/SignUp.vue'),
     },
     {
+      path: '/search',
+      component: () => import('~/components/Search.vue')
+    },
+    {
       path: '/admin',
       component: () => import('~/components/AdminPage.vue'),
     },
