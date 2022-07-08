@@ -58,32 +58,18 @@ export const useAuthStore = defineStore('auth', {
       window.localStorage.removeItem('token')
       this.user = null
     },
-    async chooseBank() {
-      const accessToken = window.localStorage.getItem('token')
+    async searchProduct(payload) {
+      const { searchTag, searchText } = payload
       const res = await axios({
-        url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/account/banks',
-        method: 'GET',
-        headers: { ...headers, Authorization: `Bearer ${accessToken}` },
-      })
-      console.log(res)
-      this.banks = res.data
-      console.log(this.banks)
-      return res
-    },
-    async addAccount(payload) {
-      const { bankCode, accountNumber, phoneNumber, signature } = payload
-      const accessToken = window.localStorage.getItem('token')
-      await axios({
-        url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/account',
+        url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/search',
         method: 'POST',
-        headers: { ...headers, Authorization: `Bearer ${accessToken}` },
+        headers,
         data: {
-          bankCode,
-          accountNumber,
-          phoneNumber,
-          signature
+          searchText,
+          searchTag
         }
       })
-    }
+      console.log(res)
+    },
   }
 })
