@@ -17,6 +17,18 @@ export default createRouter({
       }
     },
     {
+      path: '/admin/products',
+      component: () => import('~/components/Products.vue')
+    },
+    {
+      path: '/admin/products/add',
+      component: () => import('~/components/AddProduct.vue')
+    },
+    {
+      path: '/admin/products/edit',
+      component: () => import('~/components/EditProduct.vue')
+    },
+    {
       path: '/login',
       component: () => import('~/views/SignIn.vue'),
     },
@@ -33,7 +45,7 @@ export default createRouter({
     },
     {
       path: '/admin',
-      component: () => import('~/components/AdminPage.vue'),
+      component: () => import('~/views/Admin.vue'),
     },
     {
       path: '/:notfound(.*)*',
