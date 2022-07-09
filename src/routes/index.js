@@ -25,6 +25,13 @@ export default createRouter({
       component: () => import('~/views/SignUp.vue'),
     },
     {
+      path: '/search',
+      component: () => import('~/components/Search.vue'),
+      children: [
+        
+      ]
+    },
+    {
       path: '/admin',
       component: () => import('~/components/AdminPage.vue'),
     },
