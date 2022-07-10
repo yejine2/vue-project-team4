@@ -26,10 +26,7 @@ export default createRouter({
     },
     {
       path: '/search',
-      component: () => import('~/components/Search.vue'),
-      children: [
-        
-      ]
+      component: () => import('~/components/Search.vue')
     },
     {
       path: '/admin',

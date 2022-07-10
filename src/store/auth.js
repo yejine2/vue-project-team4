@@ -60,7 +60,7 @@ export const useAuthStore = defineStore('auth', {
     },
     async searchProduct(payload) {
       const { searchTag, searchText } = payload
-      const res = await axios({
+      await axios({
         url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/search',
         method: 'POST',
         headers,
@@ -69,7 +69,6 @@ export const useAuthStore = defineStore('auth', {
           searchTag
         }
       })
-      console.log(res)
-    },
+    }
   }
 })
