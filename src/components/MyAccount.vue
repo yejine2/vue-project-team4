@@ -134,7 +134,7 @@
 
 <script>
 import { mapStores } from 'pinia'
-import { useAuthStore } from '~/store/auth'
+import { useUserStore } from '~/store/user'
 
 export default {
   data() {
@@ -147,17 +147,17 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useAuthStore, ['banks']),
+    ...mapStores(useUserStore, ['banks']),
     banks() {
-      return this.authStore.banks
+      return this.userStore.banks
     }
   },
   created() {
-    this.authStore.chooseBank()
+    this.userStore.chooseBank()
   },
   methods: {
     addAccount() {
-      this.authStore.addAccount({
+      this.userStore.addAccount({
         bankCode: this.bankCode,
         accountNumber: this.accountNumber,
         phoneNumber: this.phoneNumber,
@@ -169,7 +169,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
 @import '~/scss/MyCommon.scss';
 .box {
   .header {
