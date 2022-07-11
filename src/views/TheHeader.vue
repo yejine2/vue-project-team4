@@ -1,11 +1,6 @@
 <template>
   <div class="top-nav">
     <RouterLink
-      to="/"
-      class="top-nav__link">
-      홈(임시)
-    </RouterLink>
-    <RouterLink
       to="/my"
       class="top-nav__link">
       마이페이지
@@ -30,7 +25,30 @@
       </RouterLink>
     </template>
   </div>
-  <div class="main-nav"></div>
+  
+  <div class="main-nav">
+    <div class="logo-nav">
+      <RouterLink
+        to="/"
+        class="top-nav__link">
+        <img
+          class="main-nav__logo"
+          src="../assets/logo.png"
+          alt="kream" />
+      </RouterLink>
+    </div>
+    <div class="link-nav">
+      <RouterLink
+        to="/search"
+        class="main-nav__link">
+        SHOP
+      </RouterLink>
+      <!-- 검색 버튼 -->
+      <span class="material-symbols-outlined">
+        search
+      </span>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -40,15 +58,7 @@ import { useAuthStore } from '~/store/auth'
 export default {
   computed: {
     ...mapStores(useAuthStore)
-  },
-  // watch: {
-  //   ['authStore.user'](user) {
-  //     console.log('user::::', user)
-  //   }
-  // },
-  // created() {
-  //   console.log(this.authStore.user)
-  // }
+  }
 }
 </script>
 
@@ -65,5 +75,32 @@ export default {
   font-size: 12px;
   padding: .7rem;
 }
+.main-nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 40px;
+  .main-nav__logo {
+    width: 120px;
+    flex-grow: 3;
+  }
+  .link-nav {
+    display: flex;
+    align-items: center;
+
+  .main-nav__link {
+    color: $color-black;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 8px
+  }
+  .material-symbols-outlined {
+    font-size: 34px;
+    margin-left: 30px;
+}
+  }
+
+}
+
 
 </style>
