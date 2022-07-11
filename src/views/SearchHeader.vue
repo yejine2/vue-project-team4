@@ -14,7 +14,7 @@
             class="search"
             placeholder="브랜드명,모델명,모델번호 등"
             @input="search_text = $event.target.value"
-            @keydown.enter="searchProduct" />
+            @keyup.enter.prevent="searchProduct" />
           <i
             class="bi bi-x-lg"
             @click="inputInit"></i>
@@ -36,7 +36,7 @@
         <router-link
           to=""
           class="shoes btn_category"
-          @click="category_btn(category_01= !category_01, $event)">
+          @click="category_btn(category.category_01 = !category.category_01, $event)">
           <p class="name">
             신발
           </p>
@@ -45,7 +45,7 @@
           ref="cloth"
           to=""
           class="cloth btn_category"
-          @click="category_btn(category_02= !category_02, $event)">
+          @click="category_btn(category.category_02 = !category.category_02, $event)">
           <p class="name">
             의류
           </p>
@@ -54,7 +54,7 @@
           ref="acc"
           to=""
           class="acc btn_category"
-          @click="category_btn(category_03= !category_03, $event)">
+          @click="category_btn(category.category_03 = !category.category_03, $event)">
           <p class="name">
             패션 잡화
           </p>
@@ -63,7 +63,7 @@
           ref="life"
           to=""
           class="life btn_category"
-          @click="category_btn(category_04= !category_04, $event)">
+          @click="category_btn(category.category_04 = !category.category_04, $event)">
           <p class="name">
             라이프
           </p>
@@ -72,7 +72,7 @@
           ref="tech"
           to=""
           class="tech btn_category"
-          @click="category_btn(category_05 = !category_05, $event)">
+          @click="category_btn(category.category_05 = !category.category_05, $event)">
           <p class="name">
             테크
           </p>
@@ -84,26 +84,32 @@
 
 <script>
 import { mapStores } from 'pinia'
-import { useAuthStore } from '~/store/auth'
+import { useSearchStore } from '~/store/search'
 
 export default {
   data() {
     return {
       search_text: '',
-      category_lux: true,
-      category_01: true,
-      category_02: true,
-      category_03: true,
-      category_04: true,
-      category_05: true
+      category: {
+        category_lux: false,
+        category_01: false,
+        category_02: false,
+        category_03: false,
+        category_04: false,
+        category_05: false
+      }
     }
   },
   computed: {
-    ...mapStores(useAuthStore, ['banks'])
+    ...mapStores(useSearchStore)
+  },
+  watch: {
+    
   },
   methods: {
     searchProduct() {
       this.$emit('search_text', this.search_text)
+      // console.log(this.search_text)
     },
     inputInit() {
       const search = document.querySelector('.search')
@@ -120,6 +126,7 @@ export default {
         tech: document.querySelector('.tech')
       }
       const cate = [$ref.shoes, $ref.cloth, $ref.acc, $ref.life, $ref.tech]
+      const cate_name = ['신발', '의류', '패션잡화', '라이프', '테크']
 
       function btn_on(payload) {
         payload.style.backgroundColor = '#fef7f6'
@@ -131,25 +138,60 @@ export default {
         payload.style.color = '#222'
         payload.style.fontWeight = '400'
       }
-        
-     
+      
       for(let i = 0; i < cate.length; i++) {
         if($ref.target === cate[i]) {
-          if(category) {
-            btn_off(cate[i])
+          if(cate[i] === $ref.shoes) {
+            this.category.category_02 = false
+            this.category.category_03 = false
+            this.category.category_04 = false
+            this.category.category_05 = false
+          } else if(cate[i] === $ref.cloth) {
+            this.category.category_01 = false
+            this.category.category_03 = false
+            this.category.category_04 = false
+            this.category.category_05 = false
+          } else if(cate[i] === $ref.acc) {
+            this.category.category_01 = false
+            this.category.category_02 = false
+            this.category.category_04 = false
+            this.category.category_05 = false
+          } else if(cate[i] === $ref.life) {
+            this.category.category_01 = false
+            this.category.category_02 = false
+            this.category.category_03 = false
+            this.category.category_05 = false
           } else {
+            this.category.category_01 = false
+            this.category.category_02 = false
+            this.category.category_03 = false
+            this.category.category_04 = false
+          }
+          // 스타일, 스토어 카테고리값
+          if(category) {
             btn_on(cate[i])
+            this.searchStore.category = cate_name[i]
+            console.log(this.searchStore.category)
+          } else {
+            btn_off(cate[i])
+            this.searchStore.category = ''
+            console.log(this.searchStore.category)
           }
         } else if($ref.target === $ref.luxury) {
           if(category) {
-            btn_off($ref.luxury)
-          } else {
             btn_on($ref.luxury)
+          } else {
+            btn_off($ref.luxury)
           }
         } else {
           btn_off(cate[i])
         }
       }
+      // console.log(`this.category_01 ${this.category.category_01}`)
+      // console.log(`this.category_02 ${this.category.category_02}`)
+      // console.log(`this.category_03 ${this.category.category_03}`)
+      // console.log(`this.category_04 ${this.category.category_04}`)
+      // console.log(`this.category_05 ${this.category.category_05}`)
     }
   }
 }

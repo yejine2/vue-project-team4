@@ -10,7 +10,7 @@ export default createRouter({
     },
     {
       path: '/my',
-      component: () => import('~/components/UserPage.vue'),
+      component: () => import('~/components/MyPage/My.vue'),
       meta: {
         // 로그인헤야만 접속 할 수 있게 설정
         auth: true
@@ -18,7 +18,7 @@ export default createRouter({
     },
     {
       path: '/admin/products',
-      component: () => import('~/components/Products.vue')
+     component: () => import('~/components/Products.vue')
     },
     {
       path: '/admin/products/add',
@@ -38,11 +38,11 @@ export default createRouter({
     },
     {
       path: '/search',
-      component: () => import('~/components/Search.vue')
+      component: () => import('~/components/search/Search.vue')
     },
     {
       path: '/admin',
-      component: () => import('~/views/Admin.vue'),
+      component: () => import('~/components/AdminPage.vue'),
     },
     {
       path: '/:notfound(.*)*',
