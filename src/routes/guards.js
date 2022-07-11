@@ -15,15 +15,18 @@ router.beforeEach(async to => {
   }
   
   if (to.meta.auth) {
-    if (user && user.email === 'admin@gmail.com' && user.displayName === 'admin') {
+    if (user && user.email === 'admin@gmail.com' && user.displayName === 'admin' && to.fullPath.includes('/my')) {
       return '/admin'
-    } 
+    }  
     if (!user) {
       return '/login'
-    }
+    } 
   }
 
   if (user && to.fullPath.includes('/login')) {
+    return '/'
+  }
+  if (user &&  user.email !== 'admin@gmail.com' && user.displayName !== 'admin' && to.fullPath.includes('/admin')) {
     return '/'
   }
   return true
