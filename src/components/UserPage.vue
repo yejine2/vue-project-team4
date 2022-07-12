@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <div class="snb_area">
-      <SNB />
-    </div>
+    <SNB />
     <div class="content_area">
       <RouterView />
       <template v-if="$route.path == '/my'">
@@ -48,5 +46,11 @@ export default {
 <style scoped lang="scss">
 .container {
   display: flex;
+  margin: 0 auto;
+  padding: 40px 40px 160px;
+  max-width: 1280px;
+  .content_area {
+    width: 100%;
+  }
 }
 </style>

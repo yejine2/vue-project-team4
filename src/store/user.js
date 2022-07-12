@@ -10,7 +10,8 @@ const headers = {
 export const useUserStore = defineStore('user', {
   state() {
     return {
-      user: null
+      user: null,
+      banks: null
     }
   },
   actions: {
@@ -21,42 +22,61 @@ export const useUserStore = defineStore('user', {
     },
     // 사용자 이름 수정
     async editUserInfo(payload) {
-      const { displayName = '', oldPassword = '', newPassword = ''} = payload
+      const { displayName = '', profileImgBase64 = '', oldPassword = '', newPassword = ''} = payload
       const accessToken = window.localStorage.getItem('token')
+
+      console.log(profileImgBase64)
 
       if(!displayName.trim() == '') {
         this.user.displayName = displayName
         console.log('Success EditUserName:: ',displayName)
       } else if (!(oldPassword == '' && newPassword == '')) {
         console.log('Success EditUserPassword')
-      } else return console.log('유효한 정보를 입력해주세요.')
+      } else if (!profileImgBase64){
+        console.log('Success EditUserProfileImgd')
+      } else console.log('유효한 정보를 입력해주세요.')
 
-      await axios({
+      const res = await axios({
         url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user',
         method: 'PUT',
         headers: { ...headers, Authorization: `Bearer ${accessToken}` },
         data: {
           displayName,
+          profileImgBase64,
           oldPassword,
           newPassword
         }
       })
+      this.user = res.data
+      console.log(res)
       // const { displayName } = res.data
     },
-    // 사용자 비밀번호 수정
-    async editUserPassword(oldPassword, newPassword) {
+    async chooseBank() {
+      const accessToken = window.localStorage.getItem('token')
+      const res = await axios({
+        url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/account/banks',
+        method: 'GET',
+        headers: { ...headers, Authorization: `Bearer ${accessToken}` },
+      })
+      console.log(res)
+      this.banks = res.data
+      console.log(this.banks)
+      return res
+    },
+    async addAccount(payload) {
+      const { bankCode, accountNumber, phoneNumber, signature } = payload
       const accessToken = window.localStorage.getItem('token')
       await axios({
-        url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user',
-        method: 'PUT',
+        url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/account',
+        method: 'POST',
         headers: { ...headers, Authorization: `Bearer ${accessToken}` },
         data: {
-          displayName: '',
-          oldPassword,
-          newPassword
+          bankCode,
+          accountNumber,
+          phoneNumber,
+          signature
         }
       })
-      console.log('SuccesseditUserPassword!!')
     }
   }
 })

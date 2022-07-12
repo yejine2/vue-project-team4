@@ -172,8 +172,11 @@ export default {
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
 @import '~/scss/MyCommon.scss';
 .box {
+  width: 100%;
+  // flex-grow: 1;
   .header {
     display: flex;
+    justify-content: space-between;
     padding-bottom: 12px;
     border-bottom: 3px solid #222;
     .header__name {
@@ -189,8 +192,9 @@ export default {
       }
     }
     .header__btn {
-      margin-left: auto;
-      padding-top: 12px;
+      // margin-left: auto;
+      padding: 12px 0 0 30px;
+      flex-shrink: 0;
       .btn_add {
         background-color: #fff;
         color: #222;
