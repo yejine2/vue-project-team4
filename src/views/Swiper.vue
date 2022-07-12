@@ -73,13 +73,13 @@ export default {
   justify-content: center;
 }
 .slide-item-01 {
-  background-color: rgb(255, 252, 217); 
+  background-color: rgb(227, 244, 219);
 }
 .slide-item-02 {
-  background-color: rgb(248, 241, 242); 
+  background-color: rgb(222, 227, 228); 
 }
 .slide-item-03 {
-  background-color: rgb(227, 244, 219);
+  background-color: rgb(255, 252, 217); 
 }
 .slide-item-04 {
   background-color: rgb(245, 245, 245);
