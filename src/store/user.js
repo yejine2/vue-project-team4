@@ -7,6 +7,7 @@ const headers = {
   'username': 'team4'
 }
 
+
 export const useUserStore = defineStore('user', {
   state() {
     return {
@@ -20,12 +21,10 @@ export const useUserStore = defineStore('user', {
     userEmailMasking(email) {
       return maskingFunc.email(email)
     },
-    // 사용자 이름 수정
+    // 사용자 정보 수정
     async editUserInfo(payload) {
       const { displayName = '', profileImgBase64 = '', oldPassword = '', newPassword = ''} = payload
       const accessToken = window.localStorage.getItem('token')
-
-      console.log(profileImgBase64)
 
       if(!displayName.trim() == '') {
         this.user.displayName = displayName
@@ -33,7 +32,7 @@ export const useUserStore = defineStore('user', {
       } else if (!(oldPassword == '' && newPassword == '')) {
         console.log('Success EditUserPassword')
       } else if (!profileImgBase64){
-        console.log('Success EditUserProfileImgd')
+        console.log('Success EditUserProfileImg::', profileImgBase64)
       } else console.log('유효한 정보를 입력해주세요.')
 
       const res = await axios({

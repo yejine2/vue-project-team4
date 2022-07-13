@@ -4,12 +4,34 @@
     <div class="content_area">
       <RouterView />
       <template v-if="$route.path == '/my'">
-        <h2>로그인 사용자만 볼 수 있는지 테스트</h2>
-        <h3>{{ userStore.user.displayName }}</h3>
-        <h3>{{ userEmailMasking }}</h3>
-        <RouterLink to="/my/profile">
-          수정
-        </RouterLink>
+        <div class="my_home">
+          <div class="user_membership">
+            <div class="user_detail">
+              <div class="user_thumb">
+                <img
+                  :src="userStore.user.profileImg"
+                  alt="사용자 이미지" />
+              </div>
+              <div class="user_info">
+                <div class="info_box">
+                  <strong class="name">
+                    {{ userStore.user.displayName }}
+                  </strong>
+                  <p class="email">
+                    {{ userEmailMasking }}
+                  </p>
+                  <RouterLink to="/my/profile">
+                    <button
+                      class="btn_modify"
+                      @click="getimg">
+                      프로필 수정
+                    </button>
+                  </RouterLink>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </template>
     </div>
   </div>
@@ -18,7 +40,6 @@
 <script>
 import { mapStores } from 'pinia'
 import { useUserStore } from '~/store/user'
-import { useAuthStore } from  '~/store/auth'
 import SNB from '~/components/SNB.vue'
 
 export default {
@@ -26,31 +47,85 @@ export default {
     SNB
   },
   computed: {
-    ...mapStores(useUserStore, useAuthStore),
+    ...mapStores(useUserStore),
     userEmailMasking(){
       return this.userStore.userEmailMasking(this.userStore.user.email)
-    },
-    selectableBanks() {
-      return this.userStore.getSelectableBanks()
     }
   },
   methods: {
     route() {
       console.log(this.$route)
       console.log('user',this.userStore.user)
+    },
+    getimg(){
+      console.log(this.userStore.user.profileImg)
     }
   }
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
+@import '~/scss/_variables.scss';
+
 .container {
   display: flex;
   margin: 0 auto;
   padding: 40px 40px 160px;
   max-width: 1280px;
+  box-sizing: border-box;
   .content_area {
     width: 100%;
+    .btn_modify {
+      margin-top: 12px;
+      padding: 0 14px;
+      height: 36px;
+      font-size: 12px;
+      line-height: 34px;
+      color: rgba(34, 34, 34, .8);
+      background-color: #fff;
+      border: 1px solid #d3d3d3;
+      border-radius: 10px;
+      outline: none;
+      cursor: pointer;
+    } 
+    .my_home {
+      .user_membership {
+        border: 1px solid #ebebeb;
+        border-radius: 10px;
+        background-color: $color-white;
+        .user_detail {
+          display: flex;
+          padding: 30px 32px 22px;
+          .user_thumb {
+            margin-right: 12px;
+            width: 100px;
+            height: 100px;
+            border-radius: 100%;
+            flex-shrink: 0;
+            img {
+              width: 100%;
+              height: 100%;
+              border-radius: 100%;
+            }
+          }
+          .user_info {
+            .info_box {
+              .name {
+                font-size: 18px;
+                font-weight: 700;
+                line-height: 21px;
+                color: $color-black;
+              }
+              .email {
+                font-size: 14px;
+                line-height: 18px;
+                color: rgba(34, 34, 34, .5)
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 </style>
