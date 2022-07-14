@@ -13,21 +13,12 @@
           class="nav-link"
           href="#">판매 내역</a>
       </li>
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          href="#">Link</a>
-      </li>
     </ul>
   </div>
 </template>
 
 <script>
-export default {
-  
-}
+export default {}
 </script>
 
-<style lang="">
-  
-</style>
+<style lang=""></style>

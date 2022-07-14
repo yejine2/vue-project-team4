@@ -1,15 +1,17 @@
 <template lang="">
-  <div>
+  <div class="container">
     <AdminNav />
-    <h1>전체 거래(판매) 내역 완료/취소 및 해제</h1>
+    <p class="btn btn-secondary">
+      전체 거래(판매) 내역 완료/취소 및 해제
+    </p>
    
-    <button class="btn btn-warning">
-      제품 수정
-    </button>
-    <button class="btn btn-danger">
-      제품 삭제
-    </button>
-    <h3>단일 제품 상세 조회</h3>
+    <p class="btn btn-warning">
+      제품 수정  id 연결하기
+    </p>
+ 
+    <p class="btn btn-primary">
+      단일 제품 상세 조회 페이지 만들기
+    </p>
   </div>
 </template>
 
@@ -24,5 +26,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
 </style>
