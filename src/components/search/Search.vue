@@ -1,129 +1,8 @@
 <template>
   <div class="box">
     <SearchHeader @search_text="search_product" />
-    <!-- TREND -->
-    <div class="trend">
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('애플')">
-        <img
-          src="../../assets/search/trends/apple.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          애플
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('뉴발란스')">
-        <img
-          src="../../assets/search/trends/newBalance.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          뉴발란스
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('레고')">
-        <img
-          src="../../assets/search/trends/lego.png"
-          alt="트렌드 레고"
-          class="trend_img" />
-        <p class="trend_name">
-          레고
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('샤넬')">
-        <img
-          src="../../assets/search/trends/chanel.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          샤넬
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('롤렉스')">
-        <img
-          src="../../assets/search/trends/rolex.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          롤렉스
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('헬리녹스')">
-        <img
-          src="../../assets/search/trends/helinox.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          헬리녹스
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('우영미')">
-        <img
-          src="../../assets/search/trends/wooyoungmi.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          우영미
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('에어포스')">
-        <img
-          src="../../assets/search/trends/airForce.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          에어포스
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('다이슨')">
-        <img
-          src="../../assets/search/trends/dyson.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          다이슨
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('IAB Studio')">
-        <img
-          src="../../assets/search/trends/iab.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          IAB Studio
-        </p>
-      </router-link>
-    </div>
+    <SearchTrends />
+  
     <div class="banner">
       <div class="banner__box">
         <div class="slider_box">
@@ -217,13 +96,15 @@
 <script>
 import { mapStores } from 'pinia'
 import { useSearchStore } from '~/store/search'
-import SearchHeader from '~/views/SearchHeader.vue'
+import SearchHeader from '~/views/search/SearchHeader.vue'
 import SearchResult from '~/components/search/SearchResult.vue'
+import SearchTrends from '~/views/search/SearchTrends.vue'
 
 export default {
   components: {
     SearchHeader,
-    SearchResult
+    SearchResult,
+    SearchTrends
   },
   emit: [
     'search_text'
@@ -249,11 +130,6 @@ export default {
     async search_product(search_text) {
       await this.searchStore.searchProducts(search_text)
     },
-    async trend__link(payload) {
-      const search = document.querySelector('.search')
-      search.value = payload
-      await this.searchStore.searchProducts(search.value)
-    },
     handle_pre() {
       let target = document.querySelector(`.banner_0${this.slide_current}`)
       target.classList.remove('showing')
@@ -278,34 +154,6 @@ export default {
 @import '~/scss/SearchCommon.scss';
 
 .box {
-  .trend {
-    width: 1200px;
-    margin: 0 auto;
-    padding: 0 40px;
-    display: flex;
-    padding-bottom: 16px;
-    .btn_trend {
-      flex-grow: 1;
-      width: 84px;
-      height: 82px;
-      margin-left: 40px;
-      text-align: center;
-      .trend_img {
-        width: 70px;
-        height: 70px;
-        vertical-align: top;
-        user-select: none;
-      }
-      .trend_name {
-        margin-top: -2px;
-        font-size: 13px;
-        font-weight: 600;
-      }
-    }
-    .btn_trend:first-child {
-      margin-left: 0;
-    }
-  }
   .banner {
     max-width: 1200px;
     position: relative;

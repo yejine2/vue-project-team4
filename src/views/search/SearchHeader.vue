@@ -141,32 +141,6 @@ export default {
       
       for(let i = 0; i < cate.length; i++) {
         if($ref.target === cate[i]) {
-          if(cate[i] === $ref.shoes) {
-            this.category.category_02 = false
-            this.category.category_03 = false
-            this.category.category_04 = false
-            this.category.category_05 = false
-          } else if(cate[i] === $ref.cloth) {
-            this.category.category_01 = false
-            this.category.category_03 = false
-            this.category.category_04 = false
-            this.category.category_05 = false
-          } else if(cate[i] === $ref.acc) {
-            this.category.category_01 = false
-            this.category.category_02 = false
-            this.category.category_04 = false
-            this.category.category_05 = false
-          } else if(cate[i] === $ref.life) {
-            this.category.category_01 = false
-            this.category.category_02 = false
-            this.category.category_03 = false
-            this.category.category_05 = false
-          } else {
-            this.category.category_01 = false
-            this.category.category_02 = false
-            this.category.category_03 = false
-            this.category.category_04 = false
-          }
           // 스타일, 스토어 카테고리값
           if(category) {
             btn_on(cate[i])
@@ -183,8 +157,19 @@ export default {
           } else {
             btn_off($ref.luxury)
           }
-        } else {
+        } else if($ref.target !== cate[i]) {
           btn_off(cate[i])
+          if(i === 0) {
+            this.category.category_01 = false
+          } else if(i === 1) {
+            this.category.category_02 = false
+          } else if(i === 2) {
+            this.category.category_03 = false
+          } else if(i === 3) {
+            this.category.category_04 = false
+          } else if(i === 4) {
+            this.category.category_05 = false
+          }
         }
       }
       // console.log(`this.category_01 ${this.category.category_01}`)

@@ -10,20 +10,10 @@
           모두 삭제
         </p>
       </div>
-      <div class="filter_list">
-        <div class="filter_box">
-          <div class="filter_name">
-            카테고리
-          </div>
-          <p class="all_category">
-            모든 카테고리
-          </p>
-        </div>
-        <i class="bi bi-plus-lg"></i>
-      </div>
+      <SearchFilter />
     </div>
     <div class="search_result">
-      Little
+      {{ searchStore.category }}
     </div>
   </div>
 </template>
@@ -31,11 +21,16 @@
 <script>
 import { mapStores } from 'pinia'
 import { useSearchStore } from '~/store/search'
+import SearchFilter from '~/views/search/SearchFilter.vue'
 
 export default {
+  components: {
+    SearchFilter
+  },
   data() {
     return {
-      filter_number: 1
+      filter_number: 1,
+      
     }
   },
   computed: {
@@ -83,30 +78,7 @@ export default {
         color: rgba(34,34,34,.5);
       }
     }
-    .filter_list {
-      display: flex;
-      align-items: center;
-      padding: 16px 0;
-      border-bottom: 1px solid #ebebeb;
-      .filter_box {
-        .filter_name {
-          position: relative;
-          font-size: 13px;
-          font-weight: 600;
-        }
-        .all_category {
-          margin-top: 4px;
-          font-size: 15px;
-          color: rgba(34,34,34,.5);
-        }
-      }
-      .bi {
-        width: 20px;
-        height: 20px;
-        margin-left: auto;
-        color: rgba(34,34,34,.5);
-      }
-    }
+    
   }
 }
 </style>

@@ -44,9 +44,10 @@
         SHOP
       </RouterLink>
       <!-- 검색 버튼 -->
-      <span class="material-symbols-outlined">
-        search
-      </span>
+      <img
+        src="../assets/search.png"
+        alt="검색버튼"
+        class="search_btn" />
     </div>
   </div>
 </template>
@@ -88,18 +89,17 @@ export default {
     display: flex;
     align-items: center;
 
-  .main-nav__link {
-    color: $color-black;
-    font-size: 16px;
-    text-decoration: none;
-    padding: 8px
+    .main-nav__link {
+      color: $color-black;
+      font-size: 16px;
+      text-decoration: none;
+      padding: 8px
+    }
+    .search_btn {
+      height: 34px;
+      margin-left: 30px;
+    }
   }
-  .material-symbols-outlined {
-    font-size: 34px;
-    margin-left: 30px;
-}
-  }
-
 }
 
 
