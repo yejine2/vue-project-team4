@@ -20,7 +20,7 @@ export const useUserStore = defineStore('user', {
   },
   actions: {
     // 사용자 이메일 마스킹
-    // ex) 123456789@gmail.com -> 12*******@gmail.com
+    // ex) 123456789@gmail.com -> 1*******9@gmail.com
     userEmailMasking(email) {
       return maskingFunc.email(email)
     },
@@ -128,9 +128,9 @@ let maskingFunc = {
 	/*
 	※ 이메일 마스킹
 	ex1) 원본 데이터 : abcdefg12345@naver.com
-		    변경 데이터 : ab**********@naver.com
+		    변경 데이터 : a**********5@naver.com
 	ex2) 원본 데이터 : abcdefg12345@naver.com
-	      변경 데이터 : ab**********@nav******
+	      변경 데이터 : a**********5@nav******
 	*/
 	email : function(str){
 		let originStr = str
@@ -141,10 +141,10 @@ let maskingFunc = {
 			return originStr
 		}else{
       console.log(emailStr)
-			strLength = emailStr.toString().split('@')[0].length - 3
+			strLength = emailStr.toString().split('@')[0].length - 2
 			
-			// ex1) abcdefg12345@naver.com => ab**********@naver.com
-			return originStr.toString().replace(new RegExp('.(?=.{0,' + strLength + '}@)', 'g'), '*')
+			// ex1) abcdefg12345@naver.com => a**********5@naver.com
+			return originStr.toString().replace(new RegExp('.(?=.{1,' + strLength + '}@)', 'g'), '*')
 		}
 	}
 }
