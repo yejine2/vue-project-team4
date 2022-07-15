@@ -22,7 +22,7 @@ export default createRouter({
         },
         {
           path: 'account',
-          component: () => import('~/components/MyAccount.vue')
+          component: () => import('~/components/AccountPage.vue')
         }
       ]
     },
