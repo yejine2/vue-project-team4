@@ -11,8 +11,7 @@ export const useAuthStore = defineStore('auth', {
   state() {
     return {
       user: null,
-      logInLoading: true,
-      banks: null
+      logInLoading: true
     }
   },
   actions: {

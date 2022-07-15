@@ -14,7 +14,17 @@ export default createRouter({
       meta: {
         // 로그인헤야만 접속 할 수 있게 설정
         auth: true
-      }
+      },
+      children: [
+        {
+          path: 'profile',
+          component: () => import('~/components/EditUserProfile.vue') 
+        },
+        {
+          path: 'account',
+          component: () => import('~/components/UserAccountPage.vue')
+        }
+      ]
     },
     {
       path: '/admin/products',
