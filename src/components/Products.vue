@@ -45,3 +45,7 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+</style>
