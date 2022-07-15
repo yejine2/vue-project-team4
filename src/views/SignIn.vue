@@ -108,10 +108,8 @@ export default {
           
         this.valid.password = true
         this.passwordHasError = true
-        return console.log('맞았어')
-      } 
-      console.log('틀렸어')
-      this.valid.password = false
+        return
+      } this.valid.password = false
         this.passwordHasError = false
     },
 
