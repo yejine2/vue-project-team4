@@ -35,9 +35,13 @@ export default createRouter({
       component: () => import('~/components/AddProduct.vue')
     },
     {
-      path: '/admin/products/edit',
+      path: '/admin/products/edit/:id',
       component: () => import('~/components/EditProduct.vue')
     },
+    // {
+    //   path: '/detail/:id',
+    //   component: ProductDetail
+    // },
     {
       path: '/login',
       component: () => import('~/views/SignIn.vue'),
