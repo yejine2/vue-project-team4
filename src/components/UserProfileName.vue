@@ -35,7 +35,8 @@
           autocomplete="off"
           class="input_txt"
           @input="displayName = $event.target.value"
-          @keydown.enter="editUserName(); offEditMode()" />
+          @keydown.enter="editUserName(); offEditMode()"
+          @keydown.esc="offEditMode" />
         <p
           v-show="valid.displayName"
           class="input-error">
@@ -47,7 +48,10 @@
       <button @click="offEditMode">
         취소
       </button>
-      <button @click="editUserName(); offEditMode()">
+      <button
+        :disabled="able"
+        :class="{ disabled: able }"
+        @click="editUserName(); offEditMode()">
         저장
       </button>
     </div>
@@ -63,6 +67,7 @@ export default {
     return {
       displayName: '',
       editMode: false,
+      able: true,
       valid: {
         displayName: false
       },
@@ -70,7 +75,11 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useUserStore)
+    ...mapStores(useUserStore),
+    value() {
+      // console.log(this.value.displayName)
+      return console.log(this.displayNameHasError)
+    }
   },
   watch: {
     'displayName': function() {
@@ -99,14 +108,20 @@ export default {
     checkName() {
       // 이름 형식 검사
       const validateName = /^(?=.*[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9!@#$%^&*()._-])[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9!@#$%^&*()._-]{2,50}$/
-      console.log('valid.name:', this.valid.name)
-      console.log('nameHasError:', this.displayNameHasError)
+      
       if (!validateName.test(this.displayName) || !this.displayName) {
         this.valid.displayName = true
         this.displayNameHasError = true
+        this.able = true
+        console.log('valid.name:', this.valid.displayName)
+        console.log('nameHasError:', this.displayNameHasError)
         return
       } this.valid.displayName = false
         this.displayNameHasError = false
+        this.able = false
+        
+        console.log('valid.name:', this.valid.displayName)
+        console.log('nameHasError:', this.displayNameHasError)
     }
   }
 }
@@ -190,7 +205,6 @@ export default {
     .modify_btn_box {
       padding-top: 28px;
       text-align: center;
-      
       button {
         padding: 0 38px;
         height: 42px;
@@ -199,9 +213,19 @@ export default {
         border: 1px solid #d3d3d3;
         border-radius: 12px;
         color: rgba(34, 34, 34, .8);
+        background-color: #fff;
         cursor: pointer;
         &:nth-child(2) {
+          font-weight: 700;
           margin-left: 8px;
+          background-color: #222;
+          color: #fff;
+        }
+        &:disabled {
+          border: 0;
+          background-color: #ebebeb;
+          color: #fff;
+          cursor: default;
         }
       }
     }

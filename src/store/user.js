@@ -29,15 +29,6 @@ export const useUserStore = defineStore('user', {
       const { displayName = '', profileImgBase64 = '', oldPassword = '', newPassword = ''} = payload
       const accessToken = window.localStorage.getItem('token')
 
-      // if(!displayName.trim() == '') {
-      //   this.user.displayName = displayName
-      //   console.log('Success EditUserName:: ',displayName)
-      // } else if (!(oldPassword == '' && newPassword == '')) {
-      //   console.log('Success EditUserPassword')
-      // } else if (!profileImgBase64){
-      //   console.log('Success EditUserProfileImg::', profileImgBase64)
-      // } else console.log('유효한 정보를 입력해주세요.')
-
       const res = await axios({
         url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user',
         method: 'PUT',
@@ -55,6 +46,7 @@ export const useUserStore = defineStore('user', {
     },
     async chooseBank() {
       const accessToken = window.localStorage.getItem('token')
+
       const res = await axios({
         url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/account/banks',
         method: 'GET',
@@ -68,6 +60,7 @@ export const useUserStore = defineStore('user', {
     // 계좌 목록 및 잔액 조회
     async getUserAccountList() {
       const accessToken = window.localStorage.getItem('token')
+
       const res = await axios({
         url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/account',
         method: 'GET',
@@ -82,6 +75,7 @@ export const useUserStore = defineStore('user', {
     async addAccount(payload) {
       const { bankCode, accountNumber, phoneNumber, signature } = payload
       const accessToken = window.localStorage.getItem('token')
+
       await axios({
         url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/account',
         method: 'POST',
@@ -140,7 +134,6 @@ let maskingFunc = {
 		if(this.checkNull(originStr) == true || this.checkNull(emailStr) == true){
 			return originStr
 		}else{
-      console.log(emailStr)
 			strLength = emailStr.toString().split('@')[0].length - 2
 			
 			// ex1) abcdefg12345@naver.com => a**********5@naver.com
