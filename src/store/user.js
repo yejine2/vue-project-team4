@@ -12,7 +12,10 @@ export const useUserStore = defineStore('user', {
   state() {
     return {
       user: null,
-      banks: null
+      banks: null,
+      userAccountList: null,
+      totalBalance: null
+
     }
   },
   actions: {
@@ -26,14 +29,14 @@ export const useUserStore = defineStore('user', {
       const { displayName = '', profileImgBase64 = '', oldPassword = '', newPassword = ''} = payload
       const accessToken = window.localStorage.getItem('token')
 
-      if(!displayName.trim() == '') {
-        this.user.displayName = displayName
-        console.log('Success EditUserName:: ',displayName)
-      } else if (!(oldPassword == '' && newPassword == '')) {
-        console.log('Success EditUserPassword')
-      } else if (!profileImgBase64){
-        console.log('Success EditUserProfileImg::', profileImgBase64)
-      } else console.log('유효한 정보를 입력해주세요.')
+      // if(!displayName.trim() == '') {
+      //   this.user.displayName = displayName
+      //   console.log('Success EditUserName:: ',displayName)
+      // } else if (!(oldPassword == '' && newPassword == '')) {
+      //   console.log('Success EditUserPassword')
+      // } else if (!profileImgBase64){
+      //   console.log('Success EditUserProfileImg::', profileImgBase64)
+      // } else console.log('유효한 정보를 입력해주세요.')
 
       const res = await axios({
         url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user',
@@ -57,10 +60,24 @@ export const useUserStore = defineStore('user', {
         method: 'GET',
         headers: { ...headers, Authorization: `Bearer ${accessToken}` },
       })
-      console.log(res)
+      console.log('res:: ',res)
       this.banks = res.data
-      console.log(this.banks)
+      console.log('Bank::', this.banks)
       return res
+    },
+    // 계좌 목록 및 잔액 조회
+    async getUserAccountList() {
+      const accessToken = window.localStorage.getItem('token')
+      const res = await axios({
+        url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/account',
+        method: 'GET',
+        headers: {  ...headers, Authorization: `Bearer ${accessToken}` }
+      })
+      console.log('useraccountlist::', res)
+      this.userAccountList = res.data.accounts
+      this.totalBalance = res.data.totalBalance
+      console.log('this.userAccountList:: ',this.userAccountList)
+      console.log('this.totoalBalance:: ',this.totalBalance)
     },
     async addAccount(payload) {
       const { bankCode, accountNumber, phoneNumber, signature } = payload
@@ -76,6 +93,24 @@ export const useUserStore = defineStore('user', {
           signature
         }
       })
+      this.getUserAccountList()
+      this.chooseBank()
+    },
+    async deleteAccount(payload) {
+      const { accountId, signature } = payload
+      const accessToken = window.localStorage.getItem('token')
+
+      await axios({
+        url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/account',
+        method: 'DELETE',
+        headers: { ...headers, Authorization: `Bearer ${accessToken}` },
+        data: {
+          accountId,
+          signature
+        }
+      })
+      this.getUserAccountList()
+      this.chooseBank()
     }
   }
 })

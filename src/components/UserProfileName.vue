@@ -10,7 +10,7 @@
     </p>
     <button
       class="btn_modify"
-      @click="onEditMode('name')">
+      @click="onEditMode()">
       변경
     </button>
   </div>
@@ -35,7 +35,7 @@
           autocomplete="off"
           class="input_txt"
           @input="displayName = $event.target.value"
-          @keydown.enter="editUserName(displayName); offEditMode" />
+          @keydown.enter="editUserName(); offEditMode()" />
         <p
           v-show="valid.displayName"
           class="input-error">
@@ -47,7 +47,7 @@
       <button @click="offEditMode">
         취소
       </button>
-      <button @click="editUserName(displayName); offEditMode">
+      <button @click="editUserName(); offEditMode()">
         저장
       </button>
     </div>
@@ -90,8 +90,10 @@ export default {
         this.valid.displayName = false
         this.editMode = false
     },
-    async editUserName(displayName) {
-      await this.userStore.editUserInfo({displayName})
+    async editUserName() {
+      await this.userStore.editUserInfo({
+        displayName: this.displayName
+      })
       this.displayName = ''
     },
     checkName() {

@@ -53,7 +53,7 @@
           class="input_txt"
           placeholder="영문, 숫자, 특수문자 조합 8-16자"
           type="password" 
-          @keydown.enter="editUserPassword(oldPassword, newPassword), offEditMode" />
+          @keydown.enter="editUserPassword(); offEditMode()" />
         <p
           v-show="valid.newPassword"
           class="input-error">
@@ -65,7 +65,7 @@
       <button @click="offEditMode">
         취소
       </button>
-      <button @click="editUserPassword(oldPassword, newPassword), offEditMode">
+      <button @click="editUserPassword(), offEditMode()">
         저장
       </button>
     </div>
@@ -117,10 +117,10 @@ export default {
       this.valid.newPassword = false
       this.editMode = false
     },
-    async editUserPassword(oldPassword, newPassword) {
+    async editUserPassword() {
       await this.userStore.editUserInfo({
-        oldPassword,
-        newPassword
+        oldPassword: this.oldPassword,
+        newPassword: this.newPassword
       })
       this.oldPassword = ''
       this.newPassword = ''

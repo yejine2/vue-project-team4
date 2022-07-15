@@ -42,8 +42,8 @@ export default {
   data() {
     return {
       navigations: [
-        { path: '/my/profile', name: '프로필 수정' },
-        { path: '/my/account', name: '계좌 관리' }
+        { path: '/my/profile', name: '프로필 정보' },
+        { path: '/my/account', name: '계좌 정보' }
       ]
     }
   }
