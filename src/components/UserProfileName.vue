@@ -38,7 +38,7 @@
           @keydown.enter="editUserName(); offEditMode()"
           @keydown.esc="offEditMode" />
         <p
-          v-show="valid.displayName"
+          v-show="displayNameHasError"
           class="input-error">
           올바른 이름을 입력해주세요. (2-50자)
         </p>
@@ -49,8 +49,8 @@
         취소
       </button>
       <button
-        :disabled="able"
-        :class="{ disabled: able }"
+        :disabled=" !valid.displayName"
+        :class="{ disabled: !valid.displayName }"
         @click="editUserName(); offEditMode()">
         저장
       </button>
@@ -67,7 +67,6 @@ export default {
     return {
       displayName: '',
       editMode: false,
-      able: true,
       valid: {
         displayName: false
       },
@@ -110,18 +109,11 @@ export default {
       const validateName = /^(?=.*[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9!@#$%^&*()._-])[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9!@#$%^&*()._-]{2,50}$/
       
       if (!validateName.test(this.displayName) || !this.displayName) {
-        this.valid.displayName = true
+        this.valid.displayName = false
         this.displayNameHasError = true
-        this.able = true
-        console.log('valid.name:', this.valid.displayName)
-        console.log('nameHasError:', this.displayNameHasError)
         return
-      } this.valid.displayName = false
+      } this.valid.displayName = true
         this.displayNameHasError = false
-        this.able = false
-        
-        console.log('valid.name:', this.valid.displayName)
-        console.log('nameHasError:', this.displayNameHasError)
     }
   }
 }
