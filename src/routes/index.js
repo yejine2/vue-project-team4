@@ -12,7 +12,7 @@ export default createRouter({
       path: '/my',
       component: () => import('~/components/UserPage.vue'),
       meta: {
-        // 로그인헤야만 접속 할 수 있게 설정
+        // 로그인해야만 접속 할 수 있게 설정
         auth: true
       },
       children: [
@@ -60,6 +60,10 @@ export default createRouter({
     {
       path: '/admin',
       component: () => import('~/views/Admin.vue'),
+      meta: {
+        // 로그인해야만 접속 할 수 있게 설정
+        auth: true
+      },
     },
     {
       path: '/:notfound(.*)*',
