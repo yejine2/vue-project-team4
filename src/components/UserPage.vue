@@ -65,8 +65,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~/scss/_variables.scss';
-
 .container {
   display: flex;
   margin: 0 auto;
