@@ -88,8 +88,10 @@
         </div>
       </div>
     </div>
-    <div class="content"></div>
-    <SearchResult />
+    <div class="content">
+      <SearchFilter />
+      <SearchResult />
+    </div>
   </div>
 </template>
 
@@ -97,14 +99,17 @@
 import { mapStores } from 'pinia'
 import { useSearchStore } from '~/store/search'
 import SearchHeader from '~/views/search/SearchHeader.vue'
-import SearchResult from '~/components/search/SearchResult.vue'
 import SearchTrends from '~/views/search/SearchTrends.vue'
+import SearchFilter from '~/components/search/SearchFilter.vue'
+import SearchResult from '~/components/search/SearchResult.vue'
+
 
 export default {
   components: {
     SearchHeader,
+    SearchTrends,
+    SearchFilter,
     SearchResult,
-    SearchTrends
   },
   emit: [
     'search_text'
@@ -227,6 +232,13 @@ export default {
         }
       }
     }
+  }
+  .content {
+    width: 1200px;
+    display: flex;
+    position: relative;
+    margin: 0 auto;
+    padding: 0 40px 80px;
   }
 }
 

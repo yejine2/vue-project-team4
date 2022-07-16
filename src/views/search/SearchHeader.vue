@@ -83,8 +83,10 @@
 </template>
 
 <script>
+// import Vue from 'vue'
 import { mapStores } from 'pinia'
 import { useSearchStore } from '~/store/search'
+// import $EventBus from '~/eventBus'
 
 export default {
   data() {
@@ -106,6 +108,9 @@ export default {
   watch: {
     
   },
+  created() {
+    
+  },
   methods: {
     searchProduct() {
       this.$emit('search_text', this.search_text)
@@ -116,6 +121,10 @@ export default {
       search.value = null
     },
     async category_btn(category, event) {
+      // this.$EventBus.$emit('category')
+      // console.log(this.$EventBus)
+      // const bus = new Vue()
+      // bus.$emit('category')
       const $ref = {
         target: event.currentTarget,
         luxury: document.querySelector('.luxury'),
@@ -138,19 +147,30 @@ export default {
         payload.style.color = '#222'
         payload.style.fontWeight = '400'
       }
-      
       for(let i = 0; i < cate.length; i++) {
         if($ref.target === cate[i]) {
           // 스타일, 스토어 카테고리값
           if(category) {
             btn_on(cate[i])
+            for(let k = 0; k < cate_name.length; k++) {
+              if(this.searchStore.searchTags.find(item => item === cate_name[k])) {
+                this.searchStore.searchTags.splice(0, 1)
+              }
+            }
+            this.searchStore.searchTags.unshift(cate_name[i])
             this.searchStore.category = cate_name[i]
-            console.log(this.searchStore.category)
+            console.log(this.searchStore.searchTags)
           } else {
             btn_off(cate[i])
+            for(let k = 0; k < cate_name.length; k++) {
+              if(this.searchStore.searchTags.find(item => item === cate_name[k])) {
+                this.searchStore.searchTags.splice(0, 1)
+              }
+            }
             this.searchStore.category = ''
             console.log(this.searchStore.category)
           }
+          this.searchStore.categoryInter(cate_name[i], category)
         } else if($ref.target === $ref.luxury) {
           if(category) {
             btn_on($ref.luxury)
