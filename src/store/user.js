@@ -15,7 +15,6 @@ export const useUserStore = defineStore('user', {
       banks: null,
       userAccountList: null,
       totalBalance: null
-
     }
   },
   actions: {
@@ -40,10 +39,10 @@ export const useUserStore = defineStore('user', {
           newPassword
         }
       })
+
       this.user = res.data
-      console.log(res)
-      // const { displayName } = res.data
     },
+    // 은행 전체 목록 조회
     async chooseBank() {
       const accessToken = window.localStorage.getItem('token')
 
@@ -52,12 +51,11 @@ export const useUserStore = defineStore('user', {
         method: 'GET',
         headers: { ...headers, Authorization: `Bearer ${accessToken}` },
       })
-      console.log('res:: ',res)
+
       this.banks = res.data
-      console.log('Bank::', this.banks)
       return res
     },
-    // 계좌 목록 및 잔액 조회
+    // 사용자 계좌 목록 및 잔액 조회
     async getUserAccountList() {
       const accessToken = window.localStorage.getItem('token')
 
@@ -66,12 +64,11 @@ export const useUserStore = defineStore('user', {
         method: 'GET',
         headers: {  ...headers, Authorization: `Bearer ${accessToken}` }
       })
-      console.log('useraccountlist::', res)
+
       this.userAccountList = res.data.accounts
       this.totalBalance = res.data.totalBalance
-      console.log('this.userAccountList:: ',this.userAccountList)
-      console.log('this.totoalBalance:: ',this.totalBalance)
     },
+    // 계좌 연결
     async addAccount(payload) {
       const { bankCode, accountNumber, phoneNumber, signature } = payload
       const accessToken = window.localStorage.getItem('token')
@@ -87,9 +84,11 @@ export const useUserStore = defineStore('user', {
           signature
         }
       })
+
       this.getUserAccountList()
       this.chooseBank()
     },
+    // 계좌 해지
     async deleteAccount(payload) {
       const { accountId, signature } = payload
       const accessToken = window.localStorage.getItem('token')
@@ -121,10 +120,8 @@ let maskingFunc = {
 	},
 	/*
 	※ 이메일 마스킹
-	ex1) 원본 데이터 : abcdefg12345@naver.com
-		    변경 데이터 : a**********5@naver.com
-	ex2) 원본 데이터 : abcdefg12345@naver.com
-	      변경 데이터 : a**********5@nav******
+	ex) 원본 데이터 : abcdefg12345@naver.com
+		  변경 데이터 : a**********5@naver.com
 	*/
 	email : function(str){
 		let originStr = str

@@ -14,6 +14,7 @@
       변경
     </button>
   </div>
+
   <div
     v-show="editMode"
     class="modify_password">
@@ -41,6 +42,7 @@
         </p>
       </div>
     </div>
+
     <div
       class="input_box"
       :class="{ 'has_error': newPasswordHasError }">
@@ -63,6 +65,7 @@
         </p>
       </div>
     </div>
+    
     <div class="modify_btn_box">
       <button @click="offEditMode">
         취소

@@ -1,8 +1,10 @@
 <template>
   <div class="container">
     <SNB />
+
     <div class="content_area">
       <RouterView />
+
       <template v-if="$route.path == '/my'">
         <div class="my_home">
           <div class="user_membership">
