@@ -111,9 +111,7 @@ export default {
     SearchFilter,
     SearchResult,
   },
-  emit: [
-    'search_text'
-  ],
+  
   data() {
     return {
       slide_current: 1

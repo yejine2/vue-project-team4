@@ -10,7 +10,7 @@ export default createRouter({
     },
     {
       path: '/my',
-      component: () => import('~/components/MyPage/My.vue'),
+      component: () => import(''),
       meta: {
         // 로그인해야만 접속 할 수 있게 설정
         auth: true
