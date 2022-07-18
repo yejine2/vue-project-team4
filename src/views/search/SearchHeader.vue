@@ -111,7 +111,7 @@ export default {
         cate[i].style.color = '#222'
         cate[i].style.fontWeight = '400'
       }
-      this.searchStore.categoryInteract = true
+      this.searchStore.categoryInteract = false
     }
   },
   methods: {

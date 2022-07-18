@@ -50,7 +50,6 @@
         src="../assets/search.png"
         alt="검색버튼"
         class="search_btn" />
-
     </div>
   </div>
 </template>
