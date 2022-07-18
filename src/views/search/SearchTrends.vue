@@ -1,9 +1,8 @@
 <template>
   <div class="trend">
-    <router-link
+    <div
       v-for="trend in trends"
       :key="trend.name"
-      to=""
       class="btn_trend"
       @click="trend__link(trend.name)">
       <img
@@ -13,7 +12,7 @@
       <p class="trend_name">
         {{ trend.name }}
       </p>
-    </router-link>
+    </div>
   </div>
 </template>
 
@@ -25,26 +24,16 @@ export default {
   data() {
     return {
       trends: [
-        {name: '애플',
-        img: 'src/assets/search/trends/apple.png'},
-        {name: '뉴발란스',
-        img: 'src/assets/search/trends/newBalance.png'},
-        {name: '레고',
-        img: 'src/assets/search/trends/lego.png'},
-        {name: '샤넬',
-        img: 'src/assets/search/trends/chanel.png'},
-        {name: '롤렉스',
-        img: 'src/assets/search/trends/rolex.png'},
-        {name: '헬리녹스',
-        img: 'src/assets/search/trends/helinox.png'},
-        {name: '우영미',
-        img: 'src/assets/search/trends/wooyoungmi.png'},
-        {name: '에어포스',
-        img: 'src/assets/search/trends/airForce.png'},
-        {name: '다이슨',
-        img: 'src/assets/search/trends/dyson.png'},
-        {name: 'IAB Studio',
-        img: 'src/assets/search/trends/iab.png'}
+        {name: '애플', img: 'src/assets/search/trends/apple.png'},
+        {name: '뉴발란스', img: 'src/assets/search/trends/newBalance.png'},
+        {name: '레고', img: 'src/assets/search/trends/lego.png'},
+        {name: '샤넬', img: 'src/assets/search/trends/chanel.png'},
+        {name: '롤렉스', img: 'src/assets/search/trends/rolex.png'},
+        {name: '헬리녹스', img: 'src/assets/search/trends/helinox.png'},
+        {name: '우영미', img: 'src/assets/search/trends/wooyoungmi.png'},
+        {name: '에어포스', img: 'src/assets/search/trends/airForce.png'},
+        {name: '다이슨', img: 'src/assets/search/trends/dyson.png'},
+        {name: 'IAB Studio', img: 'src/assets/search/trends/iab.png'}
       ]
     }
   },
@@ -53,10 +42,13 @@ export default {
   },
   methods: {
     async trend__link(payload) {
-      const search = document.querySelector('.search')
-      search.value = payload
-      await this.searchStore.searchProducts(search.value)
-    },
+      if(this.searchStore.brands.find( item => item === payload)) {
+        console.log('nope')
+      } else {
+        this.searchStore.searchTags.push(payload)
+        await this.searchStore.searchProducts()
+      }
+    }
   }
 }
 </script>
