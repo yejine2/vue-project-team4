@@ -1,193 +1,72 @@
 <template>
   <div class="box">
     <SearchHeader @search_text="search_product" />
-    <!-- TREND -->
-    <div class="trend">
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('애플')">
-        <img
-          src="../assets/search/trends/apple.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          애플
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('뉴발란스')">
-        <img
-          src="../assets/search/trends/newBalance.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          뉴발란스
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('레고')">
-        <img
-          src="../assets/search/trends/lego.png"
-          alt="트렌드 레고"
-          class="trend_img" />
-        <p class="trend_name">
-          레고
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('샤넬')">
-        <img
-          src="../assets/search/trends/chanel.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          샤넬
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('롤렉스')">
-        <img
-          src="../assets/search/trends/rolex.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          롤렉스
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('헬리녹스')">
-        <img
-          src="../assets/search/trends/helinox.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          헬리녹스
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('우영미')">
-        <img
-          src="../assets/search/trends/wooyoungmi.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          우영미
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('에어포스')">
-        <img
-          src="../assets/search/trends/airForce.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          에어포스
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('다이슨')">
-        <img
-          src="../assets/search/trends/dyson.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          다이슨
-        </p>
-      </router-link>
-      <router-link
-        to=""
-        class="btn_trend"
-        @click="trend__link('IAB Studio')">
-        <img
-          src="../assets/search/trends/iab.png"
-          alt="트렌드"
-          class="trend_img" />
-        <p class="trend_name">
-          IAB Studio
-        </p>
-      </router-link>
-    </div>
+    <SearchTrends />
+  
     <div class="banner">
       <div class="banner__box">
         <div class="slider_box">
           <router-link
-            to=""
+            to="#"
             class="banner_01 slider showing">
             <img
-              src="../assets/search/banners/banner_01.png"
+              src="../../assets/search/banners/banner_01.png"
               alt="광고배너01"
               class="banner_img" />
           </router-link>
           <router-link
-            to=""
+            to="#"
             class="banner_02 slider">
             <img
-              src="../assets/search/banners/banner_02.png"
+              src="../../assets/search/banners/banner_02.png"
               alt="광고배너02"
               class="banner_img" />
           </router-link>
           <router-link
-            to=""
+            to="#"
             class="banner_03 slider">
             <img
-              src="../assets/search/banners/banner_03.png"
+              src="../../assets/search/banners/banner_03.png"
               alt="광고배너03"
               class="banner_img" />
           </router-link>
           <router-link
-            to=""
+            to="#"
             class="banner_04 slider">
             <img
-              src="../assets/search/banners/banner_04.png"
+              src="../../assets/search/banners/banner_04.png"
               alt="광고배너04"
               class="banner_img" />
           </router-link>
           <router-link
-            to=""
+            to="#"
             class="banner_05 slider">
             <img
-              src="../assets/search/banners/banner_05.png"
+              src="../../assets/search/banners/banner_05.png"
               alt="광고배너05"
               class="banner_img" />
           </router-link>
           <router-link
-            to=""
+            to="#"
             class="banner_06 slider">
             <img
-              src="../assets/search/banners/banner_06.png"
+              src="../../assets/search/banners/banner_06.png"
               alt="광고배너06"
               class="banner_img" />
           </router-link>
           <router-link
-            to=""
+            to="#"
             class="banner_07 slider">
             <img
-              src="../assets/search/banners/banner_07.png"
+              src="../../assets/search/banners/banner_07.png"
               alt="광고배너07"
               class="banner_img" />
           </router-link>
           <router-link
-            to=""
+            to="#"
             class="banner_08 slider">
             <img
-              src="../assets/search/banners/banner_08.png"
+              src="../../assets/search/banners/banner_08.png"
               alt="광고배너08"
               class="banner_img" />
           </router-link>
@@ -209,18 +88,28 @@
         </div>
       </div>
     </div>
-    <div class="content"></div>
+    <div class="content">
+      <SearchFilter />
+      <SearchResult />
+    </div>
   </div>
 </template>
 
 <script>
 import { mapStores } from 'pinia'
-import { useAuthStore } from '~/store/auth'
-import SearchHeader from '~/components/SearchHeader.vue'
+import { useSearchStore } from '~/store/search'
+import SearchHeader from '~/views/search/SearchHeader.vue'
+import SearchTrends from '~/views/search/SearchTrends.vue'
+import SearchFilter from '~/components/search/SearchFilter.vue'
+import SearchResult from '~/components/search/SearchResult.vue'
+
 
 export default {
   components: {
-    SearchHeader
+    SearchHeader,
+    SearchTrends,
+    SearchFilter,
+    SearchResult,
   },
   emit: [
     'search_text'
@@ -231,7 +120,7 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useAuthStore, ['banks'])
+    ...mapStores(useSearchStore)
   },
   mounted() {
     setInterval(() => {
@@ -244,13 +133,7 @@ export default {
   },
   methods: {
     async search_product(search_text) {
-      console.log(search_text)
-      // await this.authStore.searchProduct()
-    },
-    async trend__link(payload) {
-      const search = document.querySelector('.search')
-      search.value = payload
-      // await this.authStore.searchProduct()
+      await this.searchStore.searchProducts(search_text)
     },
     handle_pre() {
       let target = document.querySelector(`.banner_0${this.slide_current}`)
@@ -276,34 +159,6 @@ export default {
 @import '~/scss/SearchCommon.scss';
 
 .box {
-  .trend {
-    width: 1200px;
-    margin: 0 auto;
-    padding: 0 40px;
-    display: flex;
-    padding-bottom: 16px;
-    .btn_trend {
-      flex-grow: 1;
-      width: 84px;
-      height: 82px;
-      margin-left: 40px;
-      text-align: center;
-      .trend_img {
-        width: 70px;
-        height: 70px;
-        vertical-align: top;
-        user-select: none;
-      }
-      .trend_name {
-        margin-top: -2px;
-        font-size: 13px;
-        font-weight: 600;
-      }
-    }
-    .btn_trend:first-child {
-      margin-left: 0;
-    }
-  }
   .banner {
     max-width: 1200px;
     position: relative;
@@ -377,6 +232,13 @@ export default {
         }
       }
     }
+  }
+  .content {
+    width: 1200px;
+    display: flex;
+    position: relative;
+    margin: 0 auto;
+    padding: 0 40px 80px;
   }
 }
 
