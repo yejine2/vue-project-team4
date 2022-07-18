@@ -7,7 +7,7 @@
       <div class="banner__box">
         <div class="slider_box">
           <router-link
-            to=""
+            to="#"
             class="banner_01 slider showing">
             <img
               src="../../assets/search/banners/banner_01.png"
@@ -15,7 +15,7 @@
               class="banner_img" />
           </router-link>
           <router-link
-            to=""
+            to="#"
             class="banner_02 slider">
             <img
               src="../../assets/search/banners/banner_02.png"
@@ -23,7 +23,7 @@
               class="banner_img" />
           </router-link>
           <router-link
-            to=""
+            to="#"
             class="banner_03 slider">
             <img
               src="../../assets/search/banners/banner_03.png"
@@ -31,7 +31,7 @@
               class="banner_img" />
           </router-link>
           <router-link
-            to=""
+            to="#"
             class="banner_04 slider">
             <img
               src="../../assets/search/banners/banner_04.png"
@@ -39,7 +39,7 @@
               class="banner_img" />
           </router-link>
           <router-link
-            to=""
+            to="#"
             class="banner_05 slider">
             <img
               src="../../assets/search/banners/banner_05.png"
@@ -47,7 +47,7 @@
               class="banner_img" />
           </router-link>
           <router-link
-            to=""
+            to="#"
             class="banner_06 slider">
             <img
               src="../../assets/search/banners/banner_06.png"
@@ -55,7 +55,7 @@
               class="banner_img" />
           </router-link>
           <router-link
-            to=""
+            to="#"
             class="banner_07 slider">
             <img
               src="../../assets/search/banners/banner_07.png"
@@ -63,7 +63,7 @@
               class="banner_img" />
           </router-link>
           <router-link
-            to=""
+            to="#"
             class="banner_08 slider">
             <img
               src="../../assets/search/banners/banner_08.png"

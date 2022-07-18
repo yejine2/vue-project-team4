@@ -3,15 +3,20 @@
     <div class="search_filter">
       <div class="filter_title">
         <strong class="title">필터</strong>
-        <p class="filter_number">
-          {{ filter_number }}
+        <p
+          v-if="tag_num"
+          class="filter_number">
+          {{ searchStore.searchTags.length }}
         </p>
-        <p class="filter_delete">
+        <p
+          class="filter_delete"
+          @click="delete_tag">
           모두 삭제
         </p>
       </div>
       <FilterCategory />
       <FilterBrand />
+      <FilterPrice />
     </div>
   </div>
 </template>
@@ -21,19 +26,33 @@ import { mapStores } from 'pinia'
 import { useSearchStore } from '~/store/search'
 import FilterCategory from '~/views/search/FilterCategory.vue'
 import FilterBrand from '~/views/search/FilterBrand.vue'
+import FilterPrice from '~/views/search/FilterPrice.vue'
 
 export default {
   components: {
     FilterCategory,
-    FilterBrand
+    FilterBrand,
+    FilterPrice
   },
   data() {
     return {
-      filter_number: 1
+      tag_num: false
     }
   },
   computed: {
-    ...mapStores(useSearchStore)
+    ...mapStores(useSearchStore),
+    tags() {
+      return this.searchStore.searchTags.length
+    }
+  },
+  watch: {
+    tags() {
+      if(this.searchStore.searchTags.length > 0) {
+        this.tag_num = true
+      } else {
+        this.tag_num = false
+      }
+    }
   }
 }
 </script>
@@ -42,7 +61,7 @@ export default {
 .box {
   
   .search_filter {
-    width: 210px;
+    width: 200px;
     margin-right: 10px;
     padding-right: 10px;
     overflow-x: hidden;
@@ -71,6 +90,7 @@ export default {
         margin-left: auto;
         font-size: 13px;
         color: rgba(34,34,34,.5);
+        text-decoration: line-through;
       }
     }
     

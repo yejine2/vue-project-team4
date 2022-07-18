@@ -23,7 +23,7 @@
     </div>
     <!-- 카테고리 리스트 -->
     <div
-      v-if="more"
+      v-show="more"
       class="list">
       <div class="list_max">
         <ul
@@ -162,22 +162,15 @@
 </template>
 
 <script>
-// import Vue from 'vue'
 import { mapStores } from 'pinia'
 import { useSearchStore } from '~/store/search'
-// import SearchHeader from '~/views/search/SearchHeader.vue'
 
 export default {
-  // components: {
-  //   SearchHeader
-  // },
   data() {
     return {
       hide: true,
       more: false,
       minus_icon: true,
-      cate_interaction: '',
-      cate_b_interaction: null,
       category_btn: {
         shoe: false,
         cloth: false,
@@ -241,46 +234,105 @@ export default {
   },
   computed: {
     ...mapStores(useSearchStore),
-    // cate_interact() {
-    //   return this.searchStore.cate
-    // },
-    // cate_b_interact() {
-    //   return this.searchStore.cateBoolean
-    // }
-    
+    tags() {return this.searchStore.searchTags[0]},
+    cate_interaction() {return this.searchStore.categoryInteract}
   },
   watch: {
-    
-  },
-  mounted() {
-    
+    // 헤더 카테고리와 연동
+    tags() {
+      const list_off = document.querySelectorAll('.list_off')
+      const checkbox = document.querySelectorAll('.checkbox')
+      const cate_name = ['신발', '의류', '패션잡화', '라이프', '테크']
+      
+      function btn_on(i) {
+        checkbox.item(i).classList.add('checked')
+        list_off.item(i).classList.add('bold')
+      }
+
+      // 검색 결과 필터 끄는 버튼과 연동
+      if(this.searchStore.categoryInteract) {
+        const list = document.querySelectorAll('.list_off')
+        const checkbox = document.querySelectorAll('.checkbox')
+        for(let i = 0; i < list.length; i++) {
+          checkbox.item(i).classList.remove('checked')
+          list.item(i).classList.remove('bold')
+        }
+        this.category_btn.shoe = false
+        this.inner.shoe = false
+        this.category_btn.cloth = false
+        this.inner.cloth = false
+        this.category_btn.accessory = false
+        this.inner.accessory = false
+        this.category_btn.life = false
+        this.inner.life = false
+        this.category_btn.tech = false
+        this.inner.tech = false
+      } else {
+        return console.log('nope')
+      }
+
+      if(cate_name.includes(this.searchStore.searchTags[0])) {
+        for(let i = 0; i < cate_name.length; i++) {
+          if(this.searchStore.searchTags[0] === cate_name[i]) {
+            this.hide = false
+            this.minus_icon = false
+            this.more = true
+            if(i === 0) {
+              btn_on(i)
+              this.category_btn.shoe = true
+              this.inner.shoe = true
+            }
+            else if(i === 1) {
+              btn_on(i)
+              this.category_btn.cloth = true
+              this.inner.cloth = true
+            }
+            else if(i === 2) {
+              btn_on(i)
+              this.category_btn.accessory = true
+              this.inner.accessory = true
+            }
+            else if(i === 3) {
+              btn_on(i)
+              this.category_btn.life = true
+              this.inner.life = true
+            }
+            else if(i === 4) {
+              btn_on(i)
+              this.category_btn.tech = true
+              this.inner.tech = true
+            }
+          }
+          else {
+            checkbox.item(i).classList.remove('checked')
+            list_off.item(i).classList.remove('bold')
+            if(i === 0) {
+              this.category_btn.shoe = false
+              this.inner.shoe = false
+            }
+            else if(i === 1) {
+              this.category_btn.cloth = false
+              this.inner.cloth = false
+            }
+            else if(i === 2) {
+              this.category_btn.accessory = false
+              this.inner.accessory = false
+            }
+            else if(i === 3) {
+              this.category_btn.life = false
+              this.inner.life = false
+            }
+            else if(i === 4) {
+              this.category_btn.tech = false
+              this.inner.tech = false
+            }
+          }
+        }
+      }
+    }
   },
   methods: {
-    // asdfasdf() {
-    //   const bus = new Vue()
-    //   bus.$on('category', () => {
-    //     console.log('asdgasdg')
-    //   })
-  // }
-    // interaction() {
-    //   const list = document.querySelectorAll('.list_off')
-    //   const checkbox = document.querySelectorAll('.checkbox')
-    //   const cate_name = ['신발', '의류', '패션잡화', '라이프', '테크']
-
-    //   if(this.cate_interaction && this.cate_b_interaction) {
-    //     for(let i = 0; i < cate_name.length; i++) {
-    //       if(this.cate_interaction === cate_name[i]) {
-    //         checkbox.item(i).classList.add('checked')
-    //         list.item(i).classList.add('bold')
-    //         // 트루로 바꿔줘야해
-    //       }
-    //     }
-    //   }
-    // },
-    checked(e, boolean, data) {
-    //   this.$EventBus.$on('category', () => {
-    //   console.log('asdgasdg')
-    // })
+    async checked(e, boolean, data) {
       const list = document.querySelectorAll('.list_off')
       const checkbox = document.querySelectorAll('.checkbox')
       const inner_checkbox = document.querySelectorAll('.inner_checkbox')
@@ -305,14 +357,14 @@ export default {
             }
             this.searchStore.searchTags.unshift(cate_name[i])
             this.searchStore.category = cate_name[i]
-            console.log(this.searchStore.searchTags)
             this.shoes.map(a => {a.two = false})
             this.clothes.map(a => {a.two = false})
             this.accessories.map(a => {a.two = false})
             this.lifes.map(a => {a.two = false})
             this.techs.map(a => {a.two = false})
+            // 재검색
+            await this.searchStore.searchProducts()
           } else {
-            console.log('왜안돼')
             data.map(a => {a.two = false})
             checkbox.item(i).classList.remove('checked')
             list.item(i).classList.remove('bold')
@@ -322,7 +374,8 @@ export default {
               }
             }
             this.searchStore.category = ''
-            console.log(this.searchStore.searchTags)
+            // 재검색
+            await this.searchStore.searchProducts()
           }
         }
         else if(e.currentTarget !== list.item(i)) {
@@ -351,7 +404,7 @@ export default {
         inner_list.item(j).classList.remove('bold')
       }
     },
-    inner_checked(e, boolean, name) {
+    async inner_checked(e, boolean, name) {
       const list = document.querySelectorAll('.list_off')
       const inner_list = document.querySelectorAll('.list_on')
       const inner_checkbox = document.querySelectorAll('.inner_checkbox')
@@ -377,31 +430,29 @@ export default {
               }
             }
             // 카테고리 소분류 추가
+            this.searchStore.category = cate_inner_name[i].textContent
             this.searchStore.searchTags.unshift(cate_inner_name[i].textContent)
-            console.log(this.searchStore.searchTags)
             for(let k = 0; k < checkbox.length; k++) {
               checkbox.item(k).classList.remove('checked')
               list.item(k).classList.remove('bold')
             }
+            // 재검색
+            await this.searchStore.searchProducts()
           } else {
             inner_checkbox.item(i).classList.remove('checked')
             inner_list.item(i).classList.remove('bold')
+            this.searchStore.category = ''
             for(let k = 0; k < cate_inner_name.length; k++) {
               if(this.searchStore.searchTags.find(item => item === cate_inner_name[k].textContent)) {
                 const number = this.searchStore.searchTags.findIndex(item => item === cate_inner_name[k].textContent)
                 this.searchStore.searchTags.splice(number, 1)
               }
             }
-            console.log(this.searchStore.searchTags)
-          // this.category_btn.shoe = false
-          // this.category_btn.cloth = false
-          // this.category_btn.accessories = false
-          // this.category_btn.life = false
-          // this.category_btn.tech = false
+            // 재검색
+            await this.searchStore.searchProducts()
           }
         }
         else if(e.currentTarget !== inner_list.item(i)) {
-          console.log('3')
           inner_checkbox.item(i).classList.remove('checked')
           inner_list.item(i).classList.remove('bold')
           if(name === this.shoes) {
@@ -482,6 +533,7 @@ section {
             display: flex;
             align-items: center;
             padding-top: 10px;
+            cursor: pointer;
           }
         }
       }

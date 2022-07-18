@@ -12,81 +12,69 @@
           <input
             type="text"
             class="search"
-            placeholder="브랜드명,모델명,모델번호 등"
+            placeholder="제품명"
             @input="search_text = $event.target.value"
-            @keyup.enter.prevent="searchProduct" />
+            @keypress.enter="search_product" />
           <i
             class="bi bi-x-lg"
-            @click="inputInit"></i>
+            @click="input_init"></i>
         </div>
       </div>
       <div class="category">
         <div class="icon">
           <i class="bi bi-sliders"></i>
         </div>
-        <router-link
-          to="#"
+        <div
           class="luxury btn_category"
           @click="category_btn(category_lux = !category_lux, $event)">
-          <p class="name">
+          <p class="name luxury_text">
             럭셔리
           </p>
-        </router-link>
+        </div>
         <span class="vir_bar"></span>
-        <router-link
-          to=""
+        <div
           class="shoes btn_category"
           @click="category_btn(category.category_01 = !category.category_01, $event)">
           <p class="name">
             신발
           </p>
-        </router-link>
-        <router-link
-          ref="cloth"
-          to=""
+        </div>
+        <div
           class="cloth btn_category"
           @click="category_btn(category.category_02 = !category.category_02, $event)">
           <p class="name">
             의류
           </p>
-        </router-link>
-        <router-link
-          ref="acc"
-          to=""
+        </div>
+        <div
           class="acc btn_category"
           @click="category_btn(category.category_03 = !category.category_03, $event)">
           <p class="name">
             패션 잡화
           </p>
-        </router-link>
-        <router-link
-          ref="life"
-          to=""
+        </div>
+        <div
           class="life btn_category"
           @click="category_btn(category.category_04 = !category.category_04, $event)">
           <p class="name">
             라이프
           </p>
-        </router-link>
-        <router-link
-          ref="tech"
-          to=""
+        </div>
+        <div
           class="tech btn_category"
           @click="category_btn(category.category_05 = !category.category_05, $event)">
           <p class="name">
             테크
           </p>
-        </router-link>
+        </div>
       </div>
     </div>
   </header>
 </template>
 
 <script>
-// import Vue from 'vue'
 import { mapStores } from 'pinia'
 import { useSearchStore } from '~/store/search'
-// import $EventBus from '~/eventBus'
 
 export default {
   data() {
@@ -103,28 +91,38 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useSearchStore)
+    ...mapStores(useSearchStore),
+    cate_interaction() {return this.searchStore.categoryInteract}
   },
   watch: {
-    
-  },
-  created() {
-    
+    // 검색결과에 필터를 끄는 아이콘을 클릭하면 실행
+    cate_interaction() {
+      const $ref = {
+        shoes: document.querySelector('.shoes'),
+        cloth: document.querySelector('.cloth'),
+        acc: document.querySelector('.acc'),
+        life: document.querySelector('.life'),
+        tech: document.querySelector('.tech')
+      }
+      const cate = [$ref.shoes, $ref.cloth, $ref.acc, $ref.life, $ref.tech]
+
+      for(let i = 0; i < cate.length; i++) {
+        cate[i].style.backgroundColor = '#f4f4f4'
+        cate[i].style.color = '#222'
+        cate[i].style.fontWeight = '400'
+      }
+      this.searchStore.categoryInteract = true
+    }
   },
   methods: {
-    searchProduct() {
+    search_product() {
       this.$emit('search_text', this.search_text)
-      // console.log(this.search_text)
     },
-    inputInit() {
+    input_init() {
       const search = document.querySelector('.search')
       search.value = null
     },
     async category_btn(category, event) {
-      // this.$EventBus.$emit('category')
-      // console.log(this.$EventBus)
-      // const bus = new Vue()
-      // bus.$emit('category')
       const $ref = {
         target: event.currentTarget,
         luxury: document.querySelector('.luxury'),
@@ -149,7 +147,6 @@ export default {
       }
       for(let i = 0; i < cate.length; i++) {
         if($ref.target === cate[i]) {
-          // 스타일, 스토어 카테고리값
           if(category) {
             btn_on(cate[i])
             for(let k = 0; k < cate_name.length; k++) {
@@ -159,7 +156,7 @@ export default {
             }
             this.searchStore.searchTags.unshift(cate_name[i])
             this.searchStore.category = cate_name[i]
-            console.log(this.searchStore.searchTags)
+            await this.searchStore.searchProducts()
           } else {
             btn_off(cate[i])
             for(let k = 0; k < cate_name.length; k++) {
@@ -168,9 +165,8 @@ export default {
               }
             }
             this.searchStore.category = ''
-            console.log(this.searchStore.category)
+            await this.searchStore.searchProducts()
           }
-          this.searchStore.categoryInter(cate_name[i], category)
         } else if($ref.target === $ref.luxury) {
           if(category) {
             btn_on($ref.luxury)
@@ -192,11 +188,6 @@ export default {
           }
         }
       }
-      // console.log(`this.category_01 ${this.category.category_01}`)
-      // console.log(`this.category_02 ${this.category.category_02}`)
-      // console.log(`this.category_03 ${this.category.category_03}`)
-      // console.log(`this.category_04 ${this.category.category_04}`)
-      // console.log(`this.category_05 ${this.category.category_05}`)
     }
   }
 }
@@ -273,9 +264,13 @@ header {
           padding: 10px 12px;
           border-radius: 12px;
           text-align: center;
+          cursor: pointer;
           .name {
             line-height: 18px;
             font-size: 15px;
+          }
+          .luxury_text {
+            text-decoration: line-through;
           }
         }
         .luxury, .shoes {

@@ -23,16 +23,16 @@
     </div>
     <!-- 카테고리 리스트 -->
     <div
-      v-if="more"
+      v-show="more"
       class="list">
       <div class="list_max">
         <ul class="filter_menu">
           <li
             v-for="brand in brands"
             :key="brand"
-            class="filter_one"
+            class="brand_filter_one"
             @click="add_brand">
-            <div class="checkbox"></div>
+            <div class="brand_checkbox"></div>
             <p class="brand_name">
               {{ brand }}
             </p>
@@ -57,39 +57,54 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useSearchStore)
+    ...mapStores(useSearchStore),
+    brand_interaction() {return this.searchStore.brands.length}
   },
-  created() {
-    this.req_brands()
+  watch: {
+    // 브랜드 필터 <-> 결과 필터 단추 연동
+    brand_interaction() {
+      const brand_list = document.querySelectorAll('.brand_filter_one')
+      const checkbox = document.querySelectorAll('.brand_checkbox')
+      const brand_name = document.querySelectorAll('.brand_name')
+      for(let i = 0; i < brand_name.length; i++) {
+        if(brand_name[i].textContent === this.searchStore.brandInteract) {
+          checkbox[i].classList.remove('checked')
+          brand_list[i].classList.remove('bold')
+        }
+      }
+      
+    }
+  },
+  async created() {
+    // store data brands는 결과 필터 데이터임 이것과 별개
+    const brands_list = await this.searchStore.searchProducts()
+      for(let i = 0; i < brands_list.length; i++) {
+        this.brands.push(brands_list[i].tags[1]) // 제품 태그는 0: 카테고리, 1: 브랜드이다.
+      }
   },
   methods: {
-    async req_brands() {
-      const data = await this.searchStore.searchProducts()
-      for(let i = 0; i < data.length; i++) {
-        this.brands.push(data[i].tags[1]) // 제품 태그는 0: 카테고리, 1: 브랜드이다.
-      }
-    },
-    add_brand(e) {
-      const brand_list = document.querySelectorAll('.filter_one')
-      const checkbox = document.querySelectorAll('.checkbox')
+    async add_brand(e) {
+      const brand_list = document.querySelectorAll('.brand_filter_one')
+      const checkbox = document.querySelectorAll('.brand_checkbox')
       const brand_name = document.querySelectorAll('.brand_name')
-      // const classes = checkbox.classList
       
       for(let i = 0; i < brand_list.length; i++) {
         const classes = checkbox[i].classList
         if(e.currentTarget === brand_list[i]) {
           if(classes.contains('checked')) {
             checkbox[i].classList.remove('checked')
-            const brand_number = this.searchStore.brand.findIndex( item => item === brand_name[i].textContent)
+            brand_list[i].classList.remove('bold')
+            const brand_number = this.searchStore.brands.findIndex( item => item === brand_name[i].textContent)
             const tag_number = this.searchStore.searchTags.findIndex( item => item === brand_name.item(i).textContent)
-            this.searchStore.brand.splice(brand_number, 1)
+            this.searchStore.brands.splice(brand_number, 1)
             this.searchStore.searchTags.splice(tag_number, 1)
-            console.log(this.searchStore.searchTags)
+            await this.searchStore.searchProducts()
           } else {
             checkbox[i].classList.add('checked')
-            this.searchStore.brand.push(brand_name[i].textContent)
+            brand_list[i].classList.add('bold')
+            this.searchStore.brands.push(brand_name[i].textContent)
             this.searchStore.searchTags.push(brand_name[i].textContent)
-            console.log(this.searchStore.searchTags)
+            await this.searchStore.searchProducts()
           }
         }
       }
@@ -134,12 +149,12 @@ section {
     overflow-y: scroll;
     .filter_menu {
       font-size: 14px;
-      .filter_one {
+      .brand_filter_one {
         display: flex;
         align-items: center;
         padding-top: 10px;
         cursor: pointer;
-        .checkbox {
+        .brand_checkbox {
           width: 16px;
           height: 17px;
           margin-right: 8px;
@@ -151,6 +166,9 @@ section {
           background-position: center;
           background-size: 22px;
         }
+      }
+      .bold {
+        font-weight: 600;
       }
     }
   }
