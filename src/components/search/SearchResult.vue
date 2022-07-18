@@ -316,6 +316,8 @@ export default {
               color: #333;
             }
             .name {
+              width: 230px;
+              height: 13px;
               margin-top: 5px;
               line-height: 16px;
               font-size: 13px;
