@@ -23,6 +23,10 @@ export default createRouter({
         {
           path: 'account',
           component: () => import('~/components/UserAccountPage.vue')
+        },
+        {
+          path: 'buying',
+          component: () => import('~/components/UserBuyingPage.vue')
         }
       ]
     },
