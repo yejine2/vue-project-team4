@@ -12,9 +12,19 @@ export default createRouter({
       path: '/my',
       component: () => import('~/components/MyPage/My.vue'),
       meta: {
-        // 로그인헤야만 접속 할 수 있게 설정
+        // 로그인해야만 접속 할 수 있게 설정
         auth: true
-      }
+      },
+      children: [
+        {
+          path: 'profile',
+          component: () => import('~/components/EditUserProfile.vue') 
+        },
+        {
+          path: 'account',
+          component: () => import('~/components/UserAccountPage.vue')
+        }
+      ]
     },
     {
       path: '/admin/products',
@@ -25,9 +35,13 @@ export default createRouter({
       component: () => import('~/components/AddProduct.vue')
     },
     {
-      path: '/admin/products/edit',
+      path: '/admin/products/edit/:id',
       component: () => import('~/components/EditProduct.vue')
     },
+    // {
+    //   path: '/detail/:id',
+    //   component: ProductDetail
+    // },
     {
       path: '/login',
       component: () => import('~/views/SignIn.vue'),
@@ -42,7 +56,11 @@ export default createRouter({
     },
     {
       path: '/admin',
-      component: () => import('~/components/AdminPage.vue'),
+      component: () => import('~/views/Admin.vue'),
+      meta: {
+        // 로그인해야만 접속 할 수 있게 설정
+        auth: true
+      }
     },
     {
       path: '/:notfound(.*)*',

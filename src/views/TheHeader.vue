@@ -7,7 +7,9 @@
     </RouterLink>
     <!-- LogIn / LogOut -->
     <template v-if="authStore.logInLoading">
-      Loading...
+      <span class="login-icon material-symbols-outlined">
+        login
+      </span>
     </template>
     <template v-else-if="!authStore.user">
       <RouterLink
@@ -30,7 +32,7 @@
     <div class="logo-nav">
       <RouterLink
         to="/"
-        class="top-nav__link">
+        class="top-nav__logo">
         <img
           class="main-nav__logo"
           src="../assets/logo.png"
@@ -64,31 +66,39 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 .top-nav{
+  height: 32px;
   display: flex;
   justify-content: flex-end;
-  padding: 8px 40px;
-}
-.top-nav__link {
-  color: $color-black;
-  text-decoration: none;
-  font-size: 12px;
-  padding: .7rem;
+  align-items: center;
+  padding: 0px 40px;
+  .top-nav__link {
+    color: #707070;
+    text-decoration: none;
+    font-size: 12px;
+    padding: 10px;
+  }
+  .login-icon {
+    font-size: 20px;
+    color: #707070;
+  }
 }
 .main-nav{
+  height: 67px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 40px;
+  padding: 0px 40px;
+  border-top: 1px solid #e9e9e9;
+  .logo-nav {
+    font-size:0;
+  }
   .main-nav__logo {
     width: 120px;
-    flex-grow: 3;
   }
   .link-nav {
     display: flex;
     align-items: center;
-
     .main-nav__link {
       color: $color-black;
       font-size: 16px;
@@ -101,6 +111,4 @@ export default {
     }
   }
 }
-
-
 </style>

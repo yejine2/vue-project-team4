@@ -105,10 +105,13 @@ export default {
       const validatePassword = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/
 
         if (!validatePassword.test(this.password) || !this.password) {
+          
         this.valid.password = true
         this.passwordHasError = true
-        return
-      } this.valid.password = false
+        return console.log('맞았어')
+      } 
+      console.log('틀렸어')
+      this.valid.password = false
         this.passwordHasError = false
     },
 

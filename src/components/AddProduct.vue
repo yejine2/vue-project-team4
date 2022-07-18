@@ -16,7 +16,7 @@
           type="text" />
       </article>
       <article class="info-box">
-        <p>태그</p>
+        <p>태그 (쉼표로 구분)</p>
         <input
           v-model="tags"
           type="text" />
@@ -43,7 +43,7 @@
       <button
         class="btn btn-primary"
         @click="addProduct">
-        제출하기
+        제품 추가
       </button>
     </section>
   </div>
