@@ -65,14 +65,17 @@
         </p>
       </div>
     </div>
-    
+
     <div class="modify_btn_box">
-      <button @click="offEditMode">
+      <button
+        class="btn"
+        @click="offEditMode">
         취소
       </button>
       <button 
         :disabled="!btnEnable"
         :class="{ disabled: !btnEnable }"
+        class="btn"
         @click="editUserPassword(), offEditMode()">
         저장
       </button>
@@ -253,8 +256,7 @@ export default {
   .modify_btn_box {
     padding-top: 28px;
     text-align: center;
-    
-    button {
+    .btn {
       padding: 0 38px;
       height: 42px;
       font-size: 14px;
