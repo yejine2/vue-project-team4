@@ -5,10 +5,12 @@
         v-for="item in items"
         :key="item"
         class="item">
-        <img
-          class="item__image"
-          :src="item.image" />
-        <p>{{ item.title }}</p> 
+        <router-link to="/">
+          <img
+            class="item__image"
+            :src="item.image" />
+          <p>{{ item.title }}</p> 
+        </router-link>
       </li>
     </ul>
   </div>
@@ -82,7 +84,9 @@ export default {
 .item { 
   text-align: center;
   margin: 0 7.5px;
-
+  a {
+    text-decoration: none;
+  }
   .item__image {
   height: 100px;
   border-radius: 10px;
