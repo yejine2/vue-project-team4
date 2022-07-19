@@ -1,18 +1,18 @@
 <template>
   <Swiper />
-  <itemsWrap />
+  <ItemsWrap />
 </template>
 
 <script>
 import { mapStores } from 'pinia'
 import { useAuthStore } from '~/store/auth'
 import Swiper from '~/views/Swiper.vue'
-import itemsWrap from '~/views/layout/itemsWrap.vue'
+import ItemsWrap from '~/views/layout/ItemsWrap.vue'
 
 export default {
   components: {
     Swiper,
-    itemsWrap 
+    ItemsWrap 
     
   },
   computed: {
