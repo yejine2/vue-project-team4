@@ -70,15 +70,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .item-container {
-  margin-top: 50px;
+  max-width: 1280px;
+  margin: 50px auto 0 auto;
 }
 .item-list {
-  max-width: 1280px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  text-align: center;
   padding: 0 30px;
-  margin: 0 auto;
 }
 .item { 
   text-align: center;
