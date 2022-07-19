@@ -1,5 +1,13 @@
 <template>
   <div class="item-container">
+    <div class="product-title">
+      <div class="title">
+        Just Dropped
+      </div>
+      <div class="sub-title">
+        발매 상품
+      </div>
+    </div>
     <ul class="item-list">
       <li
         v-for="item in items"
@@ -33,6 +41,11 @@
         </router-link>
       </li>
     </ul>
+  </div>
+  <div class="btn-container">
+    <button class="more-button">
+      더보기
+    </button>
   </div>
 </template>
 
@@ -79,13 +92,24 @@ export default {
 .item-container {
   max-width: 1280px;
   margin: 50px auto 0 auto;
+  .product-title {
+    margin: 0 auto;
+    padding: 0 40px;
+    .title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .sub-title {
+      font-size: 14px;
+      margin-top: 2px;
+      color: #a5a5a5;
+    }
+  }
 }
 .item-list {
-  max-width: 1280px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: 0 28px;
-  margin: 0 auto;
 }
 .item { 
   text-align: center;
@@ -96,7 +120,7 @@ export default {
   }
   .image-box {
   background-color: rgb(244, 244, 244);
-  width: 100%;
+  width: 282px;
   height: 282px;
   position: relative;
   border-radius: 10px;
@@ -116,7 +140,6 @@ export default {
   z-index: 1;
   }
   }
-
   .item__info {
     padding: 9px 0 0;
   p {
@@ -141,10 +164,24 @@ export default {
   }
   .item__info__derc{
     font-size: 11px;
-    color: rgb(201, 201, 201);
+    color: #a5a5a5;
     margin-top: 2px;
   }
   }
-
+}
+.btn-container {
+  height: 62px;
+  padding: 0 32px;
+  text-align: center;
+  .more-button {
+    height: 42px;
+    background-color: $color-white;
+    border: 1px solid #d3d3d3;
+    padding: 0 30px;
+    margin-top: 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    color: rgba(34,34,34,.7);
+  }
 }
 </style>
