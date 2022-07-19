@@ -9,7 +9,9 @@
           <img
             class="item__image"
             :src="item.image" />
-          <p>{{ item.title }}</p> 
+          <p class="item__title">
+            {{ item.title }}
+          </p> 
         </router-link>
       </li>
     </ul>
@@ -70,7 +72,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 .item-container {
   max-width: 1280px;
   margin: 50px auto 0 auto;
@@ -92,9 +93,10 @@ export default {
   border-radius: 10px;
   margin-top: 15px;
   }
-  p {
+  .item__title {
   margin-top: 8px;
-  color: #333
+  color: #333;
+  font-size: 15px
   }
 }
 </style>
