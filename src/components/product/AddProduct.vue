@@ -39,9 +39,9 @@
           type="file"
           @change="photoBase64Img" />
       </article>
-
+      <hr />
       <button
-        class="btn btn-primary"
+        class="btn btn-outline-primary"
         @click="addProduct">
         제품 추가
       </button>
@@ -101,3 +101,6 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+</style>

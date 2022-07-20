@@ -18,12 +18,13 @@
 <script>
 import { mapStores } from 'pinia'
 import { useIndexStore } from '~/store/admin.js'
-import ProductsList from '~/components/ProductsList.vue'
+import ProductsList from '~/components/product/ProductsList.vue'
 
 export default {
   components: {
     ProductsList
   },
+
   computed: {
     ...mapStores(useIndexStore)
   },
@@ -47,5 +48,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../node_modules/bootstrap/scss/bootstrap.scss';
 </style>
