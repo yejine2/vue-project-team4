@@ -11,8 +11,7 @@ export const useAuthStore = defineStore('auth', {
   state() {
     return {
       user: null,
-      logInLoading: true,
-      banks: null
+      logInLoading: true
     }
   },
   actions: {
@@ -57,19 +56,6 @@ export const useAuthStore = defineStore('auth', {
       })
       window.localStorage.removeItem('token')
       this.user = null
-    },
-    async searchProduct(payload) {
-      const { searchTag, searchText } = payload
-      const res = await axios({
-        url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/search',
-        method: 'POST',
-        headers,
-        data: {
-          searchText,
-          searchTag
-        }
-      })
-      console.log(res)
-    },
+    }
   }
 })

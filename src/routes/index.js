@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import EditProduct from '~/components/product/EditProduct.vue'
+import ProductDetail from '~/components/product/ProductDetail.vue'
 
 export default createRouter({
   history: createWebHistory(),
@@ -10,28 +12,43 @@ export default createRouter({
     },
     {
       path: '/my',
-      component: () => import('~/components/UserPage.vue'),
+      component: () => import('~/components/MyPage/My.vue'),
       meta: {
-        // 로그인헤야만 접속 할 수 있게 설정
+        // 로그인해야만 접속 할 수 있게 설정
         auth: true
-      }
+      },
+      children: [
+        {
+          path: 'profile',
+          component: () => import('~/components/EditUserProfile.vue') 
+        },
+        {
+          path: 'account',
+          component: () => import('~/components/UserAccountPage.vue')
+        }
+      ]
     },
     {
       path: '/admin/products',
-      component: () => import('~/components/Products.vue')
+      component: () => import('~/components/product/Products.vue')
+
+     
     },
     {
       path: '/admin/products/add',
-      component: () => import('~/components/AddProduct.vue')
+      component: () => import('~/components/product/AddProduct.vue')
     },
     {
       path: '/admin/products/edit/:id',
-      component: () => import('~/components/EditProduct.vue')
+      name: 'EditProduct',
+      component: EditProduct,
+      props: true
     },
-    // {
-    //   path: '/detail/:id',
-    //   component: ProductDetail
-    // },
+    {
+      path: '/admin/products/detail/:id',
+      name: 'ProductDetail',
+      component: ProductDetail
+    },
     {
       path: '/login',
       component: () => import('~/views/SignIn.vue'),
@@ -42,14 +59,15 @@ export default createRouter({
     },
     {
       path: '/search',
-      component: () => import('~/components/Search.vue'),
-      children: [
-        
-      ]
+      component: () => import('~/components/search/Search.vue')
     },
     {
       path: '/admin',
       component: () => import('~/views/Admin.vue'),
+      meta: {
+        // 로그인해야만 접속 할 수 있게 설정
+        auth: true
+      }
     },
     {
       path: '/:notfound(.*)*',
