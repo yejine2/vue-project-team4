@@ -70,6 +70,9 @@
       </div>
       <div class="sign-up-box">
         <button 
+          ref="signUp"
+          :disabled="disabledBtn === true"
+          :class="{ 'disabled-button': disabledBtn }"
           class="sign-up-btn"
           @click="signUp">
           가입하기
@@ -77,13 +80,18 @@
       </div>
     </div>
   </div>
+  <BannerBottom />
 </template>
 
 <script>
 import { mapStores } from 'pinia'
 import { useAuthStore } from '~/store/auth'
+import BannerBottom from '~/views/layout/BannerBottom.vue'
 
 export default {
+  components: {
+    BannerBottom
+  },
   data() {
     return {
       email: '',
@@ -97,6 +105,7 @@ export default {
         emailHasError: false,
         passwordHasError: false,
         nameHasError: false,
+        disabledBtn: true
     }
   },
   computed: {
@@ -122,9 +131,11 @@ export default {
       if (!validateEmail.test(this.email) || !this.email) {
         this.valid.email = true
         this.emailHasError = true
+        this.disabledBtn = true
         return
       } this.valid.email = false
         this.emailHasError = false
+        this.disabledBtn = false
     },
     
     checkPassword() {
@@ -134,18 +145,22 @@ export default {
         if (!validatePassword.test(this.password) || !this.password) {
         this.valid.password = true
         this.passwordHasError = true
+        this.disabledBtn = true
         return
       } this.valid.password = false
         this.passwordHasError = false
+        this.disabledBtn = false
     },
 
     checkDisplayName() {
         if (!this.displayName) {
         this.valid.displayName = true
         this.nameHasError = true
+        this.disabledBtn = true
         return
       } this.valid.displayName  = false
         this.nameHasError = false
+        this.disabledBtn = false
     },
 
     async signUp() {
@@ -172,7 +187,7 @@ export default {
   max-width: 1280px;
   .sign-up-area {
   margin: 0 auto;
-  padding: 60px 0 160px;
+  padding-top: 80px;
   width: 400px;
   .sign-up-title {
     padding-bottom: 42px;
@@ -232,6 +247,10 @@ export default {
   }
   .input-danger {
     border-bottom: 1px solid $color-error !important;
+  }
+  .disabled-button {
+    background-color: #ebebeb !important;
+    cursor: default !important;
   }
 }
 }
