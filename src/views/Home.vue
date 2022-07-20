@@ -5,6 +5,7 @@
   <BrandList />
   <HomeBanner />
   <MostPopular />
+  <BannerBottom />
 </template>
 
 <script>
@@ -16,6 +17,7 @@ import DroppedList from '~/views/layout/DroppedList.vue'
 import BrandList from '~/views/layout/BrandList.vue'
 import HomeBanner from '~/views/layout/HomeBanner.vue'
 import MostPopular from '~/views/layout/MostPopular.vue'
+import BannerBottom from '~/views/layout/BannerBottom.vue'
 
 export default {
   components: {
@@ -24,7 +26,8 @@ export default {
     DroppedList,
     BrandList,
     HomeBanner,
-    MostPopular
+    MostPopular,
+    BannerBottom
   },
   computed: {
     ...mapStores(useAuthStore)
