@@ -74,7 +74,7 @@ export default {
 <style scoped lang="scss">
 .item-container {
   max-width: 1280px;
-  margin: 50px auto 0 auto;
+  margin: 34px auto 0 auto;
 }
 .item-list {
   display: grid;
@@ -91,7 +91,7 @@ export default {
   .item__image {
   height: 100px;
   border-radius: 10px;
-  margin-top: 15px;
+  margin-top: 16px;
   }
   .item__title {
   margin-top: 8px;
