@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import EditProduct from '~/components/product/EditProduct.vue'
+import ProductDetail from '~/components/product/ProductDetail.vue'
 
 export default createRouter({
   history: createWebHistory(),
@@ -32,20 +34,23 @@ export default createRouter({
     },
     {
       path: '/admin/products',
-      component: () => import('~/components/Products.vue')
+      component: () => import('~/components/product/Products.vue')
     },
     {
       path: '/admin/products/add',
-      component: () => import('~/components/AddProduct.vue')
+      component: () => import('~/components/product/AddProduct.vue')
     },
     {
       path: '/admin/products/edit/:id',
-      component: () => import('~/components/EditProduct.vue')
+      name: 'EditProduct',
+      component: EditProduct,
+      props: true
     },
-    // {
-    //   path: '/detail/:id',
-    //   component: ProductDetail
-    // },
+    {
+      path: '/admin/products/detail/:id',
+      name: 'ProductDetail',
+      component: ProductDetail
+    },
     {
       path: '/login',
       component: () => import('~/views/SignIn.vue'),
@@ -55,8 +60,18 @@ export default createRouter({
       component: () => import('~/views/SignUp.vue'),
     },
     {
-      path: '/search',
-      component: () => import('~/components/search/Search.vue')
+      path: '',
+      component: () => import('~/components/search/Search.vue'),
+      children: [
+        {
+          path: '/search',
+          component: () => import('~/components/search/SearchMain.vue'),
+        },
+        {
+          path: '/search/:productId',
+          component: () => import('~/components/search/SearchDetail.vue'),
+        }
+      ]
     },
     {
       path: '/admin',
