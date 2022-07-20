@@ -3,11 +3,6 @@
   <header>
     <div class="header__box">
       <div class="page_title">
-        <!-- <h3 v-if="!search_bar">
-            SHOP
-          </h3> -->
-        <!-- 검색바 들어갈 자리 -->
-        <!-- 검색바가 나오면 page_title 패딩바텀 36px -->
         <div class="search_box">
           <input
             type="text"
@@ -199,6 +194,8 @@ export default {
 
 header {
     background-color: #fff;
+    // width: 100%;
+    // position: fixed;
     padding: 8px 40px 0;
     z-index: 9999;
     .header__box {

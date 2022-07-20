@@ -78,9 +78,9 @@ export default {
   async created() {
     // store data brands는 결과 필터 데이터임 이것과 별개
     const brands_list = await this.searchStore.searchProducts()
-      for(let i = 0; i < brands_list.length; i++) {
-        this.brands.push(brands_list[i].tags[1]) // 제품 태그는 0: 카테고리, 1: 브랜드이다.
-      }
+    for(let i = 0; i < brands_list.length; i++) {
+      this.brands.push(brands_list[i].tags[1]) // 제품 태그는 0: 카테고리, 1: 브랜드이다.
+    }
   },
   methods: {
     async add_brand(e) {

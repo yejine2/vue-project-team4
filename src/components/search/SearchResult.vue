@@ -4,7 +4,7 @@
       <div class="filter_express">
         <div class="express_btn">
           <img
-            src="src/assets/search/express.png"
+            src="/src/assets/search/express.png"
             alt="빠른배송"
             class="express_img" />
           <p class="express_text">
@@ -15,7 +15,7 @@
       <div class="popular">
         제품 등록순
         <img
-          src="src/assets/search/popularBtn.png"
+          src="/src/assets/search/popularBtn.png"
           alt="인기순"
           class="popular_icon" />
       </div>
@@ -56,11 +56,12 @@
     <div class="contents">
       <div
         v-for="result in searchStore.results"
-        :key="result"
+        :key="result.id"
         class="contents__box">
         <router-link
-          to="#"
-          class="contents__item">
+          :to="`/search/${result.id}`"
+          class="contents__item"
+          @click="searchDetail()">
           <div class="item_img">
             <img
               :src="result.thumbnail"
@@ -78,14 +79,18 @@
             </div>
             <div class="price">
               <p class="number">
-                {{ result.price.toLocaleString('ko-KR') }}
+                {{ result.price.toLocaleString('ko-KR') + '원' }}
               </p>
               <p class="guide">
                 즉시 구매가
               </p>
             </div>
             <div class="express">
-              빠른배송
+              <img
+                src="/src/assets/search/express.png"
+                alt="빠른배송"
+                class="express_img_s" />
+              <p>빠른배송</p>
             </div>
           </div>
         </router-link>
@@ -121,7 +126,6 @@
 <script>
 import { mapStores } from 'pinia'
 import { useSearchStore } from '~/store/search'
-
 
 export default {
   data() {
@@ -176,6 +180,9 @@ export default {
         review_num[i].textContent = review.toLocaleString('ko-KR')
       }
     },
+    searchDetail() {
+      // this.searchStore.searchDetail(this.$route.params.productId)
+    },
     async delete_btn(tag, e) {
       if(tag === 'tag_cate') {
         this.searchStore.category = ''
@@ -208,7 +215,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+// @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 .box {
+  p {
+    margin-bottom: 0;
+  }
   header {
     width: 980px;
     height: 68px;
@@ -317,12 +328,13 @@ export default {
             }
             .name {
               width: 230px;
-              height: 13px;
+              height: 17px;
               margin-top: 5px;
-              line-height: 16px;
+              line-height: 17px;
               font-size: 13px;
               text-overflow: ellipsis;
               overflow: hidden;
+              white-space : nowrap
             }
             .description {
               width: 230px;
@@ -334,6 +346,7 @@ export default {
               color: rgba(34,34,34,.5);
               text-overflow: ellipsis;
               overflow: hidden;
+              white-space : nowrap
             }
           }
           .price {
@@ -352,24 +365,23 @@ export default {
           .express {
             display: inline-block;
             position: relative;
-            margin-top: 5px;
-            padding: 3px 5.5px 4px 17px;
-            vertical-align: top;
-            line-height: 11px;
-            font-size: 11px;
-            letter-spacing: -.33px;
-            color: #31b46e;
+            padding: 4px 5.5px 4px 17px;
             border: 1px solid #31b46e;
             border-radius: 2px;
-            &::before {
-              content: "";
+            p {
+              vertical-align: top;
+              line-height: 11px;
+              font-size: 11px;
+              letter-spacing: -.33px;
+              color: #31b46e;
+            }
+            .express_img_s {
+              width: 11px;
+              height: 13px;
               position: absolute;
               left: 3.5px;
               top: 3px;
-              width: 11px;
-              height: 13px;
-              background: url('src/assets/search/express.png') 0 0 no-repeat;
-              background-size: 11px 13px;
+              margin-top: 1px;
             }
           }
         }
