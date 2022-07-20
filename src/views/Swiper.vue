@@ -17,25 +17,25 @@
     <swiper-slide class="slide slide-item-01">
       <img
         class="test slide-item_img"
-        src="../assets/home/swiper_01.jpg"
+        src="../assets/home/swiper/swiper_01.jpg"
         alt="1" />
     </swiper-slide>
     <swiper-slide class="slide slide-item-02">
       <img
         class="slide-item_img"
-        src="../assets/home/swiper_02.jpg"
+        src="../assets/home/swiper/swiper_02.jpg"
         alt="2" />
     </swiper-slide>
     <swiper-slide class="slide slide-item-03">
       <img
         class="slide-item_img"
-        src="../assets/home/swiper_03.jpg"
+        src="../assets/home/swiper/swiper_03.jpg"
         alt="2" />
     </swiper-slide>
     <swiper-slide class="slide slide-item-04">
       <img
         class="slide-item_img"
-        src="../assets/home/swiper_04.jpg"
+        src="../assets/home/swiper/swiper_04.jpg"
         alt="3" />
     </swiper-slide>
   </swiper>
@@ -95,11 +95,11 @@ export default {
   background:no-repeat center center / 100%;
 }
 .swiper-button-prev {
-  background-image: url(../assets/home/prev-button.png);
+  background-image: url(../assets/home/swiper/prev-button.png);
   left: 30px;
 }
 .swiper-button-next {
-  background-image: url(../assets/home/next-button.png);
+  background-image: url(../assets/home/swiper/next-button.png);
   right: 30px;
 }
 .swiper-button-next::after,

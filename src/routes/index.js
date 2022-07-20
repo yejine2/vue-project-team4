@@ -12,11 +12,21 @@ export default createRouter({
     },
     {
       path: '/my',
-      component: () => import('~/components/UserPage.vue'),
+      component: () => import('~/components/MyPage/My.vue'),
       meta: {
-        // 로그인헤야만 접속 할 수 있게 설정
+        // 로그인해야만 접속 할 수 있게 설정
         auth: true
-      }
+      },
+      children: [
+        {
+          path: 'profile',
+          component: () => import('~/components/EditUserProfile.vue') 
+        },
+        {
+          path: 'account',
+          component: () => import('~/components/UserAccountPage.vue')
+        }
+      ]
     },
     {
       path: '/admin/products',
@@ -49,14 +59,15 @@ export default createRouter({
     },
     {
       path: '/search',
-      component: () => import('~/components/Search.vue'),
-      children: [
-        
-      ]
+      component: () => import('~/components/search/Search.vue')
     },
     {
       path: '/admin',
       component: () => import('~/views/Admin.vue'),
+      meta: {
+        // 로그인해야만 접속 할 수 있게 설정
+        auth: true
+      }
     },
     {
       path: '/:notfound(.*)*',

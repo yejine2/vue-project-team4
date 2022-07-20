@@ -37,7 +37,8 @@
                   type="button"
                   class="btn-close"
                   data-bs-dismiss="modal"
-                  aria-label="Close"></button>
+                  aria-label="Close"
+                  @click="closeModal"></button>
               </div>
               <div class="modal-body">
                 <div class="bank-name">
@@ -48,7 +49,8 @@
                       class="btn btn-secondary dropdown-toggle"
                       type="button"
                       data-bs-toggle="dropdown"
-                      aria-expanded="false">
+                      aria-expanded="false"
+                      @click.stop="">
                       <div
                         v-if="change === ''"
                         class="choose">
@@ -67,41 +69,68 @@
                         v-for="bank in banks"
                         :key="bank.code"
                         class="dropdown-item"
-                        @click="change = bank.name, bankCode = bank.code">
+                        :class="{ 'disabled': bank.disabled}"
+                        @click="change = bank.name, bankCode = bank.code, digits = bank.digits, getBankDigit()">
                         {{ bank.name }}
                       </li>
                     </ul>
                   </div>
+                  <p class="desc">
+                    은행 당 하나의 계좌만 허용됩니다.
+                  </p>
                 </div>
 
-                <div class="account-number">
+                <div
+                  class="account-number"
+                  :class="{ 'has_error': accountNumberHasError }">
                   <strong>계좌번호</strong>
-                  <div class="input-box">
+                  <strong
+                    v-show="(digit != 0)"
+                    class="bank-digit">{{ `(${digit}자리)` }}</strong>
+                  <div class="input_box">
                     <input
                       v-model="accountNumber"
                       type="text"
-                      placeholder="- 없이 입력하세요" />
+                      placeholder="- 없이 입력하세요"
+                      oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                    <p
+                      v-show="valid.accountNumber"
+                      class="input-error">
+                      {{ `올바른 계좌번호를 입력해주세요. (${digit}자)` }}
+                    </p>
                   </div>
                 </div>
 
-                <div class="phone-number">
+                <div
+                  class="phone-number"
+                  :class="{ 'has_error': phoneNumberHasError }">
                   <strong>휴대폰 번호</strong>
-                  <div class="input-box">
+                  <div class="input_box">
                     <input
                       v-model="phoneNumber"
-                      type="text"
-                      placeholder="- 없이 입력하세요" />
+                      type="tel"
+                      placeholder="- 없이 입력하세요"
+                      oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                    <p
+                      v-show="valid.phoneNumber"
+                      class="input-error">
+                      올바른 전화번호를 입력해주세요. (11자)
+                    </p>
                   </div>
                 </div>
 
                 <div class="agree">
-                  <div class="agree-box">
+                  <div class="agree_box">
                     <input
+                      id="signature"
+                      ref="signature"
                       type="checkbox"
                       @click="signature = !signature" />
-                    <div class="user-agree">
+                    <label
+                      class="user-agree"
+                      for="signature">
                       [필수] 계좌 정보 등록을 동의합니다.
-                    </div>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -109,13 +138,16 @@
                 <button
                   type="button"
                   class="btn btn-secondary"
-                  data-bs-dismiss="modal">
+                  data-bs-dismiss="modal"
+                  @click="closeModal">
                   취소
                 </button>
                 <button
                   type="button"
                   class="btn btn-primary btn-create"
-                  @click="addAccount">
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  @click="addAccount(); closeModal()">
                   등록
                 </button>
               </div>
@@ -128,52 +160,138 @@
 
     <!-- Account List -->
     <div class="account">
+      <UserAccountItem 
+        v-for="account in userAccountList"
+        :key="account.id"
+        :account="account"
+        @change-shape="account.accountNumber = $event" />
     </div>
   </div>
 </template>
 
 <script>
 import { mapStores } from 'pinia'
-import { useAuthStore } from '~/store/auth'
+import { useUserStore } from '~/store/user'
+import UserAccountItem from './UserAccountItem.vue'
 
 export default {
+  components: {
+    UserAccountItem
+  },
   data() {
     return {
       change: '',
       bankCode: '',
       accountNumber: '',
       phoneNumber: '',
-      signature: false
+      signature: false,
+      digits: [],
+      digit: 0,
+      valid: {
+        accountNumber: false,
+        phoneNumber: false
+      },
+      accountNumberHasError: false,
+      phoneNumberHasError: false
     }
   },
   computed: {
-    ...mapStores(useAuthStore, ['banks']),
+    ...mapStores(useUserStore, ['banks']),
     banks() {
-      return this.authStore.banks
+      return this.userStore.banks
+    },
+    userAccountList() {
+      return this.userStore.userAccountList
+    }
+  },
+  watch: {
+    'accountNumber': function() {
+      this.checkAccount()
+    },
+    'phoneNumber': function() {
+      this.checkPhone()
     }
   },
   created() {
-    this.authStore.chooseBank()
+    this.userStore.chooseBank()
+    this.userStore.getUserAccountList()
   },
   methods: {
     addAccount() {
-      this.authStore.addAccount({
+      this.userStore.addAccount({
         bankCode: this.bankCode,
         accountNumber: this.accountNumber,
         phoneNumber: this.phoneNumber,
         signature: this.signature
       })
+    },
+    getBankDigit() {
+      this.digit = 0
+      console.log(this.digits)
+      this.digits.forEach(digit => {
+        this.digit += digit
+      })
+      console.log('total:: ',this.digit)
+    },
+    async closeModal() {
+      this.change = ''
+      this.bankCode = ''
+      this.accountNumber = ''
+      this.phoneNumber = ''
+      this.digit = 0
+      await this.$nextTick()
+      this.signature = false
+      // console.log(this.$refs.signature.checked)
+      this.$refs.signature.checked = false
+      this.valid.accountNumber = false
+      this.valid.phoneNumber = false
+      this.accountNumberHasError = false
+      this.phoneNumberHasError = false
+    },
+    checkAccount() {
+    // 비밀번호 형식 검사(영문, 숫자, 특수문자)
+    let validatePassword
+    if (this.digit == 12) {
+      validatePassword = /^(?=.*[0-9]).{12}$/
+    } else if (this.digit == 13) {
+      validatePassword = /^(?=.*[0-9]).{13}$/
+    } else {
+      validatePassword = /^(?=.*[0-9]).{14}$/
+    }
+    
+    if (!validatePassword.test(this.accountNumber) || !this.accountNumber) {
+      this.valid.accountNumber = true
+      this.accountNumberHasError = true
+      return
+    } this.valid.accountNumber = false
+      this.accountNumberHasError = false
+      return
+    },
+    checkPhone() {
+      // 비밀번호 형식 검사(영문, 숫자, 특수문자)
+      const validatePassword = /^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/
+
+      if (!validatePassword.test(this.phoneNumber) || !this.phoneNumber) {
+        this.valid.phoneNumber = true
+        this.phoneNumberHasError = true
+        return
+      } this.valid.phoneNumber = false
+        this.phoneNumberHasError = false
+        return
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
 @import '~/scss/MyCommon.scss';
 .box {
+  width: 100%;
+  // flex-grow: 1;
   .header {
     display: flex;
+    justify-content: space-between;
     padding-bottom: 12px;
     border-bottom: 3px solid #222;
     .header__name {
@@ -189,8 +307,9 @@ export default {
       }
     }
     .header__btn {
-      margin-left: auto;
-      padding-top: 12px;
+      // margin-left: auto;
+      padding: 12px 0 0 30px;
+      flex-shrink: 0;
       .btn_add {
         background-color: #fff;
         color: #222;
@@ -218,10 +337,15 @@ export default {
               font-weight: 600;
             }
             .bank-name {
+              position: relative;
               padding: 10px 0 14px;
               .dropdown {
+                position: relative;
+                // display: block;
+                width: 450px;
                 padding: 6px 0 7px;
                 .dropdown-toggle {
+                  
                   // background-color: #fff;
                   width: 100%;
                   display: flex;
@@ -245,52 +369,91 @@ export default {
                   }
                 }
                 .dropdown-menu {
+                  position: absolute;
+                  left: 0px;
+                  top: 36px;
                   width: 100%;
                   height: 200px;
-                  inset: -4px auto auto 0px !important;
+                  inset: 41px auto auto 0px !important;
+                  transform: translate(0px, 0px) !important;
                   border-radius: 0rem;
                   overflow: scroll;
                   .dropdown-item {
                     padding: 11px 50px 10px 16px;
                     font-size: 13px;
                     color: rgba(34,34,34,.8);
+                    &.disabled {
+                      pointer-events:none;
+                      opacity:0.6;
+                    }
                   }
                 }
+              }
+              .desc {
+                position: absolute;
+                font-size: 12px;
               }
             }
-            .input-box {
-                input {
-                  width: 100%;
-                  display: block;
-                  padding: 8px 10px 7px;
-                  font-size: 15px;
-                  border-bottom: 1px solid #ebebeb;
-                  &:focus {
-                  border-bottom: 2px solid #222;
-                  }
+            .input_box {
+              margin-top: 6px;
+              input {
+                width: 100%;
+                height: 34px;
+                display: block;
+                padding: 8px 10px 7px;
+                font-size: 15px;
+                border-bottom: 1px solid #ebebeb;
+                &:focus {
+                border-bottom: 2px solid #222;
                 }
               }
+              .input-error {
+                display: block;
+                position: absolute;
+                line-height: 16px;
+                font-size: 11px;
+                color: $color-error;
+              }
+            }
             .account-number {
               margin-top: 6px;
               padding: 10px 0 14px;
+              box-sizing: border-box;
+              &.has_error {
+                color: $color-error;
+              }
+              .bank-digit {
+              margin-left: 5px;
+              }
+              // .input_box {
+              //   
+              // }
             }
+            
             .phone-number {
               margin-top: 16px;
               padding: 10px 0 14px;
+              &.has_error {
+                color: $color-error;
+              }
             }
             .agree {
               margin-top: 10px;
               padding: 16px 4px 20px;
-              .agree-box {
+              .agree_box {
                 display: flex;
                 align-items: center;
                 font-size: 15px;
                 input {
-                  width: 20px;
-                  height: 20px;
+                  width: 18px;
+                  height: 18px;
                   margin-top: 1px;
                   margin-right: 12px;
                   accent-color: #222;
+                }
+                .user-agree {
+                  flex-grow: 1;
+                  line-height: 18px;
                 }
               }
             }
