@@ -41,9 +41,44 @@
         </router-link>
       </li>
     </ul>
+  <div ref="more" class="more">
+    <ul class="item-list">
+      <li
+        v-for="item in moreItems"
+        :key="item"
+        class="item">
+        <router-link to="/">
+          <div class="image-box">
+            <img
+              class="image-box__image"
+              :src="item.image" />
+            <img
+              class="image-box__bookmark"
+              src="src/assets/home/just-dropped/bookmark.png"
+              alt="bookmark" />
+          </div>
+          <div class="item__info">
+            <p class="item__info__brand">
+              {{ item.brand }}
+            </p>
+            <p class="item__info__name">
+              {{ item.name }}
+            </p> 
+            <p class="item__info__price">
+              {{ item.price }}
+            </p>
+            <p
+              class="item__info__derc">
+              {{ item.derc }}
+            </p>
+          </div>
+        </router-link>
+      </li>
+    </ul>
+    </div>
   </div>
   <div class="btn-container">
-    <button class="more-button">
+    <button ref="button" @click="more" class="more-button">
       더보기
     </button>
   </div>
@@ -52,7 +87,7 @@
 <script>
 export default {
   data() {
-  return {
+    return {
 				items:[
 					{
 						image: 'src/assets/home/just-dropped/dropped_01.jpg',
@@ -82,8 +117,44 @@ export default {
             price: '160,000원',
             derc: '즉시 구매가'
 					},
+				],
+        moreItems:[
+					{
+						image: 'src/assets/home/just-dropped/dropped_05.jpg',
+						brand: 'Louis Vuitton',
+            name: 'Louis Vuitton x Nike Air Force 1 Low by Virgil Abloh White Gym Green',
+            price: '10,000,000원',
+            derc: '즉시 구매가'
+					},
+					{
+						image: 'src/assets/home/just-dropped/dropped_06.jpg',
+						brand: 'Louis Vuitton',
+            name: 'Louis Vuitton x Nike Air Force 1 Low by Virgil Abloh White Comet Red',
+            price: '11,000,000원',
+            derc: '즉시 구매가'
+					},
+					{
+						image: 'src/assets/home/just-dropped/dropped_07.jpg',
+						brand: 'Louis Vuitton',
+            name: 'Louis Vuitton x Nike Air Force 1 Low by Virgil Abloh White Team Royal',
+            price: '10,000,000원',
+            derc: '즉시 구매가'
+					},
+					{
+						image: 'src/assets/home/just-dropped/dropped_08.jpg',
+						brand: 'Louis Vuitton',
+            name: 'Louis Vuitton x Nike Air Force 1 Low by Virgil Abloh White',
+            price: '12,500,000원',
+            derc: '즉시 구매가'
+					},
 				]
 			}
+  },
+  methods: {
+    more() {
+      this.$refs.more.style.display = 'block'
+      this.$refs.button.style.display = 'none'
+    }
   }
 }
 </script>
@@ -183,5 +254,8 @@ export default {
     font-size: 14px;
     color: rgba(34,34,34,.7);
   }
+}
+.more{
+  display: none;
 }
 </style>
