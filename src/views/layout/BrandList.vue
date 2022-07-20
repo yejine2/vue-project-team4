@@ -81,7 +81,7 @@ export default {
 					},
 					{
 						image: 'src/assets/home/brand-list/brand_13.jpg',
-						title: '스톤 아일래드'
+						title: '스톤 아일랜드'
 					},
 					{
 						image: 'src/assets/home/brand-list/brand_14.jpg',
