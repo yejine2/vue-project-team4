@@ -1,6 +1,6 @@
 <template>
   <div class="content_area">
-    <UserProfile />
+    <UserProfileImg />
     <div class="profile_info">
       <div class="profile_group">
         <h4 class="group_title">
@@ -15,14 +15,14 @@
 </template>
 
 <script>
-import UserProfile from '~/components/UserProfile.vue'
-import UserProfileName from '~/components/UserProfileName.vue'
-import UserProfileEmail from '~/components/UserProfileEmail.vue'
-import UserProfilePassword from '~/components/UserProfilePassword.vue'
+import UserProfileImg from '~/components/my/MyProfileImg.vue'
+import UserProfileName from '~/components/my/MyProfileName.vue'
+import UserProfileEmail from '~/components/my/MyProfileEmail.vue'
+import UserProfilePassword from '~/components/my/MyProfilePassword.vue'
 
 export default {
   components: {
-    UserProfile,
+    UserProfileImg,
     UserProfileName,
     UserProfileEmail,
     UserProfilePassword

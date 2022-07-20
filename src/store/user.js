@@ -104,6 +104,16 @@ export const useUserStore = defineStore('user', {
       })
       this.getUserAccountList()
       this.chooseBank()
+    },
+    async getBoughtList() {
+      const accessToken = window.localStorage.getItem('token')
+
+      const res = await axios({
+        url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/details',
+        method: 'GET',
+        headers: { ...headers, Authorization: `Bearer ${accessToken}` }
+      })
+      console.log(res)
     }
   }
 })

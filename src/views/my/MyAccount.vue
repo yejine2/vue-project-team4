@@ -159,7 +159,7 @@
 
     <!-- Account List -->
     <div class="account">
-      <UserAccountItem 
+      <MyAccountItem 
         v-for="account in userAccountList"
         :key="account.id"
         :account="account"
@@ -171,11 +171,11 @@
 <script>
 import { mapStores } from 'pinia'
 import { useUserStore } from '~/store/user'
-import UserAccountItem from './UserAccountItem.vue'
+import MyAccountItem from '~/components/my/MyAccountItem.vue'
 
 export default {
   components: {
-    UserAccountItem
+    MyAccountItem
   },
   data() {
     return {
@@ -300,7 +300,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 @import '~/scss/MyCommon.scss';
 .box {
   width: 100%;

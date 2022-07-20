@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <SNB />
+    <MySNB />
 
     <div class="content_area">
       <RouterView />
@@ -42,11 +42,11 @@
 <script>
 import { mapStores } from 'pinia'
 import { useUserStore } from '~/store/user'
-import SNB from '~/components/SNB.vue'
+import MySNB from '~/components/my/MySNB.vue'
 
 export default {
   components: {
-    SNB
+    MySNB
   },
   computed: {
     ...mapStores(useUserStore),
