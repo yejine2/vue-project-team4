@@ -367,19 +367,23 @@ export default {
               }
               .dropdown {
                 position: relative;
-                // display: block;
-                width: 450px;
                 padding: 6px 0 7px;
+                width: 450px;
                 .dropdown-toggle {
-                  
-                  background-color: #ebebeb;
-                  width: 100%;
                   display: flex;
+                  width: 100%;
                   align-items: center;
+                  color: rgba(34, 34, 34, .5);
+                  background-color: #ebebeb;
                   border: 0;
                   border-radius: 0;
                   border-bottom: 1px solid #ebebeb;
                   outline: none;
+                  &.show::after {
+                    content: "";
+                    margin-left: auto;
+                    transform: rotate(180deg);
+                  }
                   &::after {
                     content: "";
                     margin-left: auto;
@@ -389,7 +393,6 @@ export default {
                   }
                   .choose {
                     font-size: 15px;
-                    color: rgba(34, 34, 34, .5);
                   }
                   .chosen {
                     font-size: 15px;
@@ -404,6 +407,7 @@ export default {
                   height: 200px;
                   inset: 41px auto auto 0px !important;
                   transform: translate(0px, 0px) !important;
+                  border-top: 0;
                   border-radius: 0rem;
                   overflow: scroll;
                   .dropdown-item {
@@ -445,7 +449,7 @@ export default {
               }
             }
             .account-number {
-              margin-top: 6px;
+              margin-top: 16px;
               padding: 10px 0 14px;
               box-sizing: border-box;
               .input_title {
