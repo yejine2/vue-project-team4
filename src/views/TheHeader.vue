@@ -68,11 +68,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .navbar {
   width: 100%;
   position: fixed;
-  background-color: white;
-  z-index: 10;
+  background-color: $color-white;
+  top:0;
+  left: 0;
+  right: 0;
+  z-index: 3;
 }
 .top-nav{
   height: 32px;

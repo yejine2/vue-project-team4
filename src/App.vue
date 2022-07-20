@@ -18,5 +18,8 @@ export default {
 
 <style lang="scss">
 @import "~/scss/main.scss";
+body {
+  padding-top: 101px;
+}
 
 </style>
