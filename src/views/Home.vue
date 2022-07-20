@@ -3,6 +3,7 @@
   <ItemsWrap />
   <DroppedList />
   <BrandList />
+  <HomeBanner />
 </template>
 
 <script>
@@ -12,6 +13,8 @@ import Swiper from '~/views/Swiper.vue'
 import ItemsWrap from '~/views/layout/ItemsWrap.vue'
 import DroppedList from '~/views/layout/DroppedList.vue'
 import BrandList from '~/views/layout/BrandList.vue'
+import HomeBanner from '~/views/layout/HomeBanner.vue'
+
 
 
 export default {
@@ -19,7 +22,8 @@ export default {
     Swiper,
     ItemsWrap,
     DroppedList,
-    BrandList
+    BrandList,
+    HomeBanner
   },
   computed: {
     ...mapStores(useAuthStore)
