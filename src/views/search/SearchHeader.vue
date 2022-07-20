@@ -194,6 +194,8 @@ export default {
 
 header {
     background-color: #fff;
+    // width: 100%;
+    // position: fixed;
     padding: 8px 40px 0;
     z-index: 9999;
     .header__box {
