@@ -58,13 +58,18 @@
       </div>
     </div>
   </div>
+  <BannerBottom />
 </template>
 
 <script>
 import { mapStores } from 'pinia'
 import { useAuthStore } from '~/store/auth'
+import BannerBottom from '~/views/layout/BannerBottom.vue'
 
 export default {
+  components: {
+    BannerBottom
+  },
   data() {
     return {
       email: 'user_test1@gmail.com',
@@ -129,18 +134,16 @@ export default {
     }
   }
 }
-
 </script>
 
 <style scoped lang="scss">
-
 .container-login {
   margin: 0 auto;
   padding: 0 40px;
   max-width: 1280px;
   .login-area {
   margin: 0 auto;
-  padding: 60px 0 160px;
+  padding-top: 80px;
   width: 400px;
   .login-title {
     margin: 0 auto;
