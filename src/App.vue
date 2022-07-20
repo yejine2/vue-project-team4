@@ -1,13 +1,17 @@
 <template>
   <TheHeader />
   <RouterView />
+  <TheFooter />
 </template>
 
 <script>
 import TheHeader from '~/views/TheHeader.vue'
+import TheFooter from '~/views/TheFooter.vue'
+
 export default {
   components: {
-    TheHeader
+    TheHeader,
+    TheFooter
   },
 }
 </script>
