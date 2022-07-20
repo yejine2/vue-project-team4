@@ -2,9 +2,11 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 const BASE_URL = 'https://asia-northeast3-heropy-api.cloudfunctions.net/api'
+
 export const useIndexStore = defineStore('index', {
   state() {
     return {
+      product: {},
       allProducts: [],
       transactions: [],
       title: '',
@@ -17,11 +19,6 @@ export const useIndexStore = defineStore('index', {
       thumbnail: '',
       isSoldOut: false,
       detailId: '',
-      user: '',
-      account: '',
-      product: '',
-      reservation: '',
-      timePaid: '',
       isCanceled: false,
       done: false,
     }
@@ -57,30 +54,17 @@ export const useIndexStore = defineStore('index', {
       }
     },
 
-    async allProduct(payload = {}) {
-      const { id, title, price, description, tags, thumbnail, isSoldOut } =
-        payload
-      const res = await axios(
-        'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products',
-        {
-          method: 'GET',
-          headers: {
-            'content-type': 'application/json',
-            apikey: 'FcKdtJs202204',
-            username: 'team4',
-            masterKey: true,
-          },
-          data: {
-            id,
-            title,
-            price,
-            description,
-            tags,
-            thumbnail,
-            isSoldOut,
-          },
+    async allProduct() {
+      const res = await axios('https://asia-northeast3-heropy-api.cloudfunctions.net/api/products', {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          apikey: 'FcKdtJs202204',
+          username: 'team4',
+          masterKey: true
         }
-      )
+      })
+      console.log(res.data)
       this.allProducts = res.data
     },
 
@@ -126,6 +110,19 @@ export const useIndexStore = defineStore('index', {
     //   console.log(res)
     // },
 
+    async productDetail(id) {
+      const res = await axios(`https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/${id}`, {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          apikey: 'FcKdtJs202204',
+          username: 'team4'
+        }
+      })
+      console.log(res.data)
+      this.product = res.data
+    },
+
     async editProduct(payload) {
       const {
         id,
@@ -138,7 +135,7 @@ export const useIndexStore = defineStore('index', {
         isSoldOut,
       } = payload
       const res = await axios(
-        `https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/${id}`,
+        `https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/${id}`,
         {
           method: 'PUT',
           headers: {
@@ -158,7 +155,8 @@ export const useIndexStore = defineStore('index', {
           },
         }
       )
-      this.allProducts = res.data
+      this.product = res.data
+      window.location.href='/admin/products'
     },
     async deleteProduct(id) {
       await axios(
