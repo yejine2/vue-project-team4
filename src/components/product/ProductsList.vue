@@ -10,7 +10,7 @@
     </td>
     <td>{{ product.title }}</td>
     <td>{{ product.tags.join(' / ') }}</td>
-    <td>₩ {{ getPrice }}</td>
+    <td><i class="fa-solid fa-won-sign"></i> {{ getPrice }}</td>
     <td>
       <RouterLink
         :to="{
