@@ -17,26 +17,26 @@
     <swiper-slide class="slide slide-item-01">
       <img
         class="test slide-item_img"
-        src="../assets/home/swiper_01.jpg"
-        alt="1" />
+        src="/assets/home/swiper/swiper_01.jpg"
+        alt="럭키 드로우" />
     </swiper-slide>
     <swiper-slide class="slide slide-item-02">
       <img
         class="slide-item_img"
-        src="../assets/home/swiper_02.jpg"
-        alt="2" />
+        src="/assets/home/swiper/swiper_02.jpg"
+        alt="Dior 오블리크 컬렉션" />
     </swiper-slide>
     <swiper-slide class="slide slide-item-03">
       <img
         class="slide-item_img"
-        src="../assets/home/swiper_03.jpg"
-        alt="2" />
+        src="/assets/home/swiper/swiper_03.jpg"
+        alt="메종 미하라 야스히로" />
     </swiper-slide>
     <swiper-slide class="slide slide-item-04">
       <img
         class="slide-item_img"
-        src="../assets/home/swiper_04.jpg"
-        alt="3" />
+        src="/assets/home/swiper/swiper_04.jpg"
+        alt="조던 스타일링" />
     </swiper-slide>
   </swiper>
 </template>
@@ -71,6 +71,7 @@ export default {
 .slide {
   display: flex;
   justify-content: center;
+  cursor: pointer;
 }
 .slide-item-01 {
   background-color: rgb(227, 244, 219);
@@ -85,7 +86,6 @@ export default {
   background-color: rgb(245, 245, 245);
 }
 .slide-item_img {
-  widows: 100%;
   height: 100%;
   object-fit: cover;
 }
@@ -95,11 +95,11 @@ export default {
   background:no-repeat center center / 100%;
 }
 .swiper-button-prev {
-  background-image: url(../assets/home/prev-button.png);
+  background-image: url(/assets/home/swiper/prev-button.png);
   left: 30px;
 }
 .swiper-button-next {
-  background-image: url(../assets/home/next-button.png);
+  background-image: url(/assets/home/swiper/next-button.png);
   right: 30px;
 }
 .swiper-button-next::after,

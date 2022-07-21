@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { profileImgBase64 } from '~/store/userDefaultImg'
 
 const headers = {
   'content-type': 'application/json',
   'apikey': 'FcKdtJs202204',
   'username': 'team4'
 }
+
 
 export const useAuthStore = defineStore('auth', {
   state() {
@@ -24,7 +26,8 @@ export const useAuthStore = defineStore('auth', {
         data: {
           email,
           password,
-          displayName
+          displayName,
+          profileImgBase64
         }
       })
       const { user, accessToken } = res.data
@@ -56,19 +59,6 @@ export const useAuthStore = defineStore('auth', {
       })
       window.localStorage.removeItem('token')
       this.user = null
-    },
-    async searchProduct(payload) {
-      const { searchTag, searchText } = payload
-      const res = await axios({
-        url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/search',
-        method: 'POST',
-        headers,
-        data: {
-          searchText,
-          searchTag
-        }
-      })
-      console.log(res)
-    },
+    }
   }
 })

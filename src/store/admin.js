@@ -2,13 +2,15 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 const BASE_URL = 'https://asia-northeast3-heropy-api.cloudfunctions.net/api'
+
 export const useIndexStore = defineStore('index', {
   state() {
     return {
+      product: {},
       allProducts: [],
       transactions: [],
       title: '',
-      price: '',
+      price: 0,
       description: '',
       tags: '',
       thumbnailBase64: '',
@@ -17,11 +19,6 @@ export const useIndexStore = defineStore('index', {
       thumbnail: '',
       isSoldOut: false,
       detailId: '',
-      user: '',
-      account: '',
-      product: '',
-      reservation: '',
-      timePaid: '',
       isCanceled: false,
       done: false,
     }
@@ -49,82 +46,77 @@ export const useIndexStore = defineStore('index', {
             photoBase64,
           },
         })
-        window.location.href='/admin/products'
         console.log(res.data)
         this.allProducts = res.data
+        this.$router.push('/admin/products')
       } catch {
         // console.log(error.response.data)
       }
     },
 
-    async allProduct(payload = {}) {
-      const { id, title, price, description, tags, thumbnail, isSoldOut } =
-        payload
-      const res = await axios(
-        'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products',
-        {
-          method: 'GET',
-          headers: {
-            'content-type': 'application/json',
-            apikey: 'FcKdtJs202204',
-            username: 'team4',
-            masterKey: true,
-          },
-          data: {
-            id,
-            title,
-            price,
-            description,
-            tags,
-            thumbnail,
-            isSoldOut,
-          },
+    async allProduct() {
+      const res = await axios('https://asia-northeast3-heropy-api.cloudfunctions.net/api/products', {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          apikey: 'FcKdtJs202204',
+          username: 'team4',
+          masterKey: true
         }
-      )
+      })
+      console.log(res.data)
       this.allProducts = res.data
     },
 
-    // async allTransactions(payload = {}) {
-    //   const { detailId, user, account, product, reservation, timePaid, isCanceled, done } = payload
-    //   const res = await axios('https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/all', {
-    //     method: 'GET',
-    //     headers: {
-    //       'content-type': 'application/json',
-    //       apikey: 'FcKdtJs202204',
-    //       username: 'team4',
-    //       masterKey: true
-    //     },
-    //     data: {
-    //       detailId,
-    //       user,
-    //       account,
-    //       product,
-    //       reservation,
-    //       timePaid,
-    //       isCanceled,
-    //       done
-    //     }
-    //   })
-    //   this.transactions = res.data
-    // },
+    async allTransactions() {
+      const res = await axios({
+        url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/all',
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          apikey: 'FcKdtJs202204',
+          username: 'team4',
+          masterKey: true
+        }
+      })
+      console.log(res.data)
+      this.transactions = res.data
+    },
 
-    // async transactionsCanceled(payload) {
-    //   const { detailId, isCanceled, done } = payload
-    //   const res = await axios(`https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/${detailId}`, {
-    //     method: 'PUT',
-    //     headers: {
-    //       'content-type': 'application/json',
-    //       apikey: 'FcKdtJs202204',
-    //       username: 'team4',
-    //       masterKey: true
-    //     },
-    //     data: {
-    //       isCanceled,
-    //       done
-    //     }
-    //   })
-    //   console.log(res)
-    // },
+    async transactionsCanceled(payload) {
+      const { detailId, isCanceled, done } = payload
+      const res = await axios({
+        url: `https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/${detailId}`,
+        method: 'PUT',
+        headers: {
+          'content-type': 'application/json',
+          apikey: 'FcKdtJs202204',
+          username: 'team4',
+          masterKey: true
+        },
+        data: {
+          isCanceled,
+          done
+        }
+      })
+      console.log(res.data)
+      this.transactions = res.data
+
+      await this.allTransactions()
+    },
+
+    async productDetail(id) {
+      const res = await axios(`https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/${id}`, {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          apikey: 'FcKdtJs202204',
+          username: 'team4'
+        }
+      })
+      console.log(res.data)
+      this.product = res.data
+    },
 
     async editProduct(payload) {
       const {
@@ -138,7 +130,7 @@ export const useIndexStore = defineStore('index', {
         isSoldOut,
       } = payload
       const res = await axios(
-        `https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/${id}`,
+        `https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/${id}`,
         {
           method: 'PUT',
           headers: {
@@ -158,7 +150,8 @@ export const useIndexStore = defineStore('index', {
           },
         }
       )
-      this.allProducts = res.data
+      this.product = res.data
+      window.location.href='/admin/products'
     },
     async deleteProduct(id) {
       await axios(
