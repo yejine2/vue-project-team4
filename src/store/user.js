@@ -135,6 +135,36 @@ export const useUserStore = defineStore('user', {
           return this.transactionList.filter(list => list.isCanceled)
       }
     },
+    async transactionDone(id) {
+      const accessToken = window.localStorage.getItem('token')
+      
+      const res = await axios({
+        url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/ok',
+        method: 'POST',
+        headers: { ...headers, Authorization: `Bearer ${accessToken}` },
+        data: {
+          detailId: id
+        }
+      })
+      this.filteredList()
+      
+      return console.log(res)
+    },
+    async transactionCancel(id) {
+      const accessToken = window.localStorage.getItem('token')
+      
+      const res = await axios({
+        url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/cancel',
+        method: 'POST',
+        headers: { ...headers, Authorization: `Bearer ${accessToken}` },
+        data: {
+          detailId: id
+        }
+      })
+      this.filteredList()
+
+      return console.log(res)
+    },
     async getTransactionDetail(id) {
       const accessToken = window.localStorage.getItem('token')
 

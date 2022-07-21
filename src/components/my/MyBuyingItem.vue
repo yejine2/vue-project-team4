@@ -26,13 +26,19 @@
     </div>
     <div class="btn">
       <button
+        v-show="!list.isCanceled"
         class="done"
-        :class="{ disabled: list.done}">
+        :disabled="list.done"
+        :class="{ disabled: list.done }"
+        @click="done(list.detailId)">
         구매확정
       </button>
       <button
+        v-show="!list.done"
         class="cancel"
-        :class="{ disabled: list.isCanceled}">
+        :disabled="list.isCanceled"
+        :class="{ disabled: list.isCanceled }"
+        @click="cancel(list.detailId)">
         구매취소
       </button>
     </div>
@@ -40,11 +46,25 @@
 </template>
 
 <script>
+import { mapStores } from 'pinia'
+import { useUserStore } from '~/store/user'
 export default {
   props: {
     list: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    ...mapStores(useUserStore)
+  },
+  methods: {
+    done(value) {
+      // console.log(value)
+      this.userStore.transactionDone(value)
+    },
+    cancel(value) {
+      this.userStore.transactionCancel(value)
     }
   }
 }
