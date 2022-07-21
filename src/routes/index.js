@@ -12,6 +12,7 @@ import SearchMain from '~/components/search/SearchMain.vue'
 import SearchDetail from '~/components/search/SearchDetail.vue'
 import Admin from '~/views/Admin.vue'
 import NotFound from '~/views/NotFound.vue'
+import ProductDetail from '~/components/product/ProductDetail.vue'
 
 export default createRouter({
   history: createWebHistory(),
@@ -41,7 +42,7 @@ export default createRouter({
     },
     {
       path: '/admin/products',
-     component: Products
+      component: Products
     },
     {
       path: '/admin/products/add',
@@ -49,12 +50,15 @@ export default createRouter({
     },
     {
       path: '/admin/products/edit/:id',
-      component: EditProduct
+      name: 'EditProduct',
+      component: EditProduct,
+      props: true
     },
-    // {
-    //   path: '/detail/:id',
-    //   component: ProductDetail
-    // },
+    {
+      path: '/admin/products/detail/:id',
+      name: 'ProductDetail',
+      component: ProductDetail
+    },
     {
       path: '/login',
       component: SignIn,
@@ -70,7 +74,7 @@ export default createRouter({
     },
     {
       path: '/search/:productId',
-      component: SearchDetail,
+      component: SearchDetail
     },
     {
       path: '/admin',
