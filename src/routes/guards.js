@@ -18,7 +18,7 @@ router.beforeEach(async to => {
   }
   
   if (to.meta.auth) {
-    if (user && user.email === 'admin@gmail.com' && user.displayName === 'admin' && to.fullPath.includes('/my')) {
+    if (user && user.email === 'admin@kdt.com' && user.displayName === 'admin' && to.fullPath.includes('/my')) {
       return '/admin'
     }  
     if (!user) {
@@ -29,7 +29,7 @@ router.beforeEach(async to => {
   if (user && to.fullPath.includes('/login')) {
     return '/'
   }
-  if (user &&  user.email !== 'admin@gmail.com' && user.displayName !== 'admin' && to.fullPath.includes('/admin')) {
+  if (user &&  user.email !== 'admin@kdt.com' && user.displayName !== 'admin' && to.fullPath.includes('/admin')) {
     return '/'
   }
   return true
