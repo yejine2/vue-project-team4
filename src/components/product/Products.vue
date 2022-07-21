@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <h1>제품 조회</h1>
 
     <RouterLink

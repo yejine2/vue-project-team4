@@ -1,83 +1,91 @@
 <template>
   <div class="container">
-    <h1>상품 수정</h1>
-    <form>
-      <div>
-        <label>상품 이름: </label>
-        <input
-          v-model="title"
-          class="form-input"
-          type="text"
-          name="title" />
-      </div>
-      <div>
-        <label>상품 가격: </label>
-        <input
-          v-model.number="price"
-          class="form-input"
-          type="text"
-          name="price" />        
-      </div>
-      <div>
-        <label>상품 설명: </label>
-        <textarea
-          v-model="description"
-          class="form-input"
-          name="description"></textarea>      
-      </div>
-      <div>
-        <label> 재고: </label>
-        <label>X</label>
-        <input
-          v-model="isSoldOut"
-          type="radio"
-          :value="true" />
-        <label for="instock">O</label>
-        <input
-          v-model="isSoldOut"
-          type="radio"
-          :value="false" />
-      </div>
-      <div>
-        <label>상품 태그: </label>
-        <input
-          v-model="tags"
-          type="text"
-          name="tags" />
-      </div>
-      <div>
-        <label>상품 썸네일: </label>
-        <div>
-          <img
-            :src="thumbnailBase64"
-            alt="thumbnail" />
-        </div>
-        <input
-          type="file"
-          @change="thumbnailBase64Img" />
-      </div>
-      <div>
-        <label>상품 상세사진: </label>
-        <div>
-          <img
-            :src="photoBase64"
-            alt="photo" />
-        </div>
-        <input
-          type="file"
-          @change="photoBase64Img" />
-      </div> 
-    </form>
+    <h3>상품 수정</h3>
+
+    <div class="input-group mb-4">
+      <label
+        class="input-group-text">썸네일 사진</label>
+      <input
+        type="file"
+        class="form-control"
+        @change="thumbnailBase64Img" />
+    </div>
+
+    <div class="input-group mb-4">
+      <label
+        class="input-group-text">상품 상세 사진</label>
+      <input
+        type="file"
+        class="form-control"
+        @change="photoBase64Img" />
+    </div>
+
+    <div class="input-group mb-4">
+      <span class="input-group-text">상품명</span>
+      <input
+        v-model="title"
+        type="text"
+        class="form-control"
+        placeholder="상품명을 입력해주세요" />
+    </div>
+
+    <div class="input-group mb-4">
+      <span class="input-group-text">상품가격 (원)</span>
+      <input
+        v-model.number="price"
+        type="text"
+        class="form-control" />
+    </div>
+
+    <div class="input-group mb-4">
+      <span class="input-group-text">상품 상세 설명</span>
+      <input
+        v-model="description"
+        type="text"
+        class="form-control"
+        placeholder="상품 상세 설명을 입력해주세요" />
+    </div>
+
+    <div class="input-group mb-4">
+      <span
+        class="input-group-text">태그</span>
+      <input
+        v-model="tags"
+        type="text"
+        class="form-control"
+        placeholder="쉼표(,)를 이용해서 태그를 구분 하세요" />
+    </div>
+
+    <div class="form-check form-switch">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        role="switch" />
+      <label
+        class="form-check-label">Sold Out</label>
+    </div>
+
     <div>
-      <button
-        class="btn btn-primary"
-        @click="editProduct">
-        수정완료
-      </button>      
-    </div>        
+      <label> 재고: </label>
+      <label>X</label>
+      <input
+        v-model="isSoldOut"
+        type="radio"
+        :value="true" />
+      <label for="instock">O</label>
+      <input
+        v-model="isSoldOut"
+        type="radio"
+        :value="false" />
+    </div>
+    <hr />
+    <button
+      class="btn btn-primary"
+      @click="editProduct">
+      <i class="fa-solid fa-check"></i>
+    </button>     
   </div>
 </template>
-
 
 <script>
 import { mapStores } from 'pinia'
@@ -149,73 +157,6 @@ export default {
 
 </script>
 
-
-<!-- <script>
-import { mapStores } from 'pinia'
-import { useIndexStore } from '~/store/admin.js'
-
-export default {
-  props:{ oldTitle: { type: String, default: '' }, oldPrice: { type: String, default: '' }, oldDescription: { type: String, default: '' }, oldTags: { type: Array, default: () => [] }, oldThumbnailBase64: { type: String, default: '' }, oldIsSoldout: { type: Boolean, default: false } },
-  data(){
-    return{
-      productData: {},
-      title: this.oldTitle,
-      price: this.oldPrice,
-      description: this.oldDescription,
-      thumbnail: null,
-      thumbnailBase64: null,
-      photo: null,
-      photoBase64: null,
-      isSoldOut: false,
-      tags: []
-    } 
-  },
-    mounted(){
-    this.getCurProduct()
-    },
-    methods: {
-      async getCurProduct(){ 
-        const { data } = await useIndexStore.get(this.$route.params.id)
-        this.title = data.title
-        this.price = data.price
-        this.description = data.description
-        this.tags = data.tags.join(',')
-        this.thumbnail = data.thumbnail
-        this.photo = data.photo
-        this.isSoldOut = data.isSoldOut
-      },
-      async editProduct(){
-        await useIndexStore.put(this.$route.params.id, {
-          title : this.title,
-          price : this.price,
-          description: this.description,
-          tags: this.tags.split(','),
-          thumbnailBase64: this.thumbnailBase64,
-          photoBase64: this.photoBase64,
-          isSoldOut: this.isSoldOut
-        })
-        this.getCurProduct()
-        alert('수정완료')
-        this.$router.go(-1)
-      },
-      selectFile(event) {
-        const { files } = event.target 
-        for (const file of files) {
-          const reader = new FileReader()
-          reader.readAsDataURL(file) 
-          reader.addEventListener('load', () => {          
-            if (event.target.id === 'thumbnail') {            
-              this.thumbnailBase64 = reader.result
-            } else {
-              this.photoBase64 = reader.result
-            }
-          }
-        )
-      }
-    }
-  }    
-}
-</script> -->
-
 <style lang="scss" scoped>
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
 </style>

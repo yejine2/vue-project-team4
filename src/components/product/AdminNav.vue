@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul class="nav flex-column">
+    <ul class="nav justify-content-center">
       <li class="nav-item">
         <RouterLink
           to="/admin/products"

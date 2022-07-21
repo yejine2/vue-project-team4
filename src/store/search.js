@@ -18,7 +18,12 @@ export const useSearchStore = defineStore('search', {
       categoryInteract: false,
       brandInteract: '',
       priceInteract: '',
-      productInfo: []
+      productInfo: {
+        title: '',
+        description: '',
+        price: '',
+        tags: []
+      }
     }
   },
   actions: {
@@ -75,7 +80,7 @@ export const useSearchStore = defineStore('search', {
     async product_payment(payload) {
       const accessToken = window.localStorage.getItem('token')
       const { productId, accountId } = payload
-      const res = await axios({
+      await axios({
         url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/buy',
         method: 'POST',
         headers: { ...headers, Authorization: `Bearer ${accessToken}`},
@@ -84,7 +89,6 @@ export const useSearchStore = defineStore('search', {
           accountId
         }
       })
-      console.log(res)
     }
   }
 })
