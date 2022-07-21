@@ -30,7 +30,7 @@
 
     <div>
       <!-- 매진 정보 수정 -->
-      <div class="form-check form-switch">
+      <!-- <div class="form-check form-switch">
         <input
           class="form-check-input"
           type="checkbox"
@@ -38,11 +38,11 @@
         <label
           class="form-check-label"
           for="flexSwitchCheckDefault">Sold Out</label>
-      </div>
+      </div> -->
   
       <img 
         :src="indexStore.product.photo" 
-        :alt="indexStore.product.title" />
+        :alt="'상세 제품 사진'" />
     </div>
   </div>
 </template>
@@ -77,4 +77,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
 </style>
