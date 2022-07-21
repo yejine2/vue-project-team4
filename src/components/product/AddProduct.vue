@@ -1,49 +1,63 @@
 <template>
   <div class="container">
     <section>
-      <h1>제품 추가</h1>
+      <h3>제품 추가</h3>
 
-      <article class="info-box">
-        <p>썸네일</p>
+      <div class="input-group mb-4">
+        <label
+          class="input-group-text">썸네일 사진</label>
         <input
           type="file"
+          class="form-control"
           @change="thumbnailBase64Img" />
-      </article>
-      <article class="info-box">
-        <p>상품명</p>
+      </div>
+      <div class="input-group mb-4">
+        <label
+          class="input-group-text">제품 상세 사진</label>
+        <input
+          type="file"
+          class="form-control"
+          @change="photoBase64Img" />
+      </div>
+
+      <div class="input-group mb-4">
+        <span class="input-group-text">상품명</span>
         <input
           v-model="title"
-          type="text" />
-      </article>
-      <article class="info-box">
-        <p>태그 (쉼표로 구분)</p>
-        <input
-          v-model="tags"
-          type="text" />
-      </article>
-      <article class="info-box">
-        <p>상세설명</p>
-        <input
-          v-model="description"
-          type="text" />
-      </article>
-      <article class="info-box">
-        <p>가격</p>
+          type="text"
+          class="form-control"
+          placeholder="상품명을 입력해주세요" />
+      </div>
+      <div class="input-group mb-4">
+        <span class="input-group-text">상품가격 (원)</span>
         <input
           v-model.number="price"
-          type="text" />
-      </article>
-      <article class="info-box">
-        <p>상세 사진</p>
+          type="text"
+          class="form-control" />
+      </div>
+      <div class="input-group mb-4">
+        <span class="input-group-text">상품 상세 설명</span>
         <input
-          type="file"
-          @change="photoBase64Img" />
-      </article>
+          v-model="description"
+          type="text"
+          class="form-control"
+          placeholder="상품 상세 설명을 입력해주세요" />
+      </div>
+      <div class="input-group mb-4">
+        <span
+          class="input-group-text">태그</span>
+        <input
+          v-model="tags"
+          type="text"
+          class="form-control"
+          placeholder="쉼표(,)를 이용해서 태그를 구분 하세요" />
+      </div>
+
       <hr />
       <button
         class="btn btn-outline-primary"
         @click="addProduct">
-        제품 추가
+        <i class="fa-solid fa-plus"></i>
       </button>
     </section>
   </div>
@@ -103,4 +117,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
 </style>

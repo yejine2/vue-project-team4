@@ -37,6 +37,10 @@ export default createRouter({
       component: () => import('~/components/product/AddProduct.vue')
     },
     {
+      path: '/admin/saleshistory',
+      component: () => import('~/components/product/SalesHistory.vue')
+    },
+    {
       path: '/admin/products/edit/:id',
       name: 'EditProduct',
       component: EditProduct,
