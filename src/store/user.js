@@ -16,7 +16,8 @@ export const useUserStore = defineStore('user', {
       userAccountList: null,
       totalBalance: null,
       transactionList: [],
-      transactionFilter: 'All'
+      transactionFilter: 'All',
+      transactionDetail: null
     }
   },
   actions: {
@@ -120,6 +121,7 @@ export const useUserStore = defineStore('user', {
 
       return this.transactionList
     },
+    // 구매 내역 필터
     filteredList() {
       switch (this.transactionFilter) {
         case 'All':
@@ -131,6 +133,19 @@ export const useUserStore = defineStore('user', {
         case 'canceled':
           return this.transactionList.filter(list => list.isCanceled)
       }
+    },
+    async gettransactionDetail(id) {
+      const accessToken = window.localStorage.getItem('token')
+
+      const res = await axios({
+        url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/detail',
+        method: 'POST',
+        headers: { ...headers, Authorization: `Bearer ${accessToken}` },
+        data: {
+          detailId: id
+        }
+      })
+      this.transactionDetail = res.data
     }
   }
 })

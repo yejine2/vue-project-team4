@@ -68,8 +68,13 @@ export default {
   width: 100%;
   justify-content: space-between;
   .tab_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 25%;
-    text-align: center;
+    height: 68px;
+    cursor: pointer;
     .count {
       font-size: 20px;
       color: #222;

@@ -1,20 +1,28 @@
 <template>
   <li class="item_list">
     <div class="item_img">
-      <img
-        :src="list.product.thumbnail"
-        alt="제품 사진" />
+      <RouterLink
+        :to="`/my/buying/${list.detailId}`"
+        class="item_link">
+        <img
+          :src="list.product.thumbnail"
+          alt="제품 사진" />
+      </RouterLink>
     </div>
     <div class="item_info">
-      <div class="title">
-        <p class="brand">
-          {{ list.product.tags[1] }}
-        </p>
-        <p class="name">
-          {{ list.product.title }}
-        </p>
-        <span class="price">{{ `${list.product.price.toLocaleString()}원` }}</span>
-      </div>
+      <RouterLink
+        :to="`/my/buying/${list.detailId}`"
+        class="item_link">
+        <div class="title">
+          <p class="brand">
+            {{ list.product.tags[1] }}
+          </p>
+          <p class="name">
+            {{ list.product.title }}
+          </p>
+          <span class="price">{{ `${list.product.price.toLocaleString()}원` }}</span>
+        </div>
+      </RouterLink>
     </div>
     <div class="btn">
       <button
@@ -51,7 +59,6 @@ export default {
   border-bottom: 1px solid #ebebeb;
   .item_img {
     max-width: 120px;
-    // height: 120px;
     border-radius: 10px;
     overflow: hidden;
     background-color: #f5f5f5;
@@ -62,21 +69,24 @@ export default {
   .item_info {
     flex-grow: 1;
     margin-left: 16px;
-    .title {
-      
-      .brand {
-        font-weight: 700;
-        color: #333;
-      }
-      .name {
-        margin-top: 8px;
-        color: #222;
-      }
-      .price {
-        display: inline-block;
-        margin-top: 8px;
-        font-size: 15px;
-        color: #222;
+    .item_link {
+      text-decoration: none;
+      .title {
+        
+        .brand {
+          font-weight: 700;
+          color: #333;
+        }
+        .name {
+          margin-top: 8px;
+          color: #222;
+        }
+        .price {
+          display: inline-block;
+          margin-top: 8px;
+          font-size: 15px;
+          color: #222;
+        }
       }
     }
   }
@@ -85,6 +95,7 @@ export default {
     flex-direction: column;
     flex-shrink: 0;
     button {
+      margin-left: 30px;
       padding: 3px 15px;
       font-size: 12px;
       background-color: #fff;

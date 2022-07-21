@@ -1,23 +1,26 @@
 <template>
-  <div class="my_purchase">
-    <div class="content_title">
-      <div class="title">
-        <h3>구매 내역</h3>
+  <RouterView />
+  <template v-if="$route.path == '/my/buying'">
+    <div class="my_purchase">
+      <div class="content_title">
+        <div class="title">
+          <h3>구매 내역</h3>
+        </div>
       </div>
+      <div class="purchase_list_tab">
+        <MyBuyingOptionButton />
+      </div>
+      <div class="purchase_head"></div>
+      <div class="purchase_body">
+      </div>
+      <ul>
+        <MyBuyingItem
+          v-for="list in filteredList" 
+          :key="list.detailId"
+          :list="list" />
+      </ul>
     </div>
-    <div class="purchase_list_tab">
-      <MyBuyingOptionButton />
-    </div>
-    <div class="purchase_head"></div>
-    <div class="purchase_body">
-    </div>
-    <ul>
-      <MyBuyingItem
-        v-for="list in filteredList" 
-        :key="list.detailId"
-        :list="list" />
-    </ul>
-  </div>
+  </template>
 </template>
 
 <script>

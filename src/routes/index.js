@@ -28,7 +28,13 @@ export default createRouter({
         },
         {
           path: 'buying',
-          component: () => import('~/views/my/MyBuying.vue')
+          component: () => import('~/views/my/MyBuying.vue'),
+          children: [
+            {
+              path: ':id',
+              component: () => import('~/components/my/MyBuyingDetail.vue')
+            }
+          ]
         }
       ]
     },
