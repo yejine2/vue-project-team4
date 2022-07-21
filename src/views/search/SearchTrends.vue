@@ -24,16 +24,16 @@ export default {
   data() {
     return {
       trends: [
-        {name: '애플', img: '/src/assets/search/trends/apple.png'},
-        {name: '뉴발란스', img: '/src/assets/search/trends/newBalance.png'},
-        {name: '레고', img: '/src/assets/search/trends/lego.png'},
-        {name: '샤넬', img: '/src/assets/search/trends/chanel.png'},
-        {name: '롤렉스', img: '/src/assets/search/trends/rolex.png'},
-        {name: '헬리녹스', img: '/src/assets/search/trends/helinox.png'},
-        {name: '우영미', img: '/src/assets/search/trends/wooyoungmi.png'},
-        {name: '에어포스', img: '/src/assets/search/trends/airForce.png'},
-        {name: '다이슨', img: '/src/assets/search/trends/dyson.png'},
-        {name: 'IAB Studio', img: '/src/assets/search/trends/iab.png'}
+        {name: '애플', img: '/assets/search/trends/apple.png'},
+        {name: '뉴발란스', img: '/assets/search/trends/newBalance.png'},
+        {name: '레고', img: '/assets/search/trends/lego.png'},
+        {name: '샤넬', img: '/assets/search/trends/chanel.png'},
+        {name: '롤렉스', img: '/assets/search/trends/rolex.png'},
+        {name: '헬리녹스', img: '/assets/search/trends/helinox.png'},
+        {name: '우영미', img: '/assets/search/trends/wooyoungmi.png'},
+        {name: '에어포스', img: '/assets/search/trends/airForce.png'},
+        {name: '다이슨', img: '/assets/search/trends/dyson.png'},
+        {name: 'IAB Studio', img: '/assets/search/trends/iab.png'}
       ]
     }
   },
@@ -68,6 +68,7 @@ export default {
       height: 82px;
       margin-left: 40px;
       text-align: center;
+      cursor: pointer;
       .trend_img {
         width: 70px;
         height: 70px;

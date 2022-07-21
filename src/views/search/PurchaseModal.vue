@@ -39,9 +39,16 @@
           <div class="checkout">
             <strong>결제 방법</strong>
             <div class="account_box">
-              <p class="easy">
-                간편 결제 (계좌이체)
-              </p>
+              <div class="payment_title">
+                <p class="easy">
+                  간편 결제 (계좌이체)
+                </p>
+                <router-link
+                  to="/my/account"
+                  class="my_account">
+                  내 계좌 조회
+                </router-link>
+              </div>
               <div class="account_list">
                 <div
                   v-if="not_login" 
@@ -177,27 +184,38 @@ export default {
       }
       for(let i =0; i < this.banks_index.length; i++) {
         const classes = this.$refs.bank[i].classList
-        if(classes.contains('account_on')) {
-          return
-        } else {
+        if(!classes.contains('account_on')) {
           this.$refs.banks[i].classList.add('account_off')
         }
       }
     },
     choose_account(e, name, btn) {
       // 다른 버튼 누르면 페이먼트 데이터 지워지는것도 짜야해
-      if(btn) {
-        e.currentTarget.classList.add('btn_on')
-      } else {
-        e.currentTarget.classList.remove('btn_on')
+      for(let i = 0; i < this.$refs.banks.length; i++) {
+        if(e.currentTarget === this.$refs.banks[i]) {
+          if(btn) {
+            const num = this.get_bank.findIndex( item => item === name)
+            this.user_payment.productId = this.$route.params.productId
+            this.user_payment.accountId = this.userStore.userAccountList[num].id
+            e.currentTarget.classList.add('btn_on')
+            console.log(this.user_payment)
+          } else {
+            e.currentTarget.classList.remove('btn_on')
+            this.user_payment.productId = ''
+            this.user_payment.accountId = ''
+            console.log(this.user_payment)
+          }
+        } else {
+          this.$refs.banks[i].classList.remove('btn_on')
+        }
       }
-      
-      const num = this.get_bank.findIndex( item => item === name)
-      this.user_payment.productId = this.$route.params.productId
-      this.user_payment.accountId = this.userStore.userAccountList[num].id
     },
-    payment() {
-      this.searchStore.product_payment(this.user_payment)
+    async payment() {
+      try {
+        await this.searchStore.product_payment(this.user_payment)
+      } catch(err) {
+        alert('계좌를 확인해주세요.')
+      }
     }
   }
 }
@@ -244,18 +262,25 @@ export default {
   .checkout {
     margin-top: 20px;
     padding-bottom: 30px;
-    // border-bottom: 1px solid rgb(51, 51, 51, .5);
-    
     .account_box {
       margin-top: 4px;
-      .easy {
+      .payment_title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         padding: 16px 0 13px 1px;
-        font-size: 15px;
+        .easy {
+          font-size: 15px;
+        }
+        .my_account {
+          font-size: 13px;
+          font-weight: 600;
+          color: rgba(34,34,34,.5);
+        }
       }
       .account_list {
         display: flex;
         flex-wrap: wrap;
-        // padding: 0 4px;
         .login_guide {
           width: 446px;
           height: 288px;
@@ -361,12 +386,12 @@ export default {
     }
  }
  .btn-primary {
-  background-color: #ef6253;
-  border-color: #ef6253;
-  box-shadow: none;
+  background-color: #ef6253 !important;
+  border-color: #ef6253 !important;
+  box-shadow: none !important;
   &:hover {
-    background-color: #db5a4c;
-    border-color: #db5a4c;
+    background-color: #db5a4c !important;
+    border-color: #db5a4c !important;
   }
  }
  </style>

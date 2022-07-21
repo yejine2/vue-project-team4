@@ -114,7 +114,7 @@
         <PurchaseGuide />
         <div class="banner">
           <img
-            src="/src/assets/search/banners/banner_02.png"
+            src="/assets/search/banners/banner_02.png"
             alt="상품페이지 베너"
             class="banner_img" />
         </div>
@@ -128,16 +128,12 @@
 <script>
 import { mapStores } from 'pinia'
 import { useSearchStore } from '~/store/search'
-import vClickOutside from 'v-click-outside'
 import PurchaseModal from '~/views/search/PurchaseModal.vue'
 import PurchaseGuide from '~/views/search/PurchaseGuide.vue'
 import BrandList from '~/views/layout/BrandList.vue'
 import BannerBottom from '~/views/layout/BannerBottom.vue'
 
 export default {
-  directives: {
-    clickOutside: vClickOutside.directive
-  },
   components: {
     PurchaseModal,
     PurchaseGuide,
@@ -294,6 +290,9 @@ export default {
             letter-spacing: -.27px;
             font-weight: 800;
             border-bottom: 2px solid #222;
+            &:hover {
+              color: #222;  
+            }
           }
           .product_title__name {
             margin-bottom: 8px;
@@ -338,13 +337,14 @@ export default {
                 line-height: 26px;
                 font-size: 20px;
                 letter-spacing: -.1px;
-                font-weight: 700;
+                font-weight: 600;
                 text-align: right;
               }
               .price_percent {
                 display: flex;
                 justify-content: end;
                 align-items: center;
+                margin-top: 4px;
                 font-size: 13px;
                 color: #f15746;
                 .bi-caret-up-fill {

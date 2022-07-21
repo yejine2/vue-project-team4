@@ -29,7 +29,9 @@
       </template>
     </div>
   
-    <div class="main-nav">
+    <div
+      ref="bottom"
+      class="main-nav">
       <div class="logo-nav">
         <RouterLink
           to="/"
@@ -63,6 +65,20 @@ import { useAuthStore } from '~/store/auth'
 export default {
   computed: {
     ...mapStores(useAuthStore)
+  },
+  mounted() {
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 150) {
+        this.$refs.bottom.classList.add('bottom')
+      }
+    })
+  },
+  unmounted() {
+    window.removeEventListener('scroll', () => {
+      if(window.scrollY > 150) {
+        this.$refs.bottom.classList.add('bottom')
+      }
+    })
   }
 }
 </script>
@@ -102,7 +118,6 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 0px 40px;
-  border-bottom: 1px solid #e9e9e9;
   .logo-nav {
     font-size:0;
   }
@@ -123,5 +138,8 @@ export default {
       margin-left: 30px;
     }
   }
+}
+.bottom {
+  border-bottom: 1px solid #e9e9e9;
 }
 </style>
