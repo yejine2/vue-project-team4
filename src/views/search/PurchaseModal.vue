@@ -44,7 +44,18 @@
               </p>
               <div class="account_list">
                 <div
-                  v-for="bank in banks" 
+                  v-if="not_login" 
+                  class="login_guide">
+                  <p>로그인 후 확인 가능합니다.</p>
+                  <router-link
+                    to="/login"
+                    class="login_link">
+                    로그인
+                  </router-link>
+                </div>
+                <div
+                  v-for="bank in banks"
+                  v-else
                   :key="bank"
                   ref="banks"
                   class="banks"
@@ -134,6 +145,7 @@ export default {
         '케이뱅크',
       ],
       get_bank: [],
+      not_login: true,
       user_payment: {
         productId: '',
         accountId: ''
@@ -147,6 +159,11 @@ export default {
   async created() {
     await this.userStore.getUserAccountList()
     this.bank_list()
+  },
+  mounted() {
+    if(this.userStore.userAccountList !== null) {
+      this.not_login = false
+    }
   },
   methods: {
     bank_list() {
@@ -239,6 +256,19 @@ export default {
         display: flex;
         flex-wrap: wrap;
         // padding: 0 4px;
+        .login_guide {
+          width: 446px;
+          height: 288px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          color: rgba(34,34,34,.5);
+          .login_link {
+            margin-top: 14px;
+            color: rgba(34,34,34,.5);
+          }
+        }
         .banks {
           width: 208px;
           height: 60px;

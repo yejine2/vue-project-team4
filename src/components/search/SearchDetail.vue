@@ -63,7 +63,6 @@
                 <p class="size_list">
                   모든사이즈
                 </p>
-                <!-- 모달창 -->
                 <i class="bi bi-caret-down-fill"></i>
               </div>
             </div>
@@ -84,6 +83,7 @@
           </div>
           <div class="product_purchase">
             <div class="purchase">
+              <!-- 구매 모달창 -->
               <button
                 type="button"
                 class="purchase_btn btn btn-primary"
@@ -101,7 +101,7 @@
                   </p>
                 </div>
               </button>
-              <PurchaseModal />
+              <PurchaseModal class="modal" />
             </div>
             <div class="interseting">
               <i class="bi bi-bookmark"></i>
@@ -120,20 +120,29 @@
         </div>
       </div>
     </div>
-    <div class="column"></div>
+    <BrandList />
+    <BannerBottom />
   </div>
 </template>
 
 <script>
 import { mapStores } from 'pinia'
 import { useSearchStore } from '~/store/search'
+import vClickOutside from 'v-click-outside'
 import PurchaseModal from '~/views/search/PurchaseModal.vue'
 import PurchaseGuide from '~/views/search/PurchaseGuide.vue'
+import BrandList from '~/views/layout/BrandList.vue'
+import BannerBottom from '~/views/layout/BannerBottom.vue'
 
 export default {
+  directives: {
+    clickOutside: vClickOutside.directive
+  },
   components: {
     PurchaseModal,
-    PurchaseGuide
+    PurchaseGuide,
+    BrandList,
+    BannerBottom
   },
   data() {
     return {
@@ -145,8 +154,14 @@ export default {
   computed: {
     ...mapStores(useSearchStore)
   },
+  watch: {
+    onClickOutside() {
+      console.log('asdf')
+    }
+  },
   async created() {
     await this.searchStore.searchDetail(this.$route.params.productId)
+    
   },
   methods: {
     handle() {
@@ -154,14 +169,12 @@ export default {
         this.$refs.product_img_01.classList.remove('showing')
         this.$refs.product_img_02.classList.add('showing')
         this.img_num = this.img_num + 1
-
         this.$refs.bar_01.classList.remove('bar_on')
         this.$refs.bar_02.classList.add('bar_on')
       } else {
         this.$refs.product_img_02.classList.remove('showing')
         this.$refs.product_img_01.classList.add('showing')
         this.img_num = this.img_num - 1
-
         this.$refs.bar_02.classList.remove('bar_on')
         this.$refs.bar_01.classList.add('bar_on')
       }
@@ -185,19 +198,18 @@ export default {
   p {
     margin-bottom: 0;
   }
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 30px 40px 120px;
-  overflow: hidden;
   .inner {
+    width: 1280px;
+    display: flex;
     position: relative;
+    margin: 0 auto;
+    padding: 30px 40px 120px;
     .column-left {
-      width: 46%;
       position: relative;
       padding-right: 3%;
       .column__box {
-      position: fixed;
-      top: 130px;
+      position: sticky;
+      top: 131px;
       .img_box {
         background-color: rgb(235, 240, 245);
         width: 560px;
@@ -447,5 +459,8 @@ export default {
 a {
   color: #222;
   text-decoration: none;
+}
+.modal {
+  z-index: 99999999;
 }
 </style>

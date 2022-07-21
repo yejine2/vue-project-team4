@@ -76,7 +76,7 @@ export default {
   top:0;
   left: 0;
   right: 0;
-  z-index: 3;
+  z-index: 99999;
 }
 .top-nav{
   height: 32px;
