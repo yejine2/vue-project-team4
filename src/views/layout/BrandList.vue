@@ -32,63 +32,63 @@ export default {
     return {
       items:[
 					{
-						image: '/src/assets/home/brand-list/brand_01.jpg',
+						image: '/assets/home/brand-list/brand_01.jpg',
 						title: '샤넬'
 					},
 					{
-						image: '/src/assets/home/brand-list/brand_02.jpg',
+						image: '/assets/home/brand-list/brand_02.jpg',
 						title: '에르메스'
 					},
 					{
-						image: '/src/assets/home/brand-list/brand_03.jpg',
+						image: '/assets/home/brand-list/brand_03.jpg',
 						title: '루이비통'
 					},
 					{
-						image: '/src/assets/home/brand-list/brand_04.jpg',
+						image: '/assets/home/brand-list/brand_04.jpg',
 						title: '롤렉스'
 					},
 					{
-						image: '/src/assets/home/brand-list/brand_05.jpg',
+						image: '/assets/home/brand-list/brand_05.jpg',
 						title: '까르띠에'
 					},
 					{
-						image: '/src/assets/home/brand-list/brand_06.jpg',
+						image: '/assets/home/brand-list/brand_06.jpg',
 						title: '디올'
 					},
 					{
-						image: '/src/assets/home/brand-list/brand_07.jpg',
+						image: '/assets/home/brand-list/brand_07.jpg',
 						title: '프라다'
 					},
 					{
-						image: '/src/assets/home/brand-list/brand_08.jpg',
+						image: '/assets/home/brand-list/brand_08.jpg',
 						title: '발렌시아가'
 					},
 					{
-						image: '/src/assets/home/brand-list/brand_09.jpg',
+						image: '/assets/home/brand-list/brand_09.jpg',
 						title: '보테가 베네타'
 					},
 					{
-						image: '/src/assets/home/brand-list/brand_10.jpg',
+						image: '/assets/home/brand-list/brand_10.jpg',
 						title: '애플'
 					},
 					{
-						image: '/src/assets/home/brand-list/brand_11.jpg',
+						image: '/assets/home/brand-list/brand_11.jpg',
 						title: '미하라 야스히로'
 					},
 					{
-						image: '/src/assets/home/brand-list/brand_12.jpg',
+						image: '/assets/home/brand-list/brand_12.jpg',
 						title: '우영미'
 					},
 					{
-						image: '/src/assets/home/brand-list/brand_13.jpg',
+						image: '/assets/home/brand-list/brand_13.jpg',
 						title: '스톤 아일랜드'
 					},
 					{
-						image: '/src/assets/home/brand-list/brand_14.jpg',
+						image: '/assets/home/brand-list/brand_14.jpg',
 						title: '메종 마르지엘라'
 					},
 					{
-						image: '/src/assets/home/brand-list/brand_15.jpg',
+						image: '/assets/home/brand-list/brand_15.jpg',
 						title: '다이슨'
 					},
 				

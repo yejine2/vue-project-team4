@@ -38,7 +38,7 @@
           class="top-nav__logo">
           <img
             class="main-nav__logo"
-            src="../assets/logo.png"
+            src="/assets/logo.png"
             alt="kream" />
         </RouterLink>
       </div>
@@ -50,7 +50,7 @@
         </RouterLink>
         <!-- 검색 버튼 -->
         <img
-          src="../assets/search.png"
+          src="/assets/search.png"
           alt="검색버튼"
           class="search_btn" />
       </div>

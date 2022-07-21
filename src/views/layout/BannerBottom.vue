@@ -61,7 +61,7 @@
     .first {
       background: {
         color: #565656;
-        image: url('/src/assets/home/footer/banner_bottom_01.png'); 
+        image: url('/assets/home/footer/banner_bottom_01.png'); 
         size: 350px 200px; 
         repeat: no-repeat;
         position: 100% 0px;
@@ -70,7 +70,7 @@
     .second {
       background: {
         color: #3b3a3c;
-        image: url('/src/assets/home/footer/banner_bottom_02.png'); 
+        image: url('/assets/home/footer/banner_bottom_02.png'); 
         size: 350px 200px; 
         repeat: no-repeat;
         position: 100% 0px;
