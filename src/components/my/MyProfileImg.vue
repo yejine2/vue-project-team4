@@ -5,6 +5,7 @@
         <h3>프로필 정보</h3>
       </div>
     </div>
+    
     <div class="user_profile">
       <div class="profile_thumb">
         <img
