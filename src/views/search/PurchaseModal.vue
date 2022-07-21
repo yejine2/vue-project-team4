@@ -46,14 +46,18 @@
                 <div
                   v-for="bank in banks" 
                   :key="bank"
+                  ref="banks"
                   class="banks"
-                  @click="choose_account($event, bank)">
-                  <strong ref="bank">{{ bank }}</strong>
+                  @click="bank.btn = !bank.btn, choose_account($event, bank.name, bank.btn)">
+                  <p ref="bank">
+                    {{ bank.name }}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
           <div class="last">
+            <strong>최종 주문 정보</strong>
             <div class="price_box">
               <div class="product_box">
                 <p class="price_text">
@@ -63,17 +67,23 @@
                   {{ searchStore.productInfo.price.toLocaleString('ko-KR') }}
                 </p>
               </div>
-              <div class="shipping_box">
-                <div class="shipping">
-                  + 배송비 5,000
-                </div>
+              <div class="product_box">
+                <p class="price_text">
+                  배송비
+                </p>
+                <p class="price shipping">
+                  5,000
+                </p>
               </div>
             </div>
             <div class="last_price_box">
-              <span class="last_price">
-                {{ (searchStore.productInfo.price + 5000).toLocaleString('ko-KR') }}
-              </span>
-              <span>원</span>
+              <span class="last_text">총 결제금액</span>
+              <div class="red_text_box">
+                <span class="last_price">
+                  {{ (searchStore.productInfo.price + 5000).toLocaleString('ko-KR') }}
+                </span>
+                <span class="won">원</span>
+              </div>
             </div>
           </div>
         </div>
@@ -82,7 +92,7 @@
             type="button"
             class="btn btn-secondary"
             data-bs-dismiss="modal">
-            Close
+            취소
           </button>
           <button
             type="button"
@@ -106,13 +116,22 @@ export default {
   data() {
     return {
       banks: [
+        {name: 'KB국민은행', btn: false},
+        {name: 'NH농협은행', btn: false},
+        {name: '신한은행', btn: false},
+        {name: '카카오뱅크', btn: false},
+        {name: '우리은행', btn: false},
+        {name: '하나은행', btn: false},
+        {name: '케이뱅크', btn: false}
+      ],
+      banks_index: [
         'KB국민은행',
         'NH농협은행',
         '신한은행',
         '카카오뱅크',
         '우리은행',
         '하나은행',
-        '케이뱅크'
+        '케이뱅크',
       ],
       get_bank: [],
       user_payment: {
@@ -136,15 +155,26 @@ export default {
         this.get_bank.push(this.userStore.userAccountList[i].bankName)
       }
       for(let i =0; i < this.get_bank.length; i++) {
-        let num = this.banks.findIndex(item => {
-          return item === this.get_bank[i]  
-        })
+        const num = this.banks_index.findIndex(item => item === this.get_bank[i])
         this.$refs.bank[num].classList.add('account_on')
       }
+      for(let i =0; i < this.banks_index.length; i++) {
+        const classes = this.$refs.bank[i].classList
+        if(classes.contains('account_on')) {
+          return
+        } else {
+          this.$refs.banks[i].classList.add('account_off')
+        }
+      }
     },
-    choose_account(e, name) {
+    choose_account(e, name, btn) {
       // 다른 버튼 누르면 페이먼트 데이터 지워지는것도 짜야해
-      e.currentTarget.classList.add('btn_on')
+      if(btn) {
+        e.currentTarget.classList.add('btn_on')
+      } else {
+        e.currentTarget.classList.remove('btn_on')
+      }
+      
       const num = this.get_bank.findIndex( item => item === name)
       this.user_payment.productId = this.$route.params.productId
       this.user_payment.accountId = this.userStore.userAccountList[num].id
@@ -163,7 +193,9 @@ export default {
   p {
     margin-bottom: 0;
   }
+  height: 600px;
   margin: 0 12px 0 8px;
+  overflow: auto;
   .purchase_product {
     display: flex;
     .thumbnail_box {
@@ -185,20 +217,20 @@ export default {
         font-weight: 600;
       }
       .description {
+        margin-top: 4px;
         font-size: 13px;
-        color: rgba(34,34,34,.8);
+        color: rgba(34,34,34,.5);
       }
       
     }
   }
   .checkout {
-    margin-top: 10px;
-    strong {
-      font-size: 18px;
-      font-weight: 600;
-    }
+    margin-top: 20px;
+    padding-bottom: 30px;
+    // border-bottom: 1px solid rgb(51, 51, 51, .5);
     
     .account_box {
+      margin-top: 4px;
       .easy {
         padding: 16px 0 13px 1px;
         font-size: 15px;
@@ -206,18 +238,21 @@ export default {
       .account_list {
         display: flex;
         flex-wrap: wrap;
-        padding: 0 11px;
+        // padding: 0 4px;
         .banks {
-          width: 200px;
+          width: 208px;
           height: 60px;
           display: flex;
           justify-content: center;
           align-items: center;
-          margin: 6px;
+          margin: 6px auto;
           border: 1px solid #ebebeb;
           border-radius: 10px;
           cursor: pointer;
-          strong {
+          &:last-child {
+            margin: 6px 7.5px;
+          }
+          p {
             font-size: 16px;
             color: rgba(34,34,34,.5);
           }
@@ -225,52 +260,83 @@ export default {
             color: #222;
           }
         }
+        .account_off {
+            pointer-events: none;
+          }
         .btn_on {
+          font-weight: 600;
           border: 1px solid #333;
         }
       }
     }
   }
   .last {
+    background-color: aliceblue;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     position: relative;
     top: -20px;
-    padding: 0 8px;
+    margin-top: 20px;
+    padding: 0 12px;
+    border-radius: 20px;
     .price_box {
-      margin-top: 10px;
-      padding: 0 1px 2px 0;
+      padding: 12px 1px 8px 0;
       border-bottom: 1px solid rgb(51, 51, 51, .5);
-      text-align: right;
       .product_box {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 6px;
         .price_text {
-          font-size: 12px;
+          font-size: 13px;
           
         }
         .price {
           font-size: 14px;
           font-weight: 600;
         }
-      }
-      .shipping_box {
-        margin-top: auto;
-        padding-bottom: 2px;
-        text-align: right;
         .shipping {
-          font-size: 12px;
+          font-weight: 400;
         }
       }
     }
     .last_price_box {
-      padding-top: 4px;
-      font-size: 22px;
-      font-weight: 600;
-      color: #ef6253;
-      text-align: end;
-      .last_price {
-        display: inline-block;
-        margin-right: 3px;
-        font-style: italic;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 14px;
+      .last_text {
+        font-size: 15;
+        font-weight: 600;
       }
+      .red_text_box {
+        font-size: 22px;
+        font-weight: 600;
+        color: #ef6253;
+        text-align: end;
+        .last_price {
+          display: inline-block;
+          margin-right: 3px;
+          padding-left: 4px;
+          font-style: italic;
+        }
+      }
+      
     }
+  }
+  strong {
+      font-size: 18px;
+      font-weight: 600;
+    }
+ }
+ .btn-primary {
+  background-color: #ef6253;
+  border-color: #ef6253;
+  box-shadow: none;
+  &:hover {
+    background-color: #db5a4c;
+    border-color: #db5a4c;
   }
  }
  </style>

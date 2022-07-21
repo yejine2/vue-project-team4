@@ -1,4 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import Home from '~/views/Home.vue'
+import UserPage from '~/components/UserPage.vue'
+import EditUserProfile from '~/components/EditUserProfile.vue'
+import UserAccountPage from '~/components/UserAccountPage.vue'
+import Products from '~/components/Products.vue'
+import AddProduct from '~/components/AddProduct.vue'
+import EditProduct from '~/components/EditProduct.vue'
+import SignIn from '~/views/SignIn.vue'
+import SignUp from '~/views/SignUp.vue'
+import SearchMain from '~/components/search/SearchMain.vue'
+import SearchDetail from '~/components/search/SearchDetail.vue'
+import Admin from '~/views/Admin.vue'
+import NotFound from '~/views/NotFound.vue'
 
 export default createRouter({
   history: createWebHistory(),
@@ -6,37 +19,37 @@ export default createRouter({
   routes: [
     {
       path: '/',
-      component: () => import('~/views/Home.vue')
+      component: Home
     },
     {
       path: '/my',
-      component: () => import('~/components/UserPage.vue'),
+      component: UserPage,
       meta: {
         // 로그인해야만 접속 할 수 있게 설정
         auth: true
       },
       children: [
         {
-          path: 'profile',
-          component: () => import('~/components/EditUserProfile.vue') 
+          path: 'profile', // /my/profile
+          component: EditUserProfile
         },
         {
           path: 'account',
-          component: () => import('~/components/UserAccountPage.vue')
+          component: UserAccountPage
         }
       ]
     },
     {
       path: '/admin/products',
-     component: () => import('~/components/Products.vue')
+     component: Products
     },
     {
       path: '/admin/products/add',
-      component: () => import('~/components/AddProduct.vue')
+      component: AddProduct
     },
     {
       path: '/admin/products/edit/:id',
-      component: () => import('~/components/EditProduct.vue')
+      component: EditProduct
     },
     // {
     //   path: '/detail/:id',
@@ -44,29 +57,24 @@ export default createRouter({
     // },
     {
       path: '/login',
-      component: () => import('~/views/SignIn.vue'),
+      component: SignIn,
+      // /login/profile
     },
     {
       path: '/join',
-      component: () => import('~/views/SignUp.vue'),
+      component: SignUp,
     },
     {
-      path: '',
-      component: () => import('~/components/search/Search.vue'),
-      children: [
-        {
-          path: '/search',
-          component: () => import('~/components/search/SearchMain.vue'),
-        },
-        {
-          path: '/search/:productId',
-          component: () => import('~/components/search/SearchDetail.vue'),
-        }
-      ]
+      path: '/search',
+      component: SearchMain
+    },
+    {
+      path: '/search/:productId',
+      component: SearchDetail,
     },
     {
       path: '/admin',
-      component: () => import('~/views/Admin.vue'),
+      component: Admin,
       meta: {
         // 로그인해야만 접속 할 수 있게 설정
         auth: true
@@ -74,7 +82,7 @@ export default createRouter({
     },
     {
       path: '/:notfound(.*)*',
-      component: () => import('~/views/NotFound.vue')
+      component: NotFound
     },
   ]
 })

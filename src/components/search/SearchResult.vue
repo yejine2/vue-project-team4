@@ -310,7 +310,7 @@ export default {
           border-radius: 12px;
           overflow: hidden;
           img {
-            width: 81.5%;
+            width: 100%;
           }
         }
         .item_info {

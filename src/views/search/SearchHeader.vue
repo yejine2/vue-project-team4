@@ -160,6 +160,8 @@ export default {
               }
             }
             this.searchStore.category = ''
+            // 필터 카테고리 꺼짐
+            this.searchStore.categoryInteract = true
             await this.searchStore.searchProducts()
           }
         } else if($ref.target === $ref.luxury) {

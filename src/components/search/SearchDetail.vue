@@ -111,9 +111,16 @@
             </div>
           </div>
         </div>
+        <PurchaseGuide />
+        <div class="banner">
+          <img
+            src="/src/assets/search/banners/banner_02.png"
+            alt="상품페이지 베너"
+            class="banner_img" />
+        </div>
       </div>
-      <div class="column"></div>
     </div>
+    <div class="column"></div>
   </div>
 </template>
 
@@ -121,15 +128,18 @@
 import { mapStores } from 'pinia'
 import { useSearchStore } from '~/store/search'
 import PurchaseModal from '~/views/search/PurchaseModal.vue'
+import PurchaseGuide from '~/views/search/PurchaseGuide.vue'
 
 export default {
   components: {
-    PurchaseModal
+    PurchaseModal,
+    PurchaseGuide
   },
   data() {
     return {
       productInfo: [],
-      img_num: 1
+      img_num: 1,
+      inner_guide: false
     }
   },
   computed: {
@@ -155,13 +165,19 @@ export default {
         this.$refs.bar_02.classList.remove('bar_on')
         this.$refs.bar_01.classList.add('bar_on')
       }
+    },
+    guide_style() {
+      if(this.inner_guide) {
+        this.$refs.guide.classList.add('guide_on')
+      } else {
+        this.$refs.guide.classList.remove('guide_on')
+      }
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-@import url("https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css");
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css");
 @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 
@@ -176,7 +192,7 @@ export default {
   .inner {
     position: relative;
     .column-left {
-      width: 47%;
+      width: 46%;
       position: relative;
       padding-right: 3%;
       .column__box {
@@ -190,8 +206,8 @@ export default {
         justify-content: center;
         align-items: center;
         .slider {
-          width: 500px;
-          height: 500px;
+          width: 560px;
+          height: 560px;
           position: absolute;
           opacity: 0;
           transition: .6s;
@@ -211,7 +227,7 @@ export default {
           bottom: 50%;
           padding: 0 10px;
           font-size: 30px;
-          color: rgba(34,34,34,.1);
+          color: rgba(34,34,34,.4);
           z-index: 99;
         }
         .showing_bar {
@@ -222,6 +238,7 @@ export default {
           bottom: 48px;
           text-align: center;
           padding: 0 16px;
+          z-index: 99;
           .bar_01 {
             background-color: rgba(34,34,34,.1);
             width: 48%;
@@ -241,7 +258,7 @@ export default {
     }
     }
     .column-right {
-      width: 47%;
+      width: 48%;
       position: relative;
       margin-left: auto;
       padding-left: 3%;
@@ -259,7 +276,7 @@ export default {
           .product_title__brand {
             display: inline-block;
             padding-top: 1px;
-            margin-bottom: 9px;
+            margin-bottom: 14px;
             font-size: 18px;
             line-height: 19px;
             letter-spacing: -.27px;
@@ -267,7 +284,7 @@ export default {
             border-bottom: 2px solid #222;
           }
           .product_title__name {
-            margin-bottom: 4px;
+            margin-bottom: 8px;
             font-size: 18px;
             font-weight: 400;
           }
@@ -290,6 +307,7 @@ export default {
                 font-size: 16px;
                 font-weight: 600;
                 margin-right: 5px;
+                text-decoration: line-through;
               }
               .bi-caret-down-fill {
                 font-size: 14px;
@@ -412,6 +430,14 @@ export default {
               color: rgba(34, 34, 34, 0.9);
             }
           }
+        }
+      }
+      .banner {
+        background-color: #DBE1BF;
+        width: 100%;
+        text-align: center;
+        .banner_img {
+          height: 80px;
         }
       }
     }
