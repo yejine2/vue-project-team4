@@ -14,7 +14,9 @@ export const useUserStore = defineStore('user', {
       user: null,
       banks: null,
       userAccountList: null,
-      totalBalance: null
+      totalBalance: null,
+      transactionList: [],
+      transactionFilter: 'All'
     }
   },
   actions: {
@@ -105,7 +107,8 @@ export const useUserStore = defineStore('user', {
       this.getUserAccountList()
       this.chooseBank()
     },
-    async getBoughtList() {
+    // 구매 내역 조회
+    async readTransactionList() {
       const accessToken = window.localStorage.getItem('token')
 
       const res = await axios({
@@ -113,7 +116,21 @@ export const useUserStore = defineStore('user', {
         method: 'GET',
         headers: { ...headers, Authorization: `Bearer ${accessToken}` }
       })
-      console.log(res)
+      this.transactionList = await res.data
+
+      return this.transactionList
+    },
+    filteredList() {
+      switch (this.transactionFilter) {
+        case 'All':
+          return this.transactionList
+        case 'wait':
+          return this.transactionList.filter(list => !list.done)
+        case 'done':
+          return this.transactionList.filter(list => list.done && !list.isCanceled)
+        case 'canceled':
+          return this.transactionList.filter(list => list.isCanceled)
+      }
     }
   }
 })

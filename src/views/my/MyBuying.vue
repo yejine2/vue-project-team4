@@ -6,48 +6,63 @@
       </div>
     </div>
     <div class="purchase_list_tab">
-      <div class="tab_item">
-        <div
-          v-for="nav in navigations"
-          :key="nav.title"
-          class="tab_box">
-          <span class="count">0</span>
-          <h5 class="title">
-            {{ nav.title }}
-          </h5>
-        </div>
-      </div>
+      <MyBuyingOptionButton />
     </div>
     <div class="purchase_head"></div>
     <div class="purchase_body">
     </div>
-    <button @click="getBoughtList">
-      구매내역
-    </button>
+    <ul>
+      <MyBuyingItem
+        v-for="list in filteredList" 
+        :key="list.detailId"
+        :list="list" />
+    </ul>
   </div>
 </template>
 
 <script>
 import { mapStores } from 'pinia'
 import { useUserStore } from '~/store/user'
+import MyBuyingOptionButton from '~/components/my/MyBuyingOptionButton.vue'
+import MyBuyingItem from '~/components/my/MyBuyingItem.vue'
 
 export default {
-  data() {
-    return {
-      navigations: [
-        { title: '전체' },
-        { title: '확정 대기' },
-        { title: '구매 확정' }
-      ]
-    }
+  components: {
+    MyBuyingOptionButton,
+    MyBuyingItem
   },
   computed: {
-    ...mapStores(useUserStore)
+    ...mapStores(useUserStore),
+    filteredList() {
+      return this.userStore.filteredList()
+    }
+  },
+  created() {
+    this.userStore.readTransactionList()
   },
   methods: {
-    getBoughtList() {
-      this.userStore.getBoughtList()
+    filterList(value) {
+      console.log(value)
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.my_purchase {
+  .content_title {
+    padding: 5px 0 6px;
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+    }
+  }
+  .purchase_list_tab {
+    margin-top: 20px;
+    background-color: #fff;
+  }
+  ul {
+    margin-top: 20px;
+  }
+}
+</style>
