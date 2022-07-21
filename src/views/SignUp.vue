@@ -70,20 +70,27 @@
       </div>
       <div class="sign-up-box">
         <button 
-          class="sign-up-btn"
+          :class="{ 'disabled-button': !isComplete }"
+          :disabled="!isComplete"
+          class="active-button"
           @click="signUp">
           가입하기
         </button>
       </div>
     </div>
   </div>
+  <BannerBottom />
 </template>
 
 <script>
 import { mapStores } from 'pinia'
 import { useAuthStore } from '~/store/auth'
+import BannerBottom from '~/views/layout/BannerBottom.vue'
 
 export default {
+  components: {
+    BannerBottom
+  },
   data() {
     return {
       email: '',
@@ -97,11 +104,15 @@ export default {
         emailHasError: false,
         passwordHasError: false,
         nameHasError: false,
+        buttonHasError: false,
     }
   },
   computed: {
     ...mapStores(useAuthStore),
-    
+    // 유효성 검사 통과 시에만 가입 버튼 활성화
+    isCompleted () {
+    return !this.valid.email && !this.valid.password && !this.valid.displayName && this.email && this.password && this.displayName
+  }
   },  
   watch: {
     'email': function() {
@@ -112,7 +123,7 @@ export default {
     },
     'displayName': function() {
       this.checkDisplayName()
-    }
+    },
   },
   methods: {
     checkEmail() {
@@ -137,6 +148,7 @@ export default {
         return
       } this.valid.password = false
         this.passwordHasError = false
+
     },
 
     checkDisplayName() {
@@ -172,7 +184,7 @@ export default {
   max-width: 1280px;
   .sign-up-area {
   margin: 0 auto;
-  padding: 60px 0 160px;
+  padding-top: 80px;
   width: 400px;
   .sign-up-title {
     padding-bottom: 42px;
@@ -210,7 +222,7 @@ export default {
   }
   .sign-up-box {
     padding-top: 20px;
-    .sign-up-btn {
+    .active-button {
       width: 100%;
       height: 52px;
       border-radius: 12px;
@@ -232,6 +244,16 @@ export default {
   }
   .input-danger {
     border-bottom: 1px solid $color-error !important;
+  }
+  .disabled-button {
+    width: 100%;
+    height: 52px;
+    border-radius: 12px;
+    color: $color-white;
+    font-size: 16px;
+    border: 0px solid $color-white;
+    background-color: #ebebeb !important ; 
+    cursor: default !important;
   }
 }
 }
