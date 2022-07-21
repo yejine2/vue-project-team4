@@ -120,18 +120,16 @@ export default {
     ...mapStores(useSearchStore)
   },
   mounted() {
-    // 다른페이지 이동시 setInterval 정지
-    if(this.searchStore.setInterval_stop) {
-      return console.log('stop')
-    } else {
-      // setInterval(() => {
-      //   let target = document.querySelector(`.banner_0${this.slide_current}`)
-      //   target.classList.remove('showing')
-      //   this.slide_current = this.slide_current + 1 < 9 ? this.slide_current + 1 : 1
-      //   target = document.querySelector(`.banner_0${this.slide_current}`)
-      //   target.classList.add('showing')
-      // }, 3000)
-    }
+    this.ban = setInterval(() => {
+      let target = document.querySelector(`.banner_0${this.slide_current}`)
+      target.classList.remove('showing')
+      this.slide_current = this.slide_current + 1 < 9 ? this.slide_current + 1 : 1
+      target = document.querySelector(`.banner_0${this.slide_current}`)
+      target.classList.add('showing')
+    }, 3000)
+  },
+  beforeUnmount() {
+    clearInterval(this.ban)
   },
   methods: {
     async search_product(search_text) {
