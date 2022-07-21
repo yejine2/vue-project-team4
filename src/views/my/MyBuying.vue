@@ -42,11 +42,6 @@ export default {
   },
   created() {
     this.userStore.readTransactionList()
-  },
-  methods: {
-    filterList(value) {
-      console.log(value)
-    }
   }
 }
 </script>

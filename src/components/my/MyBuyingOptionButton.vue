@@ -2,8 +2,7 @@
   <div class="tab_item">
     <div
       ref="tab_0"
-      :class="{ selected: selected }"
-      class="tab_all"
+      class="tab_all selected"
       @click="filterList('all'); select($refs.tab_0)">
       <span class="count">{{ userStore.isAll }}</span>
       <h5 class="title">
