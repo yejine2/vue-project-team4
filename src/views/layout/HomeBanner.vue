@@ -1,7 +1,7 @@
 <template>
   <div class="banner">
     <img
-      src="src/assets/home/banners/banner_01.jpg"
+      src="/src/assets/home/banners/banner_01.jpg"
       alt="Luxury Vacation" />
   </div>
 </template>

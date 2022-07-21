@@ -70,8 +70,8 @@
       </div>
       <div class="sign-up-box">
         <button 
-          :class="{ 'disabled-button': !isComplete }"
-          :disabled="!isComplete"
+          :class="{ 'disabled-button': !isCompleted }"
+          :disabled="!isCompleted"
           class="active-button"
           @click="signUp">
           가입하기

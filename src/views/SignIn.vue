@@ -48,8 +48,8 @@
 
       <div class="login-btn-box">
         <button
-          :class="{ 'disabled-button': !isComplete }"
-          :disabled="!isComplete"
+          :class="{ 'disabled-button': !isCompleted }"
+          :disabled="!isCompleted"
           class="active-button"
           @click="signIn">
           로그인

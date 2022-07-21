@@ -25,43 +25,43 @@ export default {
   return {
 				items:[
 					{
-						image: 'src/assets/home/items-wrap/new.jpg',
+						image: '/src/assets/home/items-wrap/new.jpg',
 						title: '뉴 트렌딩'
 					},
 					{
-						image: 'src/assets/home/items-wrap/men.jpg',
+						image: '/src/assets/home/items-wrap/men.jpg',
 						title: '남성 추천'
 					},
 					{
-						image: 'src/assets/home/items-wrap/women.jpg',
+						image: '/src/assets/home/items-wrap/women.jpg',
 						title: '여성 추천'
 					},
 					{
-						image: 'src/assets/home/items-wrap/golf.jpg',
+						image: '/src/assets/home/items-wrap/golf.jpg',
 						title: '골프'
 					},
           {
-						image: 'src/assets/home/items-wrap/luxury.jpg',
+						image: '/src/assets/home/items-wrap/luxury.jpg',
 						title: '럭셔리 컬렉션'
 					},
           {
-						image: 'src/assets/home/items-wrap/challenge.jpg',
+						image: '/src/assets/home/items-wrap/challenge.jpg',
 						title: '#줌인챌린지'
 					},
 					{
-						image: 'src/assets/home/items-wrap/seoul.jpg',
+						image: '/src/assets/home/items-wrap/seoul.jpg',
 						title: '본투비 서울'
 					},
 					{
-						image: 'src/assets/home/items-wrap/lucky.jpg',
+						image: '/src/assets/home/items-wrap/lucky.jpg',
 						title: '7월 럭키드로우'
 					},
 					{
-						image: 'src/assets/home/items-wrap/fast.jpg',
+						image: '/src/assets/home/items-wrap/fast.jpg',
 						title: '빠른배송'
 					},
           {
-						image: 'src/assets/home/items-wrap/storage.jpg',
+						image: '/src/assets/home/items-wrap/storage.jpg',
 						title: '누구나 창고보관'
 					}
           
