@@ -1,15 +1,18 @@
-<template lang="">
+<template>
   <div class="container">
     <AdminNav />
+    <BarChart />
   </div>
 </template>
 
 <script>
 import AdminNav from '~/components/product/AdminNav.vue'
+import BarChart from '~/components/product/BarChart.vue'
 
 export default {
   components: {
-    AdminNav
+    AdminNav,
+    BarChart
   }
 }
 </script>
