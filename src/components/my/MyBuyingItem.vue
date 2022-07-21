@@ -60,7 +60,6 @@ export default {
   },
   methods: {
     done(value) {
-      // console.log(value)
       this.userStore.transactionDone(value)
     },
     cancel(value) {

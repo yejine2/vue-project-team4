@@ -16,8 +16,12 @@ export const useUserStore = defineStore('user', {
       userAccountList: null,
       totalBalance: null,
       transactionList: [],
-      transactionFilter: 'All',
-      transactionDetail: null
+      transactionFilter: 'all',
+      transactionDetail: null,
+      isAll: 0,
+      isWait: 0,
+      isDone: 0,
+      isCanceled: 0
     }
   },
   actions: {
@@ -118,14 +122,26 @@ export const useUserStore = defineStore('user', {
         headers: { ...headers, Authorization: `Bearer ${accessToken}` }
       })
       this.transactionList = await res.data
+      this.isAll = this.transactionList.length
+      this.isDone = 0
+      this.isCanceled = 0
+      this.isWait = 0
+      this.transactionList.forEach(list => {
+        if (list.done == false && list.isCanceled == false) {
+          this.isWait += 1
+        } else if (list.done == true && list.isCanceled == false) {
+          this.isDone+= 1
+        } else if (list.isCanceled == true) {
+          this.isCanceled += 1
+        }
+      })
 
-      return this.transactionList
+      // return this.transactionList
     },
     // 구매 내역 필터
     filteredList() {
       switch (this.transactionFilter) {
-        case 'All':
-          console.log( this.transactionList)
+        case 'all':
           return this.transactionList
         case 'wait':
           return this.transactionList.filter(list => !list.done && !list.isCanceled)
@@ -134,6 +150,7 @@ export const useUserStore = defineStore('user', {
         case 'canceled':
           return this.transactionList.filter(list => list.isCanceled)
       }
+      this.readTransactionList()
     },
     async transactionDone(id) {
       const accessToken = window.localStorage.getItem('token')
@@ -146,8 +163,8 @@ export const useUserStore = defineStore('user', {
           detailId: id
         }
       })
-      this.filteredList()
-      
+      this.readTransactionList()
+      this.getTransactionDetail()
       return console.log(res)
     },
     async transactionCancel(id) {
@@ -161,8 +178,8 @@ export const useUserStore = defineStore('user', {
           detailId: id
         }
       })
-      this.filteredList()
-
+      this.readTransactionList()
+      this.getTransactionDetail()
       return console.log(res)
     },
     async getTransactionDetail(id) {

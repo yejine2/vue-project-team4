@@ -1,14 +1,40 @@
 <template>
   <div class="tab_item">
     <div
-      v-for="nav, index in navigations"
-      :key="nav.title"
-      :ref="`tab_${index}`"
-      class="tab_box"
-      @click="filterList(nav.value);">
-      <span class="count">{{ nav.count }}</span>
+      ref="tab_0"
+      :class="{ selected: selected }"
+      class="tab_all"
+      @click="filterList('all'); select($refs.tab_0)">
+      <span class="count">{{ userStore.isAll }}</span>
       <h5 class="title">
-        {{ nav.title }}
+        전체
+      </h5>
+    </div>
+    <div
+      ref="tab_1"
+      class="tab_wait"
+      @click="filterList('wait'); select($refs.tab_1)">
+      <span class="count">{{ userStore.isWait }}</span>
+      <h5 class="title">
+        확정 대기
+      </h5>
+    </div>
+    <div
+      ref="tab_2"
+      class="tab_done"
+      @click="filterList('done'); select($refs.tab_2)">
+      <span class="count">{{ userStore.isDone }}</span>
+      <h5 class="title">
+        구매 확정
+      </h5>
+    </div>
+    <div
+      ref="tab_3"
+      class="tab_cancel"
+      @click="filterList('canceled'); select($refs.tab_3)">
+      <span class="count">{{ userStore.isCanceled }}</span>
+      <h5 class="title">
+        구매 취소
       </h5>
     </div>
   </div>
@@ -21,41 +47,22 @@ import { useUserStore } from '~/store/user'
 export default {
   data() {
     return {
-      navigations: [
-        { title: '전체', value: 'All', count: 0 },
-        { title: '확정 대기', value: 'wait', count: 0 },
-        { title: '구매 확정', value: 'done', count: 0 },
-        { title: '구매 취소', value: 'canceled', count: 0 }
-      ]
+      selected: false
     }
   },
   computed: {
     ...mapStores(useUserStore)
   },
-  async created() {
-    const res = await this.userStore.readTransactionList()
-    this.navigations[0].count = res.length
-    res.forEach(list => {
-      if (list.done == false && list.isCanceled == false) {
-          this.navigations[1].count += 1
-        } else if (list.done == true && list.isCanceled == false) {
-          this.navigations[2].count += 1
-        } else if (list.isCanceled == true) {
-          this.navigations[3].count += 1
-        }
-    })
-  },
   methods: {
     filterList(value) {
       this.userStore.transactionFilter = value
     },
-    info(event) {
-      // if (event == this.$refs.tab_0) {
-
-      // }
-      // console.log(this.$refs)
-      console.log(event)
-      console.log(this.$refs.tab_0)
+    select(e) {
+      this.$refs.tab_0.classList.remove('selected')
+      this.$refs.tab_1.classList.remove('selected')
+      this.$refs.tab_2.classList.remove('selected')
+      this.$refs.tab_3.classList.remove('selected')
+      e.classList.add('selected')
       
     }
   }
@@ -67,19 +74,32 @@ export default {
   display: flex;
   width: 100%;
   justify-content: space-between;
-  .tab_box {
+  > div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 25%;
     height: 68px;
+    border-bottom: 1px solid #d3d3d3;
     cursor: pointer;
+    &.selected {
+      border-bottom: 2px solid #222;
+      .count {
+        color: #f15746;
+      }
+      .title {
+        font-weight: 700;
+        color: #222;
+      }
+    }
     .count {
       font-size: 20px;
+      font-weight: 700;
       color: #222;
     }
     .title {
+      margin-top: 5px;
       font-size: 13px;
       color: rgba(#222, .5);
     }

@@ -25,9 +25,13 @@
         </div>
       </div>
       <div class="item_link">
-        <button class="btn">
-          상품 상세보기
-        </button>
+        <RouterLink :to="`/search/${list.product.productId}`">
+          <button
+            class="btn"
+            @click="list.product">
+            상품 상세보기
+          </button>
+        </RouterLink>
       </div>
     </div>
     <div class="purchase_info">
@@ -59,14 +63,25 @@
     </div>
     <div class="btn">
       <button
+        v-show="!list.isCanceled"
         class="done"
-        :class="{ disabled: list.done}">
+        :disabled="list.done"
+        :class="{ disabled: list.done}"
+        @click="done(list.detailId); $router.back()">
         구매확정
       </button>
       <button
+        v-show="!list.done"
         class="cancel"
-        :class="{ disabled: list.isCanceled}">
+        :disabled="list.isCanceled"
+        :class="{ disabled: list.isCanceled}"
+        @click="cancel(list.detailId); $router.back()">
         구매취소
+      </button>
+      <button
+        class="back_list"
+        @click="$router.back">
+        목록
       </button>
     </div>
   </div>
@@ -77,11 +92,6 @@ import { mapStores } from 'pinia'
 import { useUserStore } from '~/store/user'
 
 export default {
-  data() {
-    return {
-      a: null
-    }
-  },
   computed: {
     ...mapStores(useUserStore),
     list() {
@@ -90,6 +100,14 @@ export default {
   },
   created() {
     this.userStore.getTransactionDetail(this.$route.params.id)
+  },
+  methods: {
+    done(value) {
+      this.userStore.transactionDone(value)
+    },
+    cancel(value) {
+      this.userStore.transactionCancel(value)
+    }
   }
 }
 </script>
@@ -233,6 +251,16 @@ export default {
       &:first-child {
         margin-left: 0;
       }
+      &.disabled {
+          border: 0;
+          background-color: #ebebeb;
+          color: rgba(#222, 0.5);
+          cursor: default;
+        }
+    }
+    .back_list {
+      background-color: #222;
+      color: #fff
     }
   }
 }
