@@ -35,7 +35,9 @@
           v-model="password"
           :class="{ 'input-danger': passwordHasError }"
           class="input-item"
-          type="text"
+          type="password"
+          minlength="8"
+          maxlength="16"
           placeholder="영문, 숫자, 특수문자 조합 8-16자" />
         <p
           v-show="valid.password"
@@ -45,7 +47,11 @@
       </div>
 
       <div class="login-btn-box">
-        <button @click="signIn">
+        <button
+          :class="{ 'disabled-button': !isComplete }"
+          :disabled="!isComplete"
+          class="active-button"
+          @click="signIn">
           로그인
         </button>
       </div>
@@ -72,8 +78,8 @@ export default {
   },
   data() {
     return {
-      email: 'user_test1@gmail.com',
-      password: '1234qwer',
+      email: 'user_test13@gmail.com',
+      password: 'usertest13@',
       valid: {
         email: false,
         password: false,
@@ -83,7 +89,11 @@ export default {
     }
   }, 
   computed: {
-    ...mapStores(useAuthStore)
+    ...mapStores(useAuthStore),
+    // 유효성 검사 통과 시에만 로그인 버튼 활성화
+    isCompleted () {
+    return !this.valid.email && !this.valid.password && this.email && this.password
+  }
   },
   watch: {
     'email': function() {
@@ -110,13 +120,11 @@ export default {
       const validatePassword = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/
 
         if (!validatePassword.test(this.password) || !this.password) {
-          
         this.valid.password = true
         this.passwordHasError = true
-        return console.log('맞았어')
+        return
       } 
-      console.log('틀렸어')
-      this.valid.password = false
+        this.valid.password = false
         this.passwordHasError = false
     },
 
@@ -182,7 +190,7 @@ export default {
   }
   .login-btn-box {
     padding-top: 20px;
-    button {
+    .active-button {
       width: 100%;
       height: 52px;
       border-radius: 12px;
@@ -190,7 +198,7 @@ export default {
       background-color: $color-black;
       font-size: 16px;
       cursor: pointer;
-      border: 0px solid white;
+      border: 0px solid $color-white;
     }
   }
   .sign-up-box {
@@ -213,6 +221,16 @@ export default {
   }
   .input-danger {
     border-bottom: 1px solid $color-error !important;
+  }
+  .disabled-button {
+    width: 100%;
+    height: 52px;
+    border-radius: 12px;
+    color: $color-white;
+    font-size: 16px;
+    border: 0px solid $color-white;
+    background-color: #ebebeb !important ; 
+    cursor: default !important;
   }
 }
 }

@@ -70,7 +70,9 @@
       </div>
       <div class="sign-up-box">
         <button 
-          class="sign-up-btn"
+          :class="{ 'disabled-button': !isComplete }"
+          :disabled="!isComplete"
+          class="active-button"
           @click="signUp">
           가입하기
         </button>
@@ -102,10 +104,15 @@ export default {
         emailHasError: false,
         passwordHasError: false,
         nameHasError: false,
+        buttonHasError: false,
     }
   },
   computed: {
     ...mapStores(useAuthStore),
+    // 유효성 검사 통과 시에만 가입 버튼 활성화
+    isCompleted () {
+    return !this.valid.email && !this.valid.password && !this.valid.displayName && this.email && this.password && this.displayName
+  }
   },  
   watch: {
     'email': function() {
@@ -215,7 +222,7 @@ export default {
   }
   .sign-up-box {
     padding-top: 20px;
-    .sign-up-btn {
+    .active-button {
       width: 100%;
       height: 52px;
       border-radius: 12px;
@@ -238,10 +245,16 @@ export default {
   .input-danger {
     border-bottom: 1px solid $color-error !important;
   }
-  // .disabled {
-  //   background-color: #ebebeb !important ;
-  //   cursor: default !important;
-  // }
+  .disabled-button {
+    width: 100%;
+    height: 52px;
+    border-radius: 12px;
+    color: $color-white;
+    font-size: 16px;
+    border: 0px solid $color-white;
+    background-color: #ebebeb !important ; 
+    cursor: default !important;
+  }
 }
 }
 
