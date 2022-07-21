@@ -146,13 +146,13 @@
         </ul>
         <div class="footer-sns">
           <a href="#"><img
-            src="src/assets/home/footer/instagram.png"
+            src="/src/assets/home/footer/instagram.png"
             alt="instagram" /></a>
           <a href="#"><img
-            src="src/assets/home/footer/facebook.png"
+            src="/src/assets/home/footer/facebook.png"
             alt="facebook" /></a>
           <a href="#"><img
-            src="src/assets/home/footer/kakaotalk.png"
+            src="/src/assets/home/footer/kakaotalk.png"
             alt="kakaotalk" /></a>
         </div>
         <div class="business-info">
@@ -218,7 +218,7 @@
       <div class="escrow-area">
         <img
           class="escrow-area__img"
-          src="src/assets/home/footer/escrow.png"
+          src="/src/assets/home/footer/escrow.png"
           alt="escrow" />
         <p class="escrow-area__text">
           고객님의 안전거래를 위해 현금 등으로 결제 시 KREAM에서 가입한 <br />

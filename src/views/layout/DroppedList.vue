@@ -20,7 +20,7 @@
               :src="item.image" />
             <img
               class="image-box__bookmark"
-              src="src/assets/home/just-dropped/bookmark.png"
+              src="/src/assets/home/just-dropped/bookmark.png"
               alt="bookmark" />
           </div>
           <div class="item__info">
@@ -54,7 +54,7 @@
               :src="item.image" />
             <img
               class="image-box__bookmark"
-              src="src/assets/home/just-dropped/bookmark.png"
+              src="/src/assets/home/just-dropped/bookmark.png"
               alt="bookmark" />
           </div>
           <div class="item__info">
@@ -90,28 +90,28 @@ export default {
     return {
 				items:[
 					{
-						image: 'src/assets/home/just-dropped/dropped_01.jpg',
+						image: '/src/assets/home/just-dropped/dropped_01.jpg',
 						brand: 'Nike',
             name: 'Nike ACG Mountain Fly Low SE White and Black',
             price: '173,000원',
             derc: '즉시 구매가'
 					},
 					{
-						image: 'src/assets/home/just-dropped/dropped_02.jpg',
+						image: '/src/assets/home/just-dropped/dropped_02.jpg',
 						brand: 'Asics',
             name: 'Asics Actibreeze 3D Sandal Black',
             price: '155,000원',
             derc: '즉시 구매가'
 					},
 					{
-						image: 'src/assets/home/just-dropped/dropped_03.jpg',
+						image: '/src/assets/home/just-dropped/dropped_03.jpg',
 						brand: 'Nike',
             name: '(W) Nike Dunk Low Pink Oxford',
             price: '126,000원',
             derc: '즉시 구매가'
 					},
 					{
-						image: 'src/assets/home/just-dropped/dropped_04.jpg',
+						image: '/src/assets/home/just-dropped/dropped_04.jpg',
 						brand: 'Jordan',
             name: 'Jordan 1 KO White and Black',
             price: '160,000원',
@@ -120,28 +120,28 @@ export default {
 				],
         moreItems:[
 					{
-						image: 'src/assets/home/just-dropped/dropped_05.jpg',
+						image: '/src/assets/home/just-dropped/dropped_05.jpg',
 						brand: 'Louis Vuitton',
             name: 'Louis Vuitton x Nike Air Force 1 Low by Virgil Abloh White Gym Green',
             price: '10,000,000원',
             derc: '즉시 구매가'
 					},
 					{
-						image: 'src/assets/home/just-dropped/dropped_06.jpg',
+						image: '/src/assets/home/just-dropped/dropped_06.jpg',
 						brand: 'Louis Vuitton',
             name: 'Louis Vuitton x Nike Air Force 1 Low by Virgil Abloh White Comet Red',
             price: '11,000,000원',
             derc: '즉시 구매가'
 					},
 					{
-						image: 'src/assets/home/just-dropped/dropped_07.jpg',
+						image: '/src/assets/home/just-dropped/dropped_07.jpg',
 						brand: 'Louis Vuitton',
             name: 'Louis Vuitton x Nike Air Force 1 Low by Virgil Abloh White Team Royal',
             price: '10,000,000원',
             derc: '즉시 구매가'
 					},
 					{
-						image: 'src/assets/home/just-dropped/dropped_08.jpg',
+						image: '/src/assets/home/just-dropped/dropped_08.jpg',
 						brand: 'Louis Vuitton',
             name: 'Louis Vuitton x Nike Air Force 1 Low by Virgil Abloh White',
             price: '12,500,000원',
