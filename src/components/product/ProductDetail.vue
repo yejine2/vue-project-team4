@@ -29,17 +29,6 @@
     </div>
 
     <div>
-      <!-- 매진 정보 수정 -->
-      <!-- <div class="form-check form-switch">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          role="switch" />
-        <label
-          class="form-check-label"
-          for="flexSwitchCheckDefault">Sold Out</label>
-      </div> -->
-  
       <img 
         :src="indexStore.product.photo" 
         :alt="'상세 제품 사진'" />

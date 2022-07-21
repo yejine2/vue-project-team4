@@ -58,32 +58,27 @@
 
     <div class="form-check form-switch">
       <input
+        id="soldout"
+        v-model="isSoldOut"
         class="form-check-input"
         type="checkbox"
         role="switch" />
       <label
-        class="form-check-label">Sold Out</label>
+        for="soldout"
+        class="form-check-label">
+        <span v-if="isSoldOut">재고 엄씀</span>
+        <span v-if="!isSoldOut">재고 이씀</span>
+      </label>
     </div>
 
-    <div>
-      <label> 재고: </label>
-      <label>X</label>
-      <input
-        v-model="isSoldOut"
-        type="radio"
-        :value="true" />
-      <label for="instock">O</label>
-      <input
-        v-model="isSoldOut"
-        type="radio"
-        :value="false" />
-    </div>
+    
     <hr />
+
     <button
-      class="btn btn-primary"
+      class="btn btn-primary mb-4"
       @click="editProduct">
       <i class="fa-solid fa-check"></i>
-    </button>     
+    </button>
   </div>
 </template>
 
@@ -159,4 +154,11 @@ export default {
 
 <style lang="scss" scoped>
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
+    .form-check {
+      display: flex;
+      align-items: center;
+      .form-check-label {
+        margin-left: 10px;
+      } 
+    }
 </style>

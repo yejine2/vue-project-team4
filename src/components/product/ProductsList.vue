@@ -110,5 +110,11 @@ img {
 
 td {
   border: 0.5px solid $gray-200;
+   white-space: nowrap;
+  vertical-align: middle;
+  text-align: center;
+  &:nth-child(4) {
+    text-align: start;
+  }
 }
 </style>
