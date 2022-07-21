@@ -4,7 +4,7 @@
       <div class="filter_express">
         <div class="express_btn">
           <img
-            src="/src/assets/search/express.png"
+            src="/assets/search/express.png"
             alt="빠른배송"
             class="express_img" />
           <p class="express_text">
@@ -15,7 +15,7 @@
       <div class="popular">
         제품 등록순
         <img
-          src="/src/assets/search/popularBtn.png"
+          src="/assets/search/popularBtn.png"
           alt="인기순"
           class="popular_icon" />
       </div>
@@ -87,7 +87,7 @@
             </div>
             <div class="express">
               <img
-                src="/src/assets/search/express.png"
+                src="/assets/search/express.png"
                 alt="빠른배송"
                 class="express_img_s" />
               <p>빠른배송</p>
@@ -215,7 +215,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 .box {
   p {
     margin-bottom: 0;
@@ -310,7 +309,7 @@ export default {
           border-radius: 12px;
           overflow: hidden;
           img {
-            width: 81.5%;
+            width: 100%;
           }
         }
         .item_info {

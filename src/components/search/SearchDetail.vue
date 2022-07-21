@@ -63,7 +63,6 @@
                 <p class="size_list">
                   모든사이즈
                 </p>
-                <!-- 모달창 -->
                 <i class="bi bi-caret-down-fill"></i>
               </div>
             </div>
@@ -84,6 +83,7 @@
           </div>
           <div class="product_purchase">
             <div class="purchase">
+              <!-- 구매 모달창 -->
               <button
                 type="button"
                 class="purchase_btn btn btn-primary"
@@ -101,7 +101,7 @@
                   </p>
                 </div>
               </button>
-              <PurchaseModal />
+              <PurchaseModal class="modal" />
             </div>
             <div class="interseting">
               <i class="bi bi-bookmark"></i>
@@ -111,9 +111,17 @@
             </div>
           </div>
         </div>
+        <PurchaseGuide />
+        <div class="banner">
+          <img
+            src="/assets/search/banners/banner_02.png"
+            alt="상품페이지 베너"
+            class="banner_img" />
+        </div>
       </div>
-      <div class="column"></div>
     </div>
+    <BrandList />
+    <BannerBottom />
   </div>
 </template>
 
@@ -121,22 +129,35 @@
 import { mapStores } from 'pinia'
 import { useSearchStore } from '~/store/search'
 import PurchaseModal from '~/views/search/PurchaseModal.vue'
+import PurchaseGuide from '~/views/search/PurchaseGuide.vue'
+import BrandList from '~/views/layout/BrandList.vue'
+import BannerBottom from '~/views/layout/BannerBottom.vue'
 
 export default {
   components: {
-    PurchaseModal
+    PurchaseModal,
+    PurchaseGuide,
+    BrandList,
+    BannerBottom
   },
   data() {
     return {
       productInfo: [],
-      img_num: 1
+      img_num: 1,
+      inner_guide: false
     }
   },
   computed: {
     ...mapStores(useSearchStore)
   },
+  watch: {
+    onClickOutside() {
+      console.log('asdf')
+    }
+  },
   async created() {
     await this.searchStore.searchDetail(this.$route.params.productId)
+    
   },
   methods: {
     handle() {
@@ -144,16 +165,21 @@ export default {
         this.$refs.product_img_01.classList.remove('showing')
         this.$refs.product_img_02.classList.add('showing')
         this.img_num = this.img_num + 1
-
         this.$refs.bar_01.classList.remove('bar_on')
         this.$refs.bar_02.classList.add('bar_on')
       } else {
         this.$refs.product_img_02.classList.remove('showing')
         this.$refs.product_img_01.classList.add('showing')
         this.img_num = this.img_num - 1
-
         this.$refs.bar_02.classList.remove('bar_on')
         this.$refs.bar_01.classList.add('bar_on')
+      }
+    },
+    guide_style() {
+      if(this.inner_guide) {
+        this.$refs.guide.classList.add('guide_on')
+      } else {
+        this.$refs.guide.classList.remove('guide_on')
       }
     }
   }
@@ -161,7 +187,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import url("https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css");
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css");
 @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 
@@ -169,19 +194,18 @@ export default {
   p {
     margin-bottom: 0;
   }
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 30px 40px 120px;
-  overflow: hidden;
   .inner {
+    width: 1280px;
+    display: flex;
     position: relative;
+    margin: 0 auto;
+    padding: 30px 40px 120px;
     .column-left {
-      width: 47%;
       position: relative;
       padding-right: 3%;
       .column__box {
-      position: fixed;
-      top: 130px;
+      position: sticky;
+      top: 131px;
       .img_box {
         background-color: rgb(235, 240, 245);
         width: 560px;
@@ -190,8 +214,8 @@ export default {
         justify-content: center;
         align-items: center;
         .slider {
-          width: 500px;
-          height: 500px;
+          width: 560px;
+          height: 560px;
           position: absolute;
           opacity: 0;
           transition: .6s;
@@ -211,7 +235,7 @@ export default {
           bottom: 50%;
           padding: 0 10px;
           font-size: 30px;
-          color: rgba(34,34,34,.1);
+          color: rgba(34,34,34,.4);
           z-index: 99;
         }
         .showing_bar {
@@ -222,6 +246,7 @@ export default {
           bottom: 48px;
           text-align: center;
           padding: 0 16px;
+          z-index: 99;
           .bar_01 {
             background-color: rgba(34,34,34,.1);
             width: 48%;
@@ -241,7 +266,7 @@ export default {
     }
     }
     .column-right {
-      width: 47%;
+      width: 48%;
       position: relative;
       margin-left: auto;
       padding-left: 3%;
@@ -259,15 +284,18 @@ export default {
           .product_title__brand {
             display: inline-block;
             padding-top: 1px;
-            margin-bottom: 9px;
+            margin-bottom: 14px;
             font-size: 18px;
             line-height: 19px;
             letter-spacing: -.27px;
             font-weight: 800;
             border-bottom: 2px solid #222;
+            &:hover {
+              color: #222;  
+            }
           }
           .product_title__name {
-            margin-bottom: 4px;
+            margin-bottom: 8px;
             font-size: 18px;
             font-weight: 400;
           }
@@ -290,6 +318,7 @@ export default {
                 font-size: 16px;
                 font-weight: 600;
                 margin-right: 5px;
+                text-decoration: line-through;
               }
               .bi-caret-down-fill {
                 font-size: 14px;
@@ -308,13 +337,14 @@ export default {
                 line-height: 26px;
                 font-size: 20px;
                 letter-spacing: -.1px;
-                font-weight: 700;
+                font-weight: 600;
                 text-align: right;
               }
               .price_percent {
                 display: flex;
                 justify-content: end;
                 align-items: center;
+                margin-top: 4px;
                 font-size: 13px;
                 color: #f15746;
                 .bi-caret-up-fill {
@@ -414,6 +444,14 @@ export default {
           }
         }
       }
+      .banner {
+        background-color: #DBE1BF;
+        width: 100%;
+        text-align: center;
+        .banner_img {
+          height: 80px;
+        }
+      }
     }
     
   }
@@ -421,5 +459,8 @@ export default {
 a {
   color: #222;
   text-decoration: none;
+}
+.modal {
+  z-index: 99999999;
 }
 </style>
