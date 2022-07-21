@@ -10,7 +10,7 @@
             to="#"
             class="banner_01 slider showing">
             <img
-              src="/src/assets/search/banners/banner_01.png"
+              src="/assets/search/banners/banner_01.png"
               alt="광고배너01"
               class="banner_img" />
           </router-link>
@@ -18,7 +18,7 @@
             to="#"
             class="banner_02 slider">
             <img
-              src="/src/assets/search/banners/banner_02.png"
+              src="/assets/search/banners/banner_02.png"
               alt="광고배너02"
               class="banner_img" />
           </router-link>
@@ -26,7 +26,7 @@
             to="#"
             class="banner_03 slider">
             <img
-              src="/src/assets/search/banners/banner_03.png"
+              src="/assets/search/banners/banner_03.png"
               alt="광고배너03"
               class="banner_img" />
           </router-link>
@@ -34,7 +34,7 @@
             to="#"
             class="banner_04 slider">
             <img
-              src="/src/assets/search/banners/banner_04.png"
+              src="/assets/search/banners/banner_04.png"
               alt="광고배너04"
               class="banner_img" />
           </router-link>
@@ -42,7 +42,7 @@
             to="#"
             class="banner_05 slider">
             <img
-              src="/src/assets/search/banners/banner_05.png"
+              src="/assets/search/banners/banner_05.png"
               alt="광고배너05"
               class="banner_img" />
           </router-link>
@@ -50,7 +50,7 @@
             to="#"
             class="banner_06 slider">
             <img
-              src="/src/assets/search/banners/banner_06.png"
+              src="/assets/search/banners/banner_06.png"
               alt="광고배너06"
               class="banner_img" />
           </router-link>
@@ -58,7 +58,7 @@
             to="#"
             class="banner_07 slider">
             <img
-              src="/src/assets/search/banners/banner_07.png"
+              src="/assets/search/banners/banner_07.png"
               alt="광고배너07"
               class="banner_img" />
           </router-link>
@@ -66,7 +66,7 @@
             to="#"
             class="banner_08 slider">
             <img
-              src="/src/assets/search/banners/banner_08.png"
+              src="/assets/search/banners/banner_08.png"
               alt="광고배너08"
               class="banner_img" />
           </router-link>
@@ -111,7 +111,6 @@ export default {
     SearchFilter,
     SearchResult,
   },
-  
   data() {
     return {
       slide_current: 1

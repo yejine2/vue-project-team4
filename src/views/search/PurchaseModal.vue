@@ -177,9 +177,7 @@ export default {
       }
       for(let i =0; i < this.banks_index.length; i++) {
         const classes = this.$refs.bank[i].classList
-        if(classes.contains('account_on')) {
-          return
-        } else {
+        if(!classes.contains('account_on')) {
           this.$refs.banks[i].classList.add('account_off')
         }
       }

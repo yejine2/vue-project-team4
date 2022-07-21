@@ -15,6 +15,7 @@ export const useUserStore = defineStore('user', {
       banks: null,
       userAccountList: null,
       totalBalance: null
+
     }
   },
   actions: {

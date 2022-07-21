@@ -114,7 +114,7 @@
         <PurchaseGuide />
         <div class="banner">
           <img
-            src="/src/assets/search/banners/banner_02.png"
+            src="/assets/search/banners/banner_02.png"
             alt="상품페이지 베너"
             class="banner_img" />
         </div>
@@ -128,16 +128,12 @@
 <script>
 import { mapStores } from 'pinia'
 import { useSearchStore } from '~/store/search'
-import vClickOutside from 'v-click-outside'
 import PurchaseModal from '~/views/search/PurchaseModal.vue'
 import PurchaseGuide from '~/views/search/PurchaseGuide.vue'
 import BrandList from '~/views/layout/BrandList.vue'
 import BannerBottom from '~/views/layout/BannerBottom.vue'
 
 export default {
-  directives: {
-    clickOutside: vClickOutside.directive
-  },
   components: {
     PurchaseModal,
     PurchaseGuide,

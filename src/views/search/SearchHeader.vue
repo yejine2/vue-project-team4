@@ -215,7 +215,7 @@ header {
         }
         .search_box {
           width: 500px;
-          margin: 0 8px;
+          margin: 0 8px 12px 8px;
           padding-bottom: 8px;
           border-bottom: 3px solid #000;
           .search {
