@@ -84,6 +84,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
+
 a {
   text-decoration: none;
 }
@@ -105,7 +106,7 @@ a {
     text-align: center;
     font-size: 24px;
     color: $color-black;
-    padding-bottom: 50px;
+    padding-bottom: 40px;
   }
   .add-button {
   position: absolute;
@@ -115,6 +116,13 @@ a {
   .product-list {
     display: flex;
     justify-content: center;
+  }
+  th {
+    white-space: nowrap;
+    vertical-align: middle;
+    text-align: center;
+    background-color: $color-black;
+    color: $color-white;
   }
 }
 
