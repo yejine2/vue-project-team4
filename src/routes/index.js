@@ -12,7 +12,7 @@ export default createRouter({
     },
     {
       path: '/my',
-      component: () => import('~/components/MyPage/My.vue'),
+      component: () => import('~/components/UserPage.vue'),
       meta: {
         // 로그인해야만 접속 할 수 있게 설정
         auth: true
@@ -31,12 +31,14 @@ export default createRouter({
     {
       path: '/admin/products',
       component: () => import('~/components/product/Products.vue')
-
-     
     },
     {
       path: '/admin/products/add',
       component: () => import('~/components/product/AddProduct.vue')
+    },
+    {
+      path: '/admin/saleshistory',
+      component: () => import('~/components/product/SalesHistory.vue')
     },
     {
       path: '/admin/products/edit/:id',

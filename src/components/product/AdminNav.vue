@@ -9,9 +9,12 @@
         </RouterLink>
       </li>
       <li class="nav-item">
-        <a
+        <RouterLink
+          to="/admin/saleshistory"
           class="nav-link"
-          href="#">판매 내역</a>
+          href="#">
+          판매 내역
+        </RouterLink>
       </li>
     </ul>
   </div>
@@ -22,4 +25,6 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
 </style>
