@@ -1,8 +1,10 @@
 <template>
   <div class="container">
-    <SNB />
+    <MySNB />
+
     <div class="content_area">
       <RouterView />
+
       <template v-if="$route.path == '/my'">
         <div class="my_home">
           <div class="user_membership">
@@ -40,11 +42,11 @@
 <script>
 import { mapStores } from 'pinia'
 import { useUserStore } from '~/store/user'
-import SNB from '~/components/SNB.vue'
+import MySNB from '~/components/my/MySNB.vue'
 
 export default {
   components: {
-    SNB
+    MySNB
   },
   computed: {
     ...mapStores(useUserStore),
@@ -65,8 +67,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~/scss/_variables.scss';
-
 .container {
   display: flex;
   margin: 0 auto;

@@ -21,7 +21,8 @@
 
 <script>
 import { mapStores } from 'pinia'
-import { useUserStore } from '../store/user'
+import { useUserStore } from '~/store/user'
+
 export default {
   props: {
     account: {

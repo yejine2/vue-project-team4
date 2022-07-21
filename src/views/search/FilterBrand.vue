@@ -172,6 +172,9 @@ section {
       }
     }
   }
+  .list_max::-webkit-scrollbar {
+    display: none;
+  }
 }
 }
 </style>

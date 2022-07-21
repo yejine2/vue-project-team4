@@ -5,6 +5,7 @@
       <div class="page_title">
         <div class="search_box">
           <input
+            ref="search"
             type="text"
             class="search"
             placeholder="제품명"
@@ -20,7 +21,8 @@
           <i class="bi bi-sliders"></i>
         </div>
         <div
-          class="luxury btn_category"
+          ref="luxury"
+          class="btn_category"
           @click="category_btn(category_lux = !category_lux, $event)">
           <p class="name luxury_text">
             럭셔리
@@ -28,35 +30,40 @@
         </div>
         <span class="vir_bar"></span>
         <div
-          class="shoes btn_category"
+          ref="shoes"
+          class="btn_category"
           @click="category_btn(category.category_01 = !category.category_01, $event)">
           <p class="name">
             신발
           </p>
         </div>
         <div
-          class="cloth btn_category"
+          ref="cloth"
+          class="btn_category"
           @click="category_btn(category.category_02 = !category.category_02, $event)">
           <p class="name">
             의류
           </p>
         </div>
         <div
-          class="acc btn_category"
+          ref="acc"
+          class="btn_category"
           @click="category_btn(category.category_03 = !category.category_03, $event)">
           <p class="name">
             패션 잡화
           </p>
         </div>
         <div
-          class="life btn_category"
+          ref="life"
+          class="btn_category"
           @click="category_btn(category.category_04 = !category.category_04, $event)">
           <p class="name">
             라이프
           </p>
         </div>
         <div
-          class="tech btn_category"
+          ref="tech"
+          class="btn_category"
           @click="category_btn(category.category_05 = !category.category_05, $event)">
           <p class="name">
             테크
@@ -82,7 +89,14 @@ export default {
         category_03: false,
         category_04: false,
         category_05: false
-      }
+      },
+      cate: [
+        this.$refs.shoes,
+        this.$refs.cloth,
+        this.$refs.acc,
+        this.$refs.life,
+        this.$refs.tech
+      ]
     }
   },
   computed: {
@@ -92,14 +106,7 @@ export default {
   watch: {
     // 검색결과에 필터를 끄는 아이콘을 클릭하면 실행
     cate_interaction() {
-      const $ref = {
-        shoes: document.querySelector('.shoes'),
-        cloth: document.querySelector('.cloth'),
-        acc: document.querySelector('.acc'),
-        life: document.querySelector('.life'),
-        tech: document.querySelector('.tech')
-      }
-      const cate = [$ref.shoes, $ref.cloth, $ref.acc, $ref.life, $ref.tech]
+      const cate = [this.$refs.shoes, this.$refs.cloth, this.$refs.acc, this.$refs.life, this.$refs.tech]
 
       for(let i = 0; i < cate.length; i++) {
         cate[i].style.backgroundColor = '#f4f4f4'
@@ -114,20 +121,10 @@ export default {
       this.$emit('search_text', this.search_text)
     },
     input_init() {
-      const search = document.querySelector('.search')
-      search.value = null
+      this.$refs.search.value = null
     },
-    async category_btn(category, event) {
-      const $ref = {
-        target: event.currentTarget,
-        luxury: document.querySelector('.luxury'),
-        shoes: document.querySelector('.shoes'),
-        cloth: document.querySelector('.cloth'),
-        acc: document.querySelector('.acc'),
-        life: document.querySelector('.life'),
-        tech: document.querySelector('.tech')
-      }
-      const cate = [$ref.shoes, $ref.cloth, $ref.acc, $ref.life, $ref.tech]
+    async category_btn(category, e) {
+      const cate = [this.$refs.shoes, this.$refs.cloth, this.$refs.acc, this.$refs.life, this.$refs.tech]
       const cate_name = ['신발', '의류', '패션잡화', '라이프', '테크']
 
       function btn_on(payload) {
@@ -136,12 +133,13 @@ export default {
         payload.style.fontWeight = '700'
       }
       function btn_off(payload) {
+        console.log(payload)
         payload.style.backgroundColor = '#f4f4f4'
         payload.style.color = '#222'
         payload.style.fontWeight = '400'
       }
       for(let i = 0; i < cate.length; i++) {
-        if($ref.target === cate[i]) {
+        if(e.currentTarget === cate[i]) {
           if(category) {
             btn_on(cate[i])
             for(let k = 0; k < cate_name.length; k++) {
@@ -160,15 +158,17 @@ export default {
               }
             }
             this.searchStore.category = ''
+            // 필터 카테고리 꺼짐
+            this.searchStore.categoryInteract = true
             await this.searchStore.searchProducts()
           }
-        } else if($ref.target === $ref.luxury) {
+        } else if(e.currentTarget === this.$refs.luxury) {
           if(category) {
-            btn_on($ref.luxury)
+            btn_on(this.$refs.luxury)
           } else {
-            btn_off($ref.luxury)
+            btn_off(this.$refs.luxury)
           }
-        } else if($ref.target !== cate[i]) {
+        } else if(e.currentTarget !== cate[i]) {
           btn_off(cate[i])
           if(i === 0) {
             this.category.category_01 = false
@@ -213,7 +213,7 @@ header {
         }
         .search_box {
           width: 500px;
-          margin: 0 8px;
+          margin: 0 8px 12px 8px;
           padding-bottom: 8px;
           border-bottom: 3px solid #000;
           .search {

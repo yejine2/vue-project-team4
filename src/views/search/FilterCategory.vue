@@ -234,8 +234,7 @@ export default {
   },
   computed: {
     ...mapStores(useSearchStore),
-    tags() {return this.searchStore.searchTags[0]},
-    cate_interaction() {return this.searchStore.categoryInteract}
+    tags() {return this.searchStore.searchTags[0]}
   },
   watch: {
     // 헤더 카테고리와 연동
@@ -247,28 +246,6 @@ export default {
       function btn_on(i) {
         checkbox.item(i).classList.add('checked')
         list_off.item(i).classList.add('bold')
-      }
-
-      // 검색 결과 필터 끄는 버튼과 연동
-      if(this.searchStore.categoryInteract) {
-        const list = document.querySelectorAll('.list_off')
-        const checkbox = document.querySelectorAll('.checkbox')
-        for(let i = 0; i < list.length; i++) {
-          checkbox.item(i).classList.remove('checked')
-          list.item(i).classList.remove('bold')
-        }
-        this.category_btn.shoe = false
-        this.inner.shoe = false
-        this.category_btn.cloth = false
-        this.inner.cloth = false
-        this.category_btn.accessory = false
-        this.inner.accessory = false
-        this.category_btn.life = false
-        this.inner.life = false
-        this.category_btn.tech = false
-        this.inner.tech = false
-      } else {
-        return console.log('nope')
       }
 
       if(cate_name.includes(this.searchStore.searchTags[0])) {
@@ -328,6 +305,25 @@ export default {
             }
           }
         }
+      }
+      // 검색 결과 필터 끄는 x버튼과 연동
+      if(this.searchStore.categoryInteract) {
+        const list = document.querySelectorAll('.list_off')
+        const checkbox = document.querySelectorAll('.checkbox')
+        for(let i = 0; i < list.length; i++) {
+          checkbox.item(i).classList.remove('checked')
+          list.item(i).classList.remove('bold')
+        }
+        this.category_btn.shoe = false
+        this.inner.shoe = false
+        this.category_btn.cloth = false
+        this.inner.cloth = false
+        this.category_btn.accessory = false
+        this.inner.accessory = false
+        this.category_btn.life = false
+        this.inner.life = false
+        this.category_btn.tech = false
+        this.inner.tech = false
       }
     }
   },
