@@ -125,16 +125,17 @@ export const useUserStore = defineStore('user', {
     filteredList() {
       switch (this.transactionFilter) {
         case 'All':
+          console.log( this.transactionList)
           return this.transactionList
         case 'wait':
-          return this.transactionList.filter(list => !list.done)
+          return this.transactionList.filter(list => !list.done && !list.isCanceled)
         case 'done':
           return this.transactionList.filter(list => list.done && !list.isCanceled)
         case 'canceled':
           return this.transactionList.filter(list => list.isCanceled)
       }
     },
-    async gettransactionDetail(id) {
+    async getTransactionDetail(id) {
       const accessToken = window.localStorage.getItem('token')
 
       const res = await axios({

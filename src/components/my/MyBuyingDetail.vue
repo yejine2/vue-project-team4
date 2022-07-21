@@ -89,7 +89,7 @@ export default {
     }
   },
   created() {
-    this.userStore.gettransactionDetail(this.$route.params.id)
+    this.userStore.getTransactionDetail(this.$route.params.id)
   }
 }
 </script>
