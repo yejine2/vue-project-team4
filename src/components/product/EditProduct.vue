@@ -67,7 +67,7 @@
         for="soldout"
         class="form-check-label">
         <span v-if="isSoldOut">재고 엄씀</span>
-        <span v-if="!isSoldOut">재고 있음</span>
+        <span v-if="!isSoldOut">재고 이씀</span>
       </label>
     </div>
 
