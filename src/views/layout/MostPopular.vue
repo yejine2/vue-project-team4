@@ -20,7 +20,7 @@
               :src="item.image" />
             <img
               class="image-box__bookmark"
-              src="src/assets/home/just-dropped/bookmark.png"
+              src="/src/assets/home/just-dropped/bookmark.png"
               alt="bookmark" />
           </div>
           <div class="item__info">
@@ -61,7 +61,7 @@
                 :src="item.image" />
               <img
                 class="image-box__bookmark"
-                src="src/assets/home/just-dropped/bookmark.png"
+                src="/src/assets/home/just-dropped/bookmark.png"
                 alt="bookmark" />
             </div>
             <div class="item__info">
@@ -105,7 +105,7 @@ export default {
     return {
 				items:[
 					{
-						image: 'src/assets/home/popular/popular_01.jpg',
+						image: '/src/assets/home/popular/popular_01.jpg',
 						brand: 'Jordan',
             name: 'Jordan 1 Retro High OG Black Mocha',
             icon: '빠른배송',
@@ -113,7 +113,7 @@ export default {
             derc: '즉시 구매가'
 					},
 					{
-						image: 'src/assets/home/popular/popular_02.jpg',
+						image: '/src/assets/home/popular/popular_02.jpg',
 						brand: 'Nike',
             name: 'Nike Dunk Low Retro Black',
             icon: '빠른배송',
@@ -121,7 +121,7 @@ export default {
             derc: '즉시 구매가'
 					},
 					{
-						image: 'src/assets/home/popular/popular_03.jpg',
+						image: '/src/assets/home/popular/popular_03.jpg',
 						brand: 'Nike',
             name: 'Nike Air Force 1 \'07 Low White',
             icon: '빠른배송',
@@ -129,7 +129,7 @@ export default {
             derc: '즉시 구매가'
 					},
 					{
-						image: 'src/assets/home/popular/popular_04.jpg',
+						image: '/src/assets/home/popular/popular_04.jpg',
 						brand: 'New Balance',
             name: 'New Balance 992 Made in USA Grey - D Standard',
             icon: '빠른배송',
@@ -139,7 +139,7 @@ export default {
 				],
         moreItems:[
 					{
-						image: 'src/assets/home/popular/popular_05.jpg',
+						image: '/src/assets/home/popular/popular_05.jpg',
 						brand: 'Nike',
             name: 'Nike Dunk Low Retro Wolf Grey',
             icon: '빠른배송',
@@ -147,7 +147,7 @@ export default {
             derc: '즉시 구매가'
 					},
 					{
-						image: 'src/assets/home/popular/popular_06.jpg',
+						image: '/src/assets/home/popular/popular_06.jpg',
 						brand: 'Nike',
             name: 'Nike Dunk Low Retro PRM Halloween',
             icon: '빠른배송',
@@ -155,7 +155,7 @@ export default {
             derc: '즉시 구매가'
 					},
 					{
-						image: 'src/assets/home/popular/popular_07.jpg',
+						image: '/src/assets/home/popular/popular_07.jpg',
 						brand: 'Jordan',
             name: 'Jordan 1 x Travis Scott x Fragment Retro Low OG SP Military Blue',
             icon: '빠른배송',
@@ -163,7 +163,7 @@ export default {
             derc: '즉시 구매가'
 					},
 					{
-						image: 'src/assets/home/popular/popular_08.jpg',
+						image: '/src/assets/home/popular/popular_08.jpg',
 						brand: 'Jordan',
             name: 'Jordan 1 Mid Light Smoke Grey Anthracite',
             icon: '빠른배송',
@@ -270,7 +270,7 @@ export default {
       top: 3px;
       width: 11px;
       height: 13px;
-      background: url('src/assets/search/express.png') 0 0 no-repeat;
+      background: url('/src/assets/search/express.png') 0 0 no-repeat;
       background-size: 11px 13px;
     }
     .express_text{
