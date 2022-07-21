@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { profileImgBase64 } from '~/store/userDefaultImg'
 
 const headers = {
   'content-type': 'application/json',
   'apikey': 'FcKdtJs202204',
   'username': 'team4'
 }
+
 
 export const useAuthStore = defineStore('auth', {
   state() {
@@ -24,7 +26,8 @@ export const useAuthStore = defineStore('auth', {
         data: {
           email,
           password,
-          displayName
+          displayName,
+          profileImgBase64
         }
       })
       const { user, accessToken } = res.data

@@ -61,7 +61,11 @@ export default createRouter({
     },
     {
       path: '/search',
-      component: () => import('~/components/search/Search.vue')
+      component: () => import('~/components/search/SearchMain.vue')
+    },
+    {
+      path: '/search/:productId',
+      component: () => import('~/components/search/SearchDetail.vue')
     },
     {
       path: '/admin',
