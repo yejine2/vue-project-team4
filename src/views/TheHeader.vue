@@ -1,57 +1,59 @@
 <template>
-  <div class="top-nav">
-    <RouterLink
-      to="/my"
-      class="top-nav__link">
-      마이페이지
-    </RouterLink>
-    <!-- LogIn / LogOut -->
-    <template v-if="authStore.logInLoading">
-      <span class="login-icon material-symbols-outlined">
-        login
-      </span>
-    </template>
-    <template v-else-if="!authStore.user">
+  <nav class="navbar">
+    <div class="top-nav">
       <RouterLink
-        to="/login"
+        to="/my"
         class="top-nav__link">
-        로그인
+        마이페이지
       </RouterLink>
-    </template>
-    <template v-else>
-      <RouterLink 
-        to="/"
-        class="top-nav__link"
-        @click="authStore.signOut">
-        로그아웃
-      </RouterLink>
-    </template>
-  </div>
+      <!-- LogIn / LogOut -->
+      <template v-if="authStore.logInLoading">
+        <span class="login-icon material-symbols-outlined">
+          login
+        </span>
+      </template>
+      <template v-else-if="!authStore.user">
+        <RouterLink
+          to="/login"
+          class="top-nav__link">
+          로그인
+        </RouterLink>
+      </template>
+      <template v-else>
+        <RouterLink 
+          to="/"
+          class="top-nav__link"
+          @click="authStore.signOut">
+          로그아웃
+        </RouterLink>
+      </template>
+    </div>
   
-  <div class="main-nav">
-    <div class="logo-nav">
-      <RouterLink
-        to="/"
-        class="top-nav__logo">
+    <div class="main-nav">
+      <div class="logo-nav">
+        <RouterLink
+          to="/"
+          class="top-nav__logo">
+          <img
+            class="main-nav__logo"
+            src="../assets/logo.png"
+            alt="kream" />
+        </RouterLink>
+      </div>
+      <div class="link-nav">
+        <RouterLink
+          to="/search"
+          class="main-nav__link">
+          SHOP
+        </RouterLink>
+        <!-- 검색 버튼 -->
         <img
-          class="main-nav__logo"
-          src="../assets/logo.png"
-          alt="kream" />
-      </RouterLink>
+          src="../assets/search.png"
+          alt="검색버튼"
+          class="search_btn" />
+      </div>
     </div>
-    <div class="link-nav">
-      <RouterLink
-        to="/search"
-        class="main-nav__link">
-        SHOP
-      </RouterLink>
-      <!-- 검색 버튼 -->
-      <img
-        src="../assets/search.png"
-        alt="검색버튼"
-        class="search_btn" />
-    </div>
-  </div>
+  </nav>
 </template>
 
 <script>
@@ -66,12 +68,23 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+.navbar {
+  width: 100%;
+  position: fixed;
+  background-color: $color-white;
+  top:0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+}
 .top-nav{
   height: 32px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding: 0px 40px;
+  border-bottom: 1px solid #e9e9e9;
   .top-nav__link {
     color: #707070;
     text-decoration: none;
@@ -89,7 +102,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 0px 40px;
-  border-top: 1px solid #e9e9e9;
+  border-bottom: 1px solid #e9e9e9;
   .logo-nav {
     font-size:0;
   }

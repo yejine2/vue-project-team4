@@ -18,25 +18,25 @@
       <img
         class="test slide-item_img"
         src="../assets/home/swiper/swiper_01.jpg"
-        alt="1" />
+        alt="럭키 드로우" />
     </swiper-slide>
     <swiper-slide class="slide slide-item-02">
       <img
         class="slide-item_img"
         src="../assets/home/swiper/swiper_02.jpg"
-        alt="2" />
+        alt="Dior 오블리크 컬렉션" />
     </swiper-slide>
     <swiper-slide class="slide slide-item-03">
       <img
         class="slide-item_img"
         src="../assets/home/swiper/swiper_03.jpg"
-        alt="2" />
+        alt="메종 미하라 야스히로" />
     </swiper-slide>
     <swiper-slide class="slide slide-item-04">
       <img
         class="slide-item_img"
         src="../assets/home/swiper/swiper_04.jpg"
-        alt="3" />
+        alt="조던 스타일링" />
     </swiper-slide>
   </swiper>
 </template>
@@ -71,6 +71,7 @@ export default {
 .slide {
   display: flex;
   justify-content: center;
+  cursor: pointer;
 }
 .slide-item-01 {
   background-color: rgb(227, 244, 219);
@@ -85,7 +86,6 @@ export default {
   background-color: rgb(245, 245, 245);
 }
 .slide-item_img {
-  widows: 100%;
   height: 100%;
   object-fit: cover;
 }

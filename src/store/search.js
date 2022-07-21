@@ -17,7 +17,8 @@ export const useSearchStore = defineStore('search', {
       results: null,
       categoryInteract: false,
       brandInteract: '',
-      priceInteract: ''
+      priceInteract: '',
+      productInfo: []
     }
   },
   actions: {
@@ -62,6 +63,28 @@ export const useSearchStore = defineStore('search', {
         this.results = result
       }
       return res.data // 필터 브랜드 리스트 뽑기 위함, 필터 브랜드 컴포넌트에서 생성시 함수실행이 됨(검색 첫화면 전체 제품이 출력됨)
+    },
+    async searchDetail(id) {
+      const res = await axios({
+        url: `https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/${id}`,
+        method: 'GET',
+        headers
+      })
+      this.productInfo = res.data
+    },
+    async product_payment(payload) {
+      const accessToken = window.localStorage.getItem('token')
+      const { productId, accountId } = payload
+      const res = await axios({
+        url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/buy',
+        method: 'POST',
+        headers: { ...headers, Authorization: `Bearer ${accessToken}`},
+        data: {
+          productId,
+          accountId
+        }
+      })
+      console.log(res)
     }
   }
 })
