@@ -14,6 +14,7 @@
       변경
     </button>
   </div>
+
   <div
     v-show="editMode"
     class="modify_password">
@@ -32,14 +33,16 @@
           v-model="oldPassword"
           class="input_txt"
           placeholder="영문, 숫자, 특수문자 조합 8-16자"
-          type="password" />
+          type="password"
+          @keydown.esc="offEditMode" />
         <p
-          v-show="valid.oldPassword"
+          v-show="oldPasswordHasError"
           class="input-error">
           영문, 숫자, 특수문자를 조합하여 입력해주세요. (8-16자)
         </p>
       </div>
     </div>
+
     <div
       class="input_box"
       :class="{ 'has_error': newPasswordHasError }">
@@ -53,19 +56,27 @@
           class="input_txt"
           placeholder="영문, 숫자, 특수문자 조합 8-16자"
           type="password" 
-          @keydown.enter="editUserPassword(); offEditMode()" />
+          @keydown.enter="editUserPassword(); offEditMode()"
+          @keydown.esc="offEditMode" />
         <p
-          v-show="valid.newPassword"
+          v-show="newPasswordHasError"
           class="input-error">
           영문, 숫자, 특수문자를 조합하여 입력해주세요. (8-16자)
         </p>
       </div>
     </div>
+
     <div class="modify_btn_box">
-      <button @click="offEditMode">
+      <button
+        class="btn"
+        @click="offEditMode">
         취소
       </button>
-      <button @click="editUserPassword(), offEditMode()">
+      <button 
+        :disabled="!btnEnable"
+        :class="{ disabled: !btnEnable }"
+        class="btn"
+        @click="editUserPassword(), offEditMode()">
         저장
       </button>
     </div>
@@ -82,6 +93,7 @@ export default {
       oldPassword: '',
       newPassword: '',
       editMode: false,
+      btnEnable: false,
       valid: {
         oldPassword: false,
         newPassword: false,
@@ -129,25 +141,34 @@ export default {
       // 비밀번호 형식 검사(영문, 숫자, 특수문자)
       const validatePassword = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/
 
-      if (!validatePassword.test(this.oldPassword) || !this.oldPassword) {
-        
-        this.valid.oldPassword = true
+      if (!validatePassword.test(this.oldPassword) || !this.oldPassword) {        
+        this.valid.oldPassword = false
         this.oldPasswordHasError = true
-        return
-      } this.valid.oldPassword = false
+      } else {
+        this.valid.oldPassword = true
         this.oldPasswordHasError = false
-        return
+      }
+      this.buttonEnable()
     },
     checknewPassword() {
       // 비밀번호 형식 검사(영문, 숫자, 특수문자)
       const validatePassword = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/
 
-        if (!validatePassword.test(this.newPassword) || !this.newPassword) {
-        this.valid.newPassword = true
+      if (!validatePassword.test(this.newPassword) || !this.newPassword) {
+        this.valid.newPassword = false
         this.newPasswordHasError = true
-        return
-      } this.valid.newPassword = false
+      } else {
+        this.valid.newPassword = true
         this.newPasswordHasError = false
+      }
+      this.buttonEnable()
+    },
+    buttonEnable() {
+      if (this.valid.oldPassword && this.valid.newPassword) {
+        this.btnEnable = true
+      } else {
+        this.btnEnable = false
+      }
     }
   }
 }
@@ -235,8 +256,7 @@ export default {
   .modify_btn_box {
     padding-top: 28px;
     text-align: center;
-    
-    button {
+    .btn {
       padding: 0 38px;
       height: 42px;
       font-size: 14px;
@@ -244,9 +264,19 @@ export default {
       border: 1px solid #d3d3d3;
       border-radius: 12px;
       color: rgba(34, 34, 34, .8);
+      background-color: #fff;
       cursor: pointer;
       &:nth-child(2) {
+        font-weight: 700;
         margin-left: 8px;
+        background-color: #222;
+        color: #fff;
+      }
+      &:disabled {
+        border: 0;
+        background-color: #ebebeb;
+        color: #fff;
+        cursor: default;
       }
     }
   }

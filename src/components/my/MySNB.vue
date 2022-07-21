@@ -7,11 +7,14 @@
       <div class="snb_list">
         <strong class="snb_title">쇼핑 정보</strong>
         <ul class="snb_menu">
-          <li class="menu_item">
+          <li
+            v-for="nav in buyNavigations"
+            :key="nav.path"
+            class="menu_item">
             <RouterLink
-              to="#"
+              :to="nav.path"
               class="menu_link">
-              구매 내역
+              {{ nav.name }}
             </RouterLink>
           </li>
         </ul>
@@ -19,17 +22,16 @@
       <div class="snb_list">
         <strong class="snb_title">내 정보</strong>
         <ul class="snb_menu">
-          <template
-            v-for="nav in navigations"
-            :key="nav.path">
-            <li class="menu_item">
-              <RouterLink
-                :to="nav.path"
-                class="menu_link">
-                {{ nav.name }}
-              </RouterLink>
-            </li>
-          </template>
+          <li
+            v-for="nav in myNavigations"
+            :key="nav.path"
+            class="menu_item">
+            <RouterLink
+              :to="nav.path"
+              class="menu_link">
+              {{ nav.name }}
+            </RouterLink>
+          </li>
         </ul>
       </div>
     </nav>
@@ -41,10 +43,13 @@
 export default {
   data() {
     return {
-      navigations: [
+      buyNavigations: [
+        { path: '/my/buying', name: '구매 내역' }
+      ],
+      myNavigations: [
         { path: '/my/profile', name: '프로필 정보' },
         { path: '/my/account', name: '계좌 정보' }
-      ]
+      ]      
     }
   }
 }
