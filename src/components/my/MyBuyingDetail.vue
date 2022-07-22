@@ -98,8 +98,8 @@ export default {
       return this.userStore.transactionDetail
     }
   },
-  created() {
-    this.userStore.getTransactionDetail(this.$route.params.id)
+  async created() {
+    await this.userStore.getTransactionDetail(this.$route.params.id)
   },
   methods: {
     done(value) {

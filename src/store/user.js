@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
+const { VITE_API_KEY, VITE_USERNAME } = import.meta.env
+
 const headers = {
   'content-type': 'application/json',
-  'apikey': 'FcKdtJs202204',
-  'username': 'team4'
+  'apikey': VITE_API_KEY,
+  'username': VITE_USERNAME
 }
 
 
@@ -121,7 +123,7 @@ export const useUserStore = defineStore('user', {
         method: 'GET',
         headers: { ...headers, Authorization: `Bearer ${accessToken}` }
       })
-      this.transactionList = await res.data
+      this.transactionList = res.data
       this.isAll = this.transactionList.length
       this.isDone = 0
       this.isCanceled = 0
@@ -194,6 +196,8 @@ export const useUserStore = defineStore('user', {
         }
       })
       this.transactionDetail = res.data
+      console.log(res.data)
+      return res.data
     }
   }
 })
