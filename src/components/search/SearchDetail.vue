@@ -121,7 +121,7 @@
       </div>
     </div>
     <BrandList />
-    <BannerBottom />
+    <BannerBottom class="BannerBottom" />
   </div>
 </template>
 
@@ -456,5 +456,8 @@ a {
 }
 .modal {
   z-index: 99999999;
+}
+.BannerBottom {
+  height: 360px;
 }
 </style>
