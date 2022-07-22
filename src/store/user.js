@@ -139,6 +139,7 @@ export const useUserStore = defineStore('user', {
         method: 'GET',
         headers: { ...headers, Authorization: `Bearer ${accessToken}` }
       })
+
       this.transactionList = res.data
       this.isAll = this.transactionList.length
       this.isDone = 0
@@ -153,14 +154,11 @@ export const useUserStore = defineStore('user', {
           this.isCanceled += 1
         }
       })
-
-      // return this.transactionList
     },
     // 구매 내역 필터
     filteredList() {
       switch (this.transactionFilter) {
         case 'all':
-          console.log(typeof this.transactionList)
           return this.transactionList
         case 'wait':
           return this.transactionList.filter(list => !list.done && !list.isCanceled)
@@ -174,7 +172,7 @@ export const useUserStore = defineStore('user', {
     async transactionDone(id) {
       const accessToken = window.localStorage.getItem('token')
       
-      const res = await axios({
+      await axios({
         url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/ok',
         method: 'POST',
         headers: { ...headers, Authorization: `Bearer ${accessToken}` },
@@ -184,12 +182,11 @@ export const useUserStore = defineStore('user', {
       })
       await this.readTransactionList()
       await this.getTransactionDetail(id)
-      return console.log(res)
     },
     async transactionCancel(id) {
       const accessToken = window.localStorage.getItem('token')
       
-      const res = await axios({
+      await axios({
         url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/cancel',
         method: 'POST',
         headers: { ...headers, Authorization: `Bearer ${accessToken}` },
@@ -199,7 +196,6 @@ export const useUserStore = defineStore('user', {
       })
       this.readTransactionList()
       this.getTransactionDetail(id)
-      return console.log(res)
     },
     async getTransactionDetail(id) {
       const accessToken = window.localStorage.getItem('token')
@@ -212,6 +208,7 @@ export const useUserStore = defineStore('user', {
           detailId: id
         }
       })
+      
       this.transactionDetail.detailId = res.data.detailId
       this.transactionDetail.done = res.data.done
       this.transactionDetail.isCanceled = res.data.isCanceled

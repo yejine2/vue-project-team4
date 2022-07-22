@@ -5,9 +5,6 @@
         <h3>구매 상세 내역</h3>
       </div>
     </div>
-    <!-- <button @click="dd">
-      dd
-    </button> -->
     <div class="detail_id">
       <h4>주문번호<span class="id">{{ userStore.transactionDetail.detailId }}</span></h4>
     </div>
@@ -102,7 +99,6 @@ export default {
   },
   methods: {
     async done(value) {
-      // console.log(value)
       await this.userStore.transactionDone(value)
     },
     cancel(value) {

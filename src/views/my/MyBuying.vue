@@ -10,15 +10,16 @@
       <div class="purchase_list_tab">
         <MyBuyingOptionButton />
       </div>
-      <div class="purchase_head"></div>
-      <div class="purchase_body">
+      <div 
+        v-if="filteredList != 0"
+        class="purchase_goods">
+        <ul>
+          <MyBuyingItem
+            v-for="list in filteredList" 
+            :key="list.detailId"
+            :list="list" />
+        </ul>
       </div>
-      <ul>
-        <MyBuyingItem
-          v-for="list in filteredList" 
-          :key="list.detailId"
-          :list="list" />
-      </ul>
     </div>
   </template>
 </template>
@@ -59,8 +60,17 @@ export default {
     margin-top: 20px;
     background-color: #fff;
   }
-  ul {
+  .purchase_goods {
     margin-top: 20px;
+    min-height: 600px;
+    ul {
+    min-height: 600px;
+      li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
   }
 }
 </style>

@@ -3,8 +3,10 @@
     <div
       ref="tab_0"
       class="tab_all selected"
-      @click="filterList('all'); select($refs.tab_0)">
-      <span class="count">{{ userStore.isAll }}</span>
+      @click="filterList('all'); select($refs.tab_0); showEl($refs.isAll)">
+      <span
+        ref="isAll"
+        class="count all">{{ userStore.isAll }}</span>
       <h5 class="title">
         전체
       </h5>
@@ -12,8 +14,10 @@
     <div
       ref="tab_1"
       class="tab_wait"
-      @click="filterList('wait'); select($refs.tab_1)">
-      <span class="count">{{ userStore.isWait }}</span>
+      @click="filterList('wait'); select($refs.tab_1); showEl($refs.isWait)">
+      <span
+        ref="isWait"
+        class="count wait">{{ userStore.isWait }}</span>
       <h5 class="title">
         확정 대기
       </h5>
@@ -21,8 +25,10 @@
     <div
       ref="tab_2"
       class="tab_done"
-      @click="filterList('done'); select($refs.tab_2)">
-      <span class="count">{{ userStore.isDone }}</span>
+      @click="filterList('done'); select($refs.tab_2); showEl($refs.isDone)">
+      <span 
+        ref="isDone"
+        class="count done">{{ userStore.isDone }}</span>
       <h5 class="title">
         구매 확정
       </h5>
@@ -30,12 +36,32 @@
     <div
       ref="tab_3"
       class="tab_cancel"
-      @click="filterList('canceled'); select($refs.tab_3)">
-      <span class="count">{{ userStore.isCanceled }}</span>
+      @click="filterList('canceled'); select($refs.tab_3); showEl($refs.isCanceled)">
+      <span
+        ref="isCanceled"
+        class="count cancel">{{ userStore.isCanceled }}</span>
       <h5 class="title">
         구매 취소
       </h5>
     </div>
+  </div>
+  
+  <div
+    class="purchase_goods">
+    <ul>
+      <li
+        :style="{display : noContent }">
+        거내 내역이 없습니다.
+      </li>
+      <li
+        :style="{display : noDone }">
+        구매 확정 내용이 없습니다.
+      </li>
+      <li
+        :style="{display : noCancel }">
+        구매 취소 내용이 없습니다.
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -46,7 +72,10 @@ import { useUserStore } from '~/store/user'
 export default {
   data() {
     return {
-      selected: false
+      selected: false,
+      noContent: 'none',
+      noDone: 'none',
+      noCancel: 'none'
     }
   },
   computed: {
@@ -62,7 +91,25 @@ export default {
       this.$refs.tab_2.classList.remove('selected')
       this.$refs.tab_3.classList.remove('selected')
       e.classList.add('selected')
-      
+    },
+    showEl(e) {
+      if (e.classList[1] == 'done' && this.userStore.isDone == 0) {
+        this.noContent = 'none'
+        this.noDone = ''
+        this.noCancel = 'none'
+      } else if (e.classList[1] == 'all' && this.userStore.isAll == 0) {
+        this.noContent = ''
+        this.noDone = 'none'
+        this.noCancel = 'none'
+      } else if (e.classList[1] == 'cancel' && this.userStore.isCanceled == 0) {
+        this.noContent = 'none'
+        this.noDone = 'none'
+        this.noCancel = ''
+      } else {
+        this.noContent = 'none'
+        this.noDone = 'none'
+        this.noCancel = 'none'
+      }
     }
   }
 }
@@ -104,4 +151,13 @@ export default {
     }
   }
 }
+.purchase_goods {
+    ul {
+      background-color: #fafafa;
+      li {
+        padding: 250px 0;
+        text-align: center;
+      }
+    }
+  }
 </style>
