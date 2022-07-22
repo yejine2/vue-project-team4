@@ -7,6 +7,7 @@
     </div>
     <div class="detail_id">
       <h4>주문번호<span class="id">{{ userStore.transactionDetail.detailId }}</span></h4>
+      <span class="purchase_date">{{ `주문 일자 ${purchaseDate}` }}</span>
     </div>
     <div class="item_list">
       <div class="item_img">
@@ -71,6 +72,12 @@
             <div class="title">
               간편 결제 (계좌이체)
             </div>
+            <div class="bank-name">
+              {{ userStore.transactionDetail.account.bankName }}
+            </div>
+            <div class="bank-account-number">
+              {{ `(${accountNumber})` }}
+            </div>
             <div class="price">
               {{ `${userStore.transactionDetail.product.price.toLocaleString()}원` }}
             </div>
@@ -109,11 +116,20 @@ import { mapStores } from 'pinia'
 import { useUserStore } from '~/store/user'
 
 export default {
+  data () {
+    return {
+      accountNumber: '',
+      purchaseDate: ''
+    }
+  },
   computed: {
-    ...mapStores(useUserStore)
+    ...mapStores(useUserStore)    
   },
   async created() {
     await this.userStore.getTransactionDetail(this.$route.params.id)
+    
+    this.accountNumber = this.userStore.transactionDetail.account.accountNumber.replace(/X/g, '●')
+    this.purchaseDate = new Date(this.userStore.transactionDetail.timePaid).toLocaleString()
   },
   methods: {
     async done(value) {
@@ -136,15 +152,21 @@ export default {
     }
   }
   .detail_id {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
     margin-top: 30px;
+    border-bottom: 2px solid #222;
     h4 {
       padding-bottom: 15px;
       font-size: 18px;
-      border-bottom: 2px solid #222;
       .id {
         margin-left: 5px;
         font-weight: 700;
       }
+    }
+    .purchase_date {
+      font-size: 13px;
     }
   }
   .item_list {
@@ -228,15 +250,13 @@ export default {
       }
     }
     .payment {
-      display: flex;
-      justify-content: space-between;
       margin-top: 20px;
       .price_detail {
         display: flex;
         flex-grow: 1;
         flex-direction: column;
         padding: 30px 20px;
-        border-right: 1px solid #ebebeb;
+        border-bottom: 1px solid #ebebeb;
         > div {
           display: flex;
           justify-content: space-between;
@@ -262,9 +282,8 @@ export default {
       }
       .way {
         display: flex;
-        flex-grow: 1;
         flex-direction: column;
-        padding: 0px 20px;
+        padding: 30px 20px;
         .way_title {
           padding: 10px 0 5px 0;
           h5 {
@@ -275,14 +294,23 @@ export default {
         .way_info {
           display: flex;
           justify-content: space-between;
+          align-items: center;
+          padding: 10px 0;
+          font-size: 14px;
+          line-height: 18px;
           .title {
-            flex-grow: 1;
-            padding: 10px 0;
-            font-size: 14px;
+            width: 150px;
+          }
+          .bank-name {
+            padding: 0 5px;
+          }
+          .bank-account-number {
+            padding: 0 5px;
           }
           .price {
+            text-align: right;
+            flex-grow: 1;
             padding: 10px 0;
-            font-size: 14px;
           }
         }
       }

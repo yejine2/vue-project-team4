@@ -23,6 +23,7 @@ export const useUserStore = defineStore('user', {
         detailId: '',
         done: false,
         isCanceled: false,
+        timePaid: '',
         account: {
           bankName: '',
           accountNumber: ''
@@ -208,18 +209,19 @@ export const useUserStore = defineStore('user', {
           detailId: id
         }
       })
-      
+
       this.transactionDetail.detailId = res.data.detailId
       this.transactionDetail.done = res.data.done
       this.transactionDetail.isCanceled = res.data.isCanceled
+      this.transactionDetail.timePaid = res.data.timePaid
       this.transactionDetail.product.productId = res.data.product.productId
       this.transactionDetail.product.title = res.data.product.title
       this.transactionDetail.product.price = res.data.product.price
       this.transactionDetail.product.description = res.data.product.description
       this.transactionDetail.product.tags = res.data.product.tags
       this.transactionDetail.product.thumbnail = res.data.product.thumbnail
-      this.transactionDetail.account.bankName = res.data.product.bankName
-      this.transactionDetail.account.accountNumber = res.data.product.accountNumber
+      this.transactionDetail.account.bankName = res.data.account.bankName
+      this.transactionDetail.account.accountNumber = res.data.account.accountNumber
     }
   }
 })
