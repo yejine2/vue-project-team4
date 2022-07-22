@@ -5,10 +5,10 @@
       <div class="page_title">
         <div class="search_box">
           <input
-            ref="search"
+            ref="search_input"
             type="text"
             class="search"
-            placeholder="제품명"
+            placeholder="모델명"
             @input="search_text = $event.target.value"
             @keypress.enter="search_product" />
           <i
@@ -96,7 +96,8 @@ export default {
         this.$refs.acc,
         this.$refs.life,
         this.$refs.tech
-      ]
+      ],
+      get_recents: []
     }
   },
   computed: {
@@ -116,12 +117,22 @@ export default {
       this.searchStore.categoryInteract = false
     }
   },
+  mounted() {
+    const is_header_search = window.sessionStorage.getItem('is_header_search')
+    // 루트 헤더 검색어 인풋 값으로 넣어주기
+    if(is_header_search === 'true') {
+      const get_recent_arr = window.localStorage.getItem('recent_search')
+      this.get_recents = JSON.parse(get_recent_arr)
+      this.$refs.search_input.value = this.get_recents[0]
+    }
+  },
   methods: {
     search_product() {
       this.$emit('search_text', this.search_text)
     },
-    input_init() {
-      this.$refs.search.value = null
+    async input_init() {
+      this.$refs.search_input.value = null
+      await this.searchStore.searchProducts()
     },
     async category_btn(category, e) {
       const cate = [this.$refs.shoes, this.$refs.cloth, this.$refs.acc, this.$refs.life, this.$refs.tech]
@@ -133,7 +144,6 @@ export default {
         payload.style.fontWeight = '700'
       }
       function btn_off(payload) {
-        console.log(payload)
         payload.style.backgroundColor = '#f4f4f4'
         payload.style.color = '#222'
         payload.style.fontWeight = '400'
