@@ -33,7 +33,7 @@ KREAM
 
  #### 로그인 / 회원가입
 
-<img width="850" alt="auth" src="https://user-images.githubusercontent.com/85099612/180381065-5cc9287d-ae6c-43e7-8b18-d6324f62a883.png">
+<img width="800" alt="auth" src="https://user-images.githubusercontent.com/85099612/180381065-5cc9287d-ae6c-43e7-8b18-d6324f62a883.png">
 
  - 로그인 및 회원가입 시 이메일 및 비밀번호 형식이 맞는지 실시간으로 유효성 검사를 합니다.
  - 유효성 검사에 통과하지 못하면 로그인 / 가입 버튼이 비활성화 됩니다.
@@ -50,7 +50,7 @@ KREAM
 
  #### 검색 및 사용자 제품 구매
 
-<img width="700" alt="serch" src="https://user-images.githubusercontent.com/85099612/180413942-a66a5cf4-cc86-410b-8552-1c646154e3d8.png">
+<img width="800" alt="serch" src="https://user-images.githubusercontent.com/85099612/180413942-a66a5cf4-cc86-410b-8552-1c646154e3d8.png">
 
 #### 헤더 섹션 검색
 - 검색어를 로컬스토리지에서 스토어로 전달합니다.
@@ -70,7 +70,7 @@ KREAM
 
 #### 사용자 정보 수정 및 계좌 관리
 
-<img width="600" alt="serch" src="https://user-images.githubusercontent.com/85099612/180398919-d0fbc001-6d2c-48af-8237-e6016d5a05ab.png">
+<img width="800" alt="account" src="https://user-images.githubusercontent.com/85099612/180416804-03a19ea9-8c95-4f07-a9e1-1cfd4732fa9f.png">
 
 #### 사용자 이미지, 이름, 비밀번호 수정
 - 사용자가 이미지를 선택하면 Base64 인코딩하여 전송합니다.
@@ -88,7 +88,7 @@ KREAM
 <br />
 
 #### 관리자 파트
-<img width="800" alt="serch" src="https://user-images.githubusercontent.com/85099612/180399750-0abdfd7c-a97f-477a-98d1-e2b68f11476b.png">
+<img width="800" alt="admin" src="https://user-images.githubusercontent.com/85099612/180399750-0abdfd7c-a97f-477a-98d1-e2b68f11476b.png">
 
 
 
@@ -121,12 +121,12 @@ KREAM
   - Bootstrap
   - Eslint
 
-
+<br />
 
 ### 🌳 설계도
 
 
-<img width="700" alt="User flow" src="https://velog.velcdn.com/images/yejine2/post/51e77242-9821-4dd6-b77f-de42657b03ee/image.jpg">
+<img width="800" alt="User flow" src="https://velog.velcdn.com/images/yejine2/post/51e77242-9821-4dd6-b77f-de42657b03ee/image.jpg">
 
 
 - [User Flow](https://app.diagrams.net/#G1CvW9kHXPxmw40lganlLvndA0Nr9bjmlQ)
