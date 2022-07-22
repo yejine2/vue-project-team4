@@ -78,8 +78,8 @@ export default {
   },
   data() {
     return {
-      email: 'user_test13@gmail.com',
-      password: 'usertest13@',
+      email: '',
+      password: '',
       valid: {
         email: false,
         password: false,
