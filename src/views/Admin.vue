@@ -17,5 +17,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+
+::-webkit-scrollbar {
+  width: 0;
+}
 </style>
