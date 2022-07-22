@@ -32,7 +32,7 @@ export default createRouter({
           children: [
             {
               path: ':id',
-              component: () => import('~/components/my/MyBuyingDetail.vue')
+              component: () => import('~/views/my/MyBuyingDetail.vue')
             }
           ]
         }
