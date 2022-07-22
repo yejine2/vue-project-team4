@@ -42,7 +42,7 @@
               </div>
               <div class="modal-body">
                 <div class="bank-name">
-                  <strong>은행명</strong>
+                  <strong class="input_title">은행명</strong>
                   <div class="dropdown">
                     <button
                       id="dropdownMenuButton1"
@@ -70,7 +70,7 @@
                         :key="bank.code"
                         class="dropdown-item"
                         :class="{ 'disabled': bank.disabled}"
-                        @click="change = bank.name, bankCode = bank.code, digits = bank.digits, getBankDigit()">
+                        @click="change = bank.name; bankCode = bank.code; digits = bank.digits; changeBank()">
                         {{ bank.name }}
                       </li>
                     </ul>
@@ -83,10 +83,7 @@
                 <div
                   class="account-number"
                   :class="{ 'has_error': accountNumberHasError }">
-                  <strong>계좌번호</strong>
-                  <strong
-                    v-show="(digit != 0)"
-                    class="bank-digit">{{ `(${digit}자리)` }}</strong>
+                  <strong class="input_title">계좌번호</strong>
                   <div class="input_box">
                     <input
                       v-model="accountNumber"
@@ -94,9 +91,9 @@
                       placeholder="- 없이 입력하세요"
                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
                     <p
-                      v-show="valid.accountNumber"
+                      v-show="accountNumberHasError"
                       class="input-error">
-                      {{ `올바른 계좌번호를 입력해주세요. (${digit}자)` }}
+                      {{ `올바른 계좌번호를 입력해주세요. (${totalDigit}자)` }}
                     </p>
                   </div>
                 </div>
@@ -104,7 +101,7 @@
                 <div
                   class="phone-number"
                   :class="{ 'has_error': phoneNumberHasError }">
-                  <strong>휴대폰 번호</strong>
+                  <strong class="input_title">휴대폰 번호</strong>
                   <div class="input_box">
                     <input
                       v-model="phoneNumber"
@@ -112,7 +109,7 @@
                       placeholder="- 없이 입력하세요"
                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
                     <p
-                      v-show="valid.phoneNumber"
+                      v-show="phoneNumberHasError"
                       class="input-error">
                       올바른 전화번호를 입력해주세요. (11자)
                     </p>
@@ -137,14 +134,16 @@
               <div class="modal-footer">
                 <button
                   type="button"
-                  class="btn btn-secondary"
+                  class="btn btn_cancle"
                   data-bs-dismiss="modal"
                   @click="closeModal">
                   취소
                 </button>
                 <button
+                  :disabled="!btnEnable"
                   type="button"
-                  class="btn btn-primary btn-create"
+                  :class="{ disabled: !btnEnable }"
+                  class="btn btn-create"
                   data-bs-dismiss="modal"
                   aria-label="Close"
                   @click="addAccount(); closeModal()">
@@ -160,7 +159,7 @@
 
     <!-- Account List -->
     <div class="account">
-      <UserAccountItem 
+      <MyAccountItem 
         v-for="account in userAccountList"
         :key="account.id"
         :account="account"
@@ -172,11 +171,11 @@
 <script>
 import { mapStores } from 'pinia'
 import { useUserStore } from '~/store/user'
-import UserAccountItem from './UserAccountItem.vue'
+import MyAccountItem from '~/components/my/MyAccountItem.vue'
 
 export default {
   components: {
-    UserAccountItem
+    MyAccountItem
   },
   data() {
     return {
@@ -186,7 +185,8 @@ export default {
       phoneNumber: '',
       signature: false,
       digits: [],
-      digit: 0,
+      totalDigit: 0,
+      btnEnable: false,
       valid: {
         accountNumber: false,
         phoneNumber: false
@@ -210,6 +210,9 @@ export default {
     },
     'phoneNumber': function() {
       this.checkPhone()
+    },
+    'signature' : function() {
+      this.checkSign()
     }
   },
   created() {
@@ -225,23 +228,24 @@ export default {
         signature: this.signature
       })
     },
-    getBankDigit() {
-      this.digit = 0
-      console.log(this.digits)
+    changeBank() {
+      this.totalDigit = 0
+      this.accountNumber = ''
+      this.phoneNumber = ''
+      this.signature = false
+      this.$refs.signature.checked = false
       this.digits.forEach(digit => {
-        this.digit += digit
+        this.totalDigit += digit
       })
-      console.log('total:: ',this.digit)
     },
     async closeModal() {
       this.change = ''
       this.bankCode = ''
       this.accountNumber = ''
       this.phoneNumber = ''
-      this.digit = 0
+      this.totalDigit = 0
       await this.$nextTick()
       this.signature = false
-      // console.log(this.$refs.signature.checked)
       this.$refs.signature.checked = false
       this.valid.accountNumber = false
       this.valid.phoneNumber = false
@@ -249,42 +253,54 @@ export default {
       this.phoneNumberHasError = false
     },
     checkAccount() {
-    // 비밀번호 형식 검사(영문, 숫자, 특수문자)
-    let validatePassword
-    if (this.digit == 12) {
-      validatePassword = /^(?=.*[0-9]).{12}$/
-    } else if (this.digit == 13) {
-      validatePassword = /^(?=.*[0-9]).{13}$/
-    } else {
-      validatePassword = /^(?=.*[0-9]).{14}$/
-    }
-    
-    if (!validatePassword.test(this.accountNumber) || !this.accountNumber) {
-      this.valid.accountNumber = true
-      this.accountNumberHasError = true
-      return
-    } this.valid.accountNumber = false
-      this.accountNumberHasError = false
-      return
+      // 비밀번호 형식 검사(영문, 숫자, 특수문자)
+      let validatePassword
+      if (this.totalDigit == 12) {
+        validatePassword = /^(?=.*[0-9]).{12}$/
+      } else if (this.totalDigit == 13) {
+        validatePassword = /^(?=.*[0-9]).{13}$/
+      } else {
+        validatePassword = /^(?=.*[0-9]).{14}$/
+      }
+      
+      if (!validatePassword.test(this.accountNumber) || !this.accountNumber) {
+        this.valid.accountNumber = false
+        this.accountNumberHasError = true
+      } else {
+        this.valid.accountNumber = true
+        this.accountNumberHasError = false
+      }
+      this.buttonEnable()
     },
     checkPhone() {
       // 비밀번호 형식 검사(영문, 숫자, 특수문자)
       const validatePassword = /^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/
 
       if (!validatePassword.test(this.phoneNumber) || !this.phoneNumber) {
-        this.valid.phoneNumber = true
+        this.valid.phoneNumber = false
         this.phoneNumberHasError = true
-        return
-      } this.valid.phoneNumber = false
+      } else {
+        this.valid.phoneNumber = true
         this.phoneNumberHasError = false
-        return
+      }
+      this.buttonEnable()
+    },
+    checkSign() {
+      this.buttonEnable()
+    },
+    buttonEnable() {
+      if (this.valid.accountNumber && this.valid.phoneNumber && this.signature) {
+        this.btnEnable = true
+      } else {
+        this.btnEnable = false
+      }
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 @import '~/scss/MyCommon.scss';
 .box {
   width: 100%;
@@ -303,7 +319,7 @@ export default {
         margin-top: 5px;
         font-size: 12px;
         font-weight: 400;
-        color: rgba(34,34,34,.5);
+        color: rgba(34, 34, 34, .5);
       }
     }
     .header__btn {
@@ -339,19 +355,35 @@ export default {
             .bank-name {
               position: relative;
               padding: 10px 0 14px;
+              .input_title {
+                position: relative;
+                padding-right: 6px;
+                &::after {
+                  content: '*';
+                  position: absolute;
+                  top: -2px;
+                  right: 0;
+                }
+              }
               .dropdown {
                 position: relative;
-                // display: block;
-                width: 450px;
                 padding: 6px 0 7px;
+                width: 450px;
                 .dropdown-toggle {
-                  
-                  // background-color: #fff;
-                  width: 100%;
                   display: flex;
+                  width: 100%;
                   align-items: center;
-                  border-radius: 0rem;
+                  color: rgba(34, 34, 34, .5);
+                  background-color: #ebebeb;
+                  border: 0;
+                  border-radius: 0;
                   border-bottom: 1px solid #ebebeb;
+                  outline: none;
+                  &.show::after {
+                    content: "";
+                    margin-left: auto;
+                    transform: rotate(180deg);
+                  }
                   &::after {
                     content: "";
                     margin-left: auto;
@@ -361,7 +393,6 @@ export default {
                   }
                   .choose {
                     font-size: 15px;
-                    color: rgba(34,34,34,.5);
                   }
                   .chosen {
                     font-size: 15px;
@@ -376,12 +407,13 @@ export default {
                   height: 200px;
                   inset: 41px auto auto 0px !important;
                   transform: translate(0px, 0px) !important;
+                  border-top: 0;
                   border-radius: 0rem;
                   overflow: scroll;
                   .dropdown-item {
                     padding: 11px 50px 10px 16px;
                     font-size: 13px;
-                    color: rgba(34,34,34,.8);
+                    color: rgba(34, 34, 34, .8);
                     &.disabled {
                       pointer-events:none;
                       opacity:0.6;
@@ -392,6 +424,7 @@ export default {
               .desc {
                 position: absolute;
                 font-size: 12px;
+                color: rgba(34, 34, 34, .8);
               }
             }
             .input_box {
@@ -416,23 +449,37 @@ export default {
               }
             }
             .account-number {
-              margin-top: 6px;
+              margin-top: 16px;
               padding: 10px 0 14px;
               box-sizing: border-box;
+              .input_title {
+                position: relative;
+                padding-right: 6px;
+                &::after {
+                  content: '*';
+                  position: absolute;
+                  top: -2px;
+                  right: 0;
+                }
+              }
               &.has_error {
                 color: $color-error;
               }
-              .bank-digit {
-              margin-left: 5px;
-              }
-              // .input_box {
-              //   
-              // }
             }
             
             .phone-number {
               margin-top: 16px;
               padding: 10px 0 14px;
+              .input_title {
+                position: relative;
+                padding-right: 6px;
+                &::after {
+                  content: '*';
+                  position: absolute;
+                  top: -2px;
+                  right: 0;
+                }
+              }
               &.has_error {
                 color: $color-error;
               }
@@ -458,8 +505,30 @@ export default {
               }
             }
           }
-          .btn-create {
-            background-color: #222;
+          .modal-footer {
+            .btn {
+              padding: 0 17px;
+              height: 42px;
+              font-size: 14px;
+              line-height: 40px;
+              border: 1px solid #d3d3d3;
+              border-radius: 12px;
+              color: rgba(34, 34, 34, .8);
+              background-color: #fff;
+              cursor: pointer;
+              &.btn-create {
+                font-weight: 700;
+                margin-left: 8px;
+                background-color: #222;
+                color: #fff;
+                &:disabled {
+                  border: 0;
+                  background-color: #ebebeb;
+                  color: #fff;
+                  cursor: default;
+                }
+              }
+            }
           }
         }
       }

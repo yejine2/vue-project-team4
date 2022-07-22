@@ -65,4 +65,9 @@ export default {
 <style lang="scss" scoped>
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
+th {
+  white-space: nowrap;
+  vertical-align: middle;
+  text-align: center;
+}
 </style>

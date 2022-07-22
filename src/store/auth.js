@@ -10,7 +10,6 @@ const headers = {
   'username': VITE_USERNAME
 }
 
-
 export const useAuthStore = defineStore('auth', {
   state() {
     return {

@@ -1,14 +1,17 @@
 <template>
-  <Bar
-    :chart-options="chartOptions"
-    :chart-data="chartData"
-    :chart-id="chartId"
-    :dataset-id-key="datasetIdKey"
-    :plugins="plugins"
-    :css-classes="cssClasses"
-    :styles="styles"
-    :width="width"
-    :height="height" />
+  <div class="chart-container">
+    <Bar
+      class="chart-bar"
+      :chart-options="chartOptions"
+      :chart-data="chartData"
+      :chart-id="chartId"
+      :dataset-id-key="datasetIdKey"
+      :plugins="plugins"
+      :css-classes="cssClasses"
+      :styles="styles"
+      :width="width"
+      :height="height" />
+  </div>
 </template>
 
 <script>
@@ -72,3 +75,18 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+
+.chart-container {
+  width: 700px;
+  display: flex;
+  justify-content: center;
+  margin-left: 100px;
+  .chart-bar {
+    margin: 0 auto;
+    width: 100%
+  }
+}
+
+</style>

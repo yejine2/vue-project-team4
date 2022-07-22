@@ -1,4 +1,5 @@
 import axios from 'axios'
+const { VITE_API_KEY, VITE_USERNAME } = import.meta.env
 
 // 로그인 사용자인 경우 token 유효하게 하는 함수
 export async function validateTokenUser() {
@@ -11,8 +12,8 @@ export async function validateTokenUser() {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'apikey': 'FcKdtJs202204',
-        'username': 'team4',
+        'apikey': VITE_API_KEY,
+        'username': VITE_USERNAME,
         'masterkey': true,
         'Authorization': `Bearer ${accessToken}`
       }

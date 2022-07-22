@@ -12,7 +12,7 @@ export default createRouter({
     },
     {
       path: '/my',
-      component: () => import('~/components/UserPage.vue'),
+      component: () => import('~/views/my/My.vue'),
       meta: {
         // 로그인해야만 접속 할 수 있게 설정
         auth: true
@@ -20,11 +20,21 @@ export default createRouter({
       children: [
         {
           path: 'profile',
-          component: () => import('~/components/EditUserProfile.vue') 
+          component: () => import('~/views/my/MyProfile.vue') 
         },
         {
           path: 'account',
-          component: () => import('~/components/UserAccountPage.vue')
+          component: () => import('~/views/my/MyAccount.vue')
+        },
+        {
+          path: 'buying',
+          component: () => import('~/views/my/MyBuying.vue'),
+          children: [
+            {
+              path: ':id',
+              component: () => import('~/components/my/MyBuyingDetail.vue')
+            }
+          ]
         }
       ]
     },
