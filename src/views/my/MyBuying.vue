@@ -1,26 +1,31 @@
 <template>
-  <RouterView />
-  <template v-if="$route.path == '/my/buying'">
-    <div class="my_purchase">
-      <div class="content_title">
-        <div class="title">
-          <h3>구매 내역</h3>
+  <transition name="fade">
+    <RouterView />
+  </transition>
+  <transition name="fade">
+    <template v-if="$route.path == '/my/buying'">
+      <div class="my_purchase">
+        <div class="content_title">
+          <div class="title">
+            <h3>구매 내역</h3>
+          </div>
+        </div>
+        <div class="purchase_list_tab">
+          <MyBuyingOptionButton />
+        </div>
+        <div 
+          v-if="filteredList != 0"
+          class="purchase_goods">
+          <ul>
+            <MyBuyingItem
+              v-for="list in filteredList" 
+              :key="list.detailId"
+              :list="list" />
+          </ul>
         </div>
       </div>
-      <div class="purchase_list_tab">
-        <MyBuyingOptionButton />
-      </div>
-      <div class="purchase_head"></div>
-      <div class="purchase_body">
-      </div>
-      <ul>
-        <MyBuyingItem
-          v-for="list in filteredList" 
-          :key="list.detailId"
-          :list="list" />
-      </ul>
-    </div>
-  </template>
+    </template>
+  </transition>
 </template>
 
 <script>
@@ -47,6 +52,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.fade-enter-active {
+  transition: all .6s ease;
+}
+.fade-leave-active {
+  transition: all 0s;
+}
 .my_purchase {
   .content_title {
     padding: 5px 0 6px;
@@ -59,8 +70,17 @@ export default {
     margin-top: 20px;
     background-color: #fff;
   }
-  ul {
+  .purchase_goods {
     margin-top: 20px;
+    min-height: 600px;
+    ul {
+    min-height: 600px;
+      li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
   }
 }
 </style>
