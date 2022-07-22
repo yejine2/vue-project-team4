@@ -11,7 +11,7 @@
 - 주어진 API 요구사항대로 기능 구현 하되, 전체적인 디자인은 KREAM 사이트 클론하기!
 
 #### 배포 주소
-KREAM
+https://sprightly-centaur-a0443a.netlify.app/
 
 <br />
 
