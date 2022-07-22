@@ -1,20 +1,30 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
+const { VITE_API_KEY, VITE_USERNAME } = import.meta.env
+
 const headers = {
   'content-type': 'application/json',
-  'apikey': 'FcKdtJs202204',
-  'username': 'team4'
+  'apikey': VITE_API_KEY,
+  'username': VITE_USERNAME
 }
 
 export const useSearchStore = defineStore('search', {
   state() {
     return {
+      searchText: '',
       searchTags: [],
       category: '',
       brands: [],
       price: '',
-      results: null,
+      results: [
+        {
+        title: '',
+        description: '',
+        price: '',
+        tags: []
+        }
+      ],
       categoryInteract: false,
       brandInteract: '',
       priceInteract: '',
@@ -28,16 +38,17 @@ export const useSearchStore = defineStore('search', {
   },
   actions: {
     async searchProducts(payload) {
-      let searchText = ''
       if(payload) {
-        searchText = payload  // 검색어가 날라옴
+        this.searchText = payload  // 검색어가 날라옴
+      } else {
+        this.searchText = ''
       }
       const res = await axios({
         url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/search',
         method: 'POST',
         headers,
         data: {
-          searchText,
+          searchText: this.searchText,
           searchTags: this.searchTags
         }
       })

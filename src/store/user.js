@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
+const { VITE_API_KEY, VITE_USERNAME } = import.meta.env
+
 const headers = {
   'content-type': 'application/json',
-  'apikey': 'FcKdtJs202204',
-  'username': 'team4'
+  'apikey': VITE_API_KEY,
+  'username': VITE_USERNAME
 }
 
 
@@ -15,9 +17,26 @@ export const useUserStore = defineStore('user', {
       banks: null,
       userAccountList: null,
       totalBalance: null,
-      transactionList: [],
+      transactionList: {},
       transactionFilter: 'all',
-      transactionDetail: null,
+      transactionDetail: {
+        detailId: '',
+        done: false,
+        isCanceled: false,
+        timePaid: '',
+        account: {
+          bankName: '',
+          accountNumber: ''
+        },
+        product: {
+          productId: '',
+          title: '',
+          price: 0,
+          description: '',
+          tags: [],
+          thumbnail: null,
+        }
+      },
       isAll: 0,
       isWait: 0,
       isDone: 0,
@@ -121,7 +140,8 @@ export const useUserStore = defineStore('user', {
         method: 'GET',
         headers: { ...headers, Authorization: `Bearer ${accessToken}` }
       })
-      this.transactionList = await res.data
+
+      this.transactionList = res.data
       this.isAll = this.transactionList.length
       this.isDone = 0
       this.isCanceled = 0
@@ -135,8 +155,6 @@ export const useUserStore = defineStore('user', {
           this.isCanceled += 1
         }
       })
-
-      // return this.transactionList
     },
     // 구매 내역 필터
     filteredList() {
@@ -155,7 +173,7 @@ export const useUserStore = defineStore('user', {
     async transactionDone(id) {
       const accessToken = window.localStorage.getItem('token')
       
-      const res = await axios({
+      await axios({
         url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/ok',
         method: 'POST',
         headers: { ...headers, Authorization: `Bearer ${accessToken}` },
@@ -163,14 +181,13 @@ export const useUserStore = defineStore('user', {
           detailId: id
         }
       })
-      this.readTransactionList()
-      this.getTransactionDetail()
-      return console.log(res)
+      await this.readTransactionList()
+      await this.getTransactionDetail(id)
     },
     async transactionCancel(id) {
       const accessToken = window.localStorage.getItem('token')
       
-      const res = await axios({
+      await axios({
         url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/cancel',
         method: 'POST',
         headers: { ...headers, Authorization: `Bearer ${accessToken}` },
@@ -179,8 +196,7 @@ export const useUserStore = defineStore('user', {
         }
       })
       this.readTransactionList()
-      this.getTransactionDetail()
-      return console.log(res)
+      this.getTransactionDetail(id)
     },
     async getTransactionDetail(id) {
       const accessToken = window.localStorage.getItem('token')
@@ -193,7 +209,19 @@ export const useUserStore = defineStore('user', {
           detailId: id
         }
       })
-      this.transactionDetail = res.data
+
+      this.transactionDetail.detailId = res.data.detailId
+      this.transactionDetail.done = res.data.done
+      this.transactionDetail.isCanceled = res.data.isCanceled
+      this.transactionDetail.timePaid = res.data.timePaid
+      this.transactionDetail.product.productId = res.data.product.productId
+      this.transactionDetail.product.title = res.data.product.title
+      this.transactionDetail.product.price = res.data.product.price
+      this.transactionDetail.product.description = res.data.product.description
+      this.transactionDetail.product.tags = res.data.product.tags
+      this.transactionDetail.product.thumbnail = res.data.product.thumbnail
+      this.transactionDetail.account.bankName = res.data.account.bankName
+      this.transactionDetail.account.accountNumber = res.data.account.accountNumber
     }
   }
 })

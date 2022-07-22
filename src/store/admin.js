@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
+const { VITE_API_KEY, VITE_USERNAME } = import.meta.env
 const BASE_URL = 'https://asia-northeast3-heropy-api.cloudfunctions.net/api'
 
 export const useIndexStore = defineStore('index', {
@@ -33,8 +34,8 @@ export const useIndexStore = defineStore('index', {
           method: 'POST',
           headers: {
             'content-type': 'application/json',
-            apikey: 'FcKdtJs202204',
-            username: 'team4',
+            apikey: VITE_API_KEY,
+            username: VITE_USERNAME,
             masterKey: true,
           },
           data: {
@@ -46,9 +47,9 @@ export const useIndexStore = defineStore('index', {
             photoBase64,
           },
         })
-        console.log(res.data)
         this.allProducts = res.data
-        this.$router.push('/admin/products')
+        // this.$router.push('/admin/products')
+        window.location.href='/admin/products'
       } catch {
         // console.log(error.response.data)
       }
@@ -59,12 +60,11 @@ export const useIndexStore = defineStore('index', {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
-          apikey: 'FcKdtJs202204',
-          username: 'team4',
+          apikey: VITE_API_KEY,
+          username: VITE_USERNAME,
           masterKey: true
         }
       })
-      console.log(res.data)
       this.allProducts = res.data
     },
 
@@ -74,12 +74,11 @@ export const useIndexStore = defineStore('index', {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
-          apikey: 'FcKdtJs202204',
-          username: 'team4',
+          apikey: VITE_API_KEY,
+          username: VITE_USERNAME,
           masterKey: true
         }
       })
-      console.log(res.data)
       this.transactions = res.data
     },
 
@@ -90,8 +89,8 @@ export const useIndexStore = defineStore('index', {
         method: 'PUT',
         headers: {
           'content-type': 'application/json',
-          apikey: 'FcKdtJs202204',
-          username: 'team4',
+          apikey: VITE_API_KEY,
+          username: VITE_USERNAME,
           masterKey: true
         },
         data: {
@@ -99,7 +98,6 @@ export const useIndexStore = defineStore('index', {
           done
         }
       })
-      console.log(res.data)
       this.transactions = res.data
 
       await this.allTransactions()
@@ -110,11 +108,10 @@ export const useIndexStore = defineStore('index', {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
-          apikey: 'FcKdtJs202204',
-          username: 'team4'
+          apikey: VITE_API_KEY,
+          username: VITE_USERNAME
         }
       })
-      console.log(res.data)
       this.product = res.data
     },
 
@@ -135,8 +132,8 @@ export const useIndexStore = defineStore('index', {
           method: 'PUT',
           headers: {
             'content-type': 'application/json',
-            apikey: 'FcKdtJs202204',
-            username: 'team4',
+            apikey: VITE_API_KEY,
+            username: VITE_USERNAME,
             masterKey: true,
           },
           data: {
@@ -151,6 +148,7 @@ export const useIndexStore = defineStore('index', {
         }
       )
       this.product = res.data
+      // this.$router.push('/admin/products')
       window.location.href='/admin/products'
     },
     async deleteProduct(id) {
@@ -160,8 +158,8 @@ export const useIndexStore = defineStore('index', {
           method: 'DELETE',
           headers: {
             'content-type': 'application/json',
-            apikey: 'FcKdtJs202204',
-            username: 'team4',
+            apikey: VITE_API_KEY,
+            username: VITE_USERNAME,
             masterKey: true,
           },
         }

@@ -104,6 +104,19 @@ export default {
 
   td {
     border: 0.5px solid $gray-700;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-align: center;
+
+    &:nth-child(2),
+    &:nth-child(7) {
+      white-space: normal;
+    }
+
+    .form-check {
+      display: flex;
+      justify-content: center;
+    }
   }
 
   #flexSwitchCheckDefault {

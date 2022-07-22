@@ -43,9 +43,12 @@ export default {
   methods: {
     async trend__link(payload) {
       if(this.searchStore.brands.find( item => item === payload)) {
-        console.log('nope')
+        return // 이미 검색필터로 들어가있으니 아무동작하지마
       } else {
+        this.searchStore.searchTags = []
+        this.searchStore.brands = []
         this.searchStore.searchTags.push(payload)
+        this.searchStore.brands.push(payload)
         await this.searchStore.searchProducts()
       }
     }

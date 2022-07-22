@@ -3,38 +3,41 @@
     <MySNB />
 
     <div class="content_area">
-      <RouterView />
-
-      <template v-if="$route.path == '/my'">
-        <div class="my_home">
-          <div class="user_membership">
-            <div class="user_detail">
-              <div class="user_thumb">
-                <img
-                  :src="userStore.user.profileImg"
-                  alt="사용자 이미지" />
-              </div>
-              <div class="user_info">
-                <div class="info_box">
-                  <strong class="name">
-                    {{ userStore.user.displayName }}
-                  </strong>
-                  <p class="email">
-                    {{ userEmailMasking }}
-                  </p>
-                  <RouterLink to="/my/profile">
-                    <button
-                      class="btn_modify"
-                      @click="getimg">
-                      프로필 수정
-                    </button>
-                  </RouterLink>
+      <transition name="fade">
+        <RouterView />
+      </transition>
+      <transition name="fade">
+        <template v-if="$route.path == '/my'">
+          <div class="my_home">
+            <div class="user_membership">
+              <div class="user_detail">
+                <div class="user_thumb">
+                  <img
+                    :src="userStore.user.profileImg"
+                    alt="사용자 이미지" />
+                </div>
+                <div class="user_info">
+                  <div class="info_box">
+                    <strong class="name">
+                      {{ userStore.user.displayName }}
+                    </strong>
+                    <p class="email">
+                      {{ userEmailMasking }}
+                    </p>
+                    <RouterLink to="/my/profile">
+                      <button
+                        class="btn_modify"
+                        @click="getimg">
+                        프로필 수정
+                      </button>
+                    </RouterLink>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </template>
+        </template>
+      </transition>
     </div>
   </div>
 </template>
@@ -67,6 +70,12 @@ export default {
 </script>
 
 <style lang="scss">
+.fade-enter-active {
+  transition: all .6s ease;
+}
+.fade-leave-active {
+  transition: all 0s;
+}
 .container {
   display: flex;
   margin: 0 auto;

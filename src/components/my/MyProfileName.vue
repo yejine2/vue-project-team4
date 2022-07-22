@@ -41,7 +41,7 @@
         <p
           v-show="displayNameHasError"
           class="input-error">
-          올바른 이름을 입력해주세요. (2-50자)
+          올바른 이름을 입력해주세요. (1-20자)
         </p>
       </div>
     </div>
@@ -108,7 +108,7 @@ export default {
     },
     checkName() {
       // 이름 형식 검사
-      const validateName = /^(?=.*[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9!@#$%^&*()._-])[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9!@#$%^&*()._-]{2,50}$/
+      const validateName = /^(?=.*[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9!@#$%^&*()._-])[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9!@#$%^&*()._-]{1,20}$/
       
       if (!validateName.test(this.displayName) || !this.displayName) {
         this.valid.displayName = false
