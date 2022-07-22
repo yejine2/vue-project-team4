@@ -20,7 +20,9 @@
           <p class="name">
             {{ list.product.title }}
           </p>
-          <span class="price">{{ `${list.product.price.toLocaleString()}원` }}</span>
+          <p class="price">
+            {{ `${list.product.price.toLocaleString()}원` }}
+          </p>
         </div>
       </RouterLink>
     </div>
@@ -91,18 +93,23 @@ export default {
     .item_link {
       text-decoration: none;
       .title {
+        > p {
+          margin-bottom: 10px;
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
         
         .brand {
+          margin-bottom: 15px;
           font-weight: 700;
           color: #333;
         }
         .name {
-          margin-top: 8px;
           color: #222;
         }
         .price {
           display: inline-block;
-          margin-top: 8px;
           font-size: 15px;
           color: #222;
         }

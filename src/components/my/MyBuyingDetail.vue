@@ -22,6 +22,9 @@
           <p class="name">
             {{ userStore.transactionDetail.product.title }}
           </p>
+          <p class="desc">
+            {{ userStore.transactionDetail.product.description }}
+          </p>
         </div>
       </div>
       <div class="item_link">
@@ -45,18 +48,33 @@
           {{ `${userStore.transactionDetail.product.price.toLocaleString()}원` }}
         </div>
       </div>
-      <div class="price_detail">
-        <div class="purchase_price">
-          <div>구매가</div>
-          <div>{{ userStore.transactionDetail.product.price.toLocaleString() }}</div>
+      <div class="payment">
+        <div class="price_detail">
+          <div class="purchase_price">
+            <div>구매가</div>
+            <div>{{ userStore.transactionDetail.product.price.toLocaleString() }}</div>
+          </div>
+          <div class="inspection_price">
+            <div>검수비</div>
+            <div>무료</div>
+          </div>
+          <div class="shipping_price">
+            <div>배송비</div>
+            <div>무료 이벤트</div>
+          </div>
         </div>
-        <div class="inspection_price">
-          <div>검수비</div>
-          <div>무료</div>
-        </div>
-        <div class="shipping_price">
-          <div>배송비</div>
-          <div>무료 이벤트</div>
+        <div class="way">
+          <div class="way_title">
+            <h5>결제 상세</h5>
+          </div>
+          <div class="way_info">
+            <div class="title">
+              간편 결제 (계좌이체)
+            </div>
+            <div class="price">
+              {{ `${userStore.transactionDetail.product.price.toLocaleString()}원` }}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -78,7 +96,7 @@
         구매취소
       </button>
       <button
-        class="back_list"
+        class="list_back"
         @click="$router.back">
         목록
       </button>
@@ -147,20 +165,29 @@ export default {
       flex-grow: 1;
       margin-left: 16px;
       .title {
+        > p {
+          margin-bottom: 10px;
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
         .brand {
+          margin-bottom: 15px;
           font-weight: 700;
           color: #333;
         }
         .name {
-          margin-top: 8px;
           color: #222;
+        }
+        .desc {
+          font-size: 14px;
+          color: #555;
         }
       }
     }
     .item_link {
       flex-shrink: 0;
       .btn {
-        margin-left: 30px;
         padding: 3px 15px;
         font-size: 12px;
         background-color: #FFF;
@@ -173,7 +200,7 @@ export default {
     }
   }
   .purchase_info {
-    margin-top: 40px;
+    margin-top: 80px;
     .info_title {
       padding: 5px 0;
       border-bottom: 3px solid #222;
@@ -189,49 +216,79 @@ export default {
       border-bottom: 1px solid #ebebeb;
       .title {
         flex-grow: 1;
-        max-width: 280px;
         font-size: 15px;
         font-weight: 700;
         line-height: 18px
       }
       .price {
-        flex-grow: 1;
+        // flex-grow: 1;
         font-size: 18px;
         font-weight: 700;
         color: #f15746;
       }
     }
-    .price_detail {
+    .payment {
       display: flex;
-      flex-direction: column;
-      padding: 30px 20px;
-      > div {
+      justify-content: space-between;
+      margin-top: 20px;
+      .price_detail {
         display: flex;
-        padding: 10px 0;
-        font-size: 14px;
-        font-weight: 700;
-        div:nth-child(1) {
-          flex-grow: 1;
-          max-width: 280px;
-          color: rgba(#222, .6);
+        flex-grow: 1;
+        flex-direction: column;
+        padding: 30px 20px;
+        border-right: 1px solid #ebebeb;
+        > div {
+          display: flex;
+          justify-content: space-between;
+          padding: 10px 0;
+          font-size: 14px;
+          font-weight: 700;
+          div:nth-child(1) {
+            flex-grow: 1;
+            max-width: 280px;
+            color: rgba(#222, .6);
+          }
         }
-        div:nth-child(2) {
-          flex-grow: 1;
+        .purchase_price {
+          div:nth-child(1) {
+            color: #222;
+          }
+        }
+        .inspection_price {
+          div:nth-child(2) {
+            color: rgba(#222, .8);
+          }
         }
       }
-      .purchase_price {
-        div:nth-child(1) {
-          color: #222;
+      .way {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        padding: 0px 20px;
+        .way_title {
+          padding: 10px 0 5px 0;
+          h5 {
+            font-size: 14px;
+            font-weight: 700;
+          }
         }
-      }
-      .inspection_price {
-        div:nth-child(2) {
-          color: rgba(#222, .8);
+        .way_info {
+          display: flex;
+          justify-content: space-between;
+          .title {
+            flex-grow: 1;
+            padding: 10px 0;
+            font-size: 14px;
+          }
+          .price {
+            padding: 10px 0;
+            font-size: 14px;
+          }
         }
       }
     }
   }
-  .btn {
+  > .btn {
     margin-top: 20px;
     text-align: center;
     button {
@@ -254,7 +311,7 @@ export default {
           cursor: default;
         }
     }
-    .back_list {
+    .list_back {
       background-color: #222;
       color: #fff
     }
