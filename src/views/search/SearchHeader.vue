@@ -131,8 +131,9 @@ export default {
     search_product() {
       this.$emit('search_text', this.search_text)
     },
-    input_init() {
+    async input_init() {
       this.$refs.search_input.value = null
+      await this.searchStore.searchProducts()
     },
     async category_btn(category, e) {
       const cate = [this.$refs.shoes, this.$refs.cloth, this.$refs.acc, this.$refs.life, this.$refs.tech]

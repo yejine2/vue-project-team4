@@ -10,6 +10,7 @@ const headers = {
 export const useSearchStore = defineStore('search', {
   state() {
     return {
+      searchText: '',
       searchTags: [],
       category: '',
       brands: [],
@@ -35,16 +36,15 @@ export const useSearchStore = defineStore('search', {
   },
   actions: {
     async searchProducts(payload) {
-      let searchText = ''
       if(payload) {
-        searchText = payload  // 검색어가 날라옴
+        this.searchText = payload  // 검색어가 날라옴
       }
       const res = await axios({
         url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/search',
         method: 'POST',
         headers,
         data: {
-          searchText,
+          searchText: this.searchText,
           searchTags: this.searchTags
         }
       })

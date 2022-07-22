@@ -105,7 +105,8 @@
             v-for="brand in brands"
             :key="brand.name"
             class="brand"
-            to="#">
+            to="/search"
+            @click="recent(brand.name)">
             <img
               :src="brand.num"
               alt="인기상품"
