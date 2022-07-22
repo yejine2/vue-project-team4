@@ -123,7 +123,6 @@ export default {
     if(is_header_search === 'true') {
       const get_recent_arr = window.localStorage.getItem('recent_search')
       this.get_recents = JSON.parse(get_recent_arr)
-      console.log(this.get_recents)
       this.$refs.search_input.value = this.get_recents[0]
     }
   },

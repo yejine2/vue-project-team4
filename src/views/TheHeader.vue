@@ -10,9 +10,10 @@
       </RouterLink>
       <!-- LogIn / LogOut -->
       <template v-if="authStore.logInLoading">
-        <span class="login-icon material-symbols-outlined">
-          login
-        </span>
+        <img
+          class="login-icon"
+          src="/assets/login.png"
+          alt="Login" />
       </template>
       <template v-else-if="!authStore.user">
         <RouterLink
@@ -75,7 +76,7 @@
               type="text"
               class="search_input"
               placeholder="모델명"
-              @keypress.enter="recent($event.target.value)" />
+              @keypress.enter="recent($event.currentTarget.value)" />
           </div>
           <div
             class="cancel"
@@ -185,6 +186,7 @@ export default {
         } else {
           // 사이트 첫 검색시
           this.recent_value.unshift(value)
+          this.get_recents = [ value ]
           this.get_recents.unshift(value)
           const recent = JSON.stringify(this.recent_value)
           window.localStorage.setItem('recent_search', recent)
@@ -235,7 +237,7 @@ export default {
     padding: 10px;
   }
   .login-icon {
-    font-size: 20px;
+    width: 20px;
     color: #707070;
   }
 }
