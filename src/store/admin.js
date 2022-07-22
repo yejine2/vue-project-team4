@@ -47,7 +47,6 @@ export const useIndexStore = defineStore('index', {
             photoBase64,
           },
         })
-        console.log(res.data)
         this.allProducts = res.data
         // this.$router.push('/admin/products')
         window.location.href='/admin/products'
@@ -66,7 +65,6 @@ export const useIndexStore = defineStore('index', {
           masterKey: true
         }
       })
-      console.log(res.data)
       this.allProducts = res.data
     },
 
@@ -81,7 +79,6 @@ export const useIndexStore = defineStore('index', {
           masterKey: true
         }
       })
-      console.log(res.data)
       this.transactions = res.data
     },
 
@@ -101,7 +98,6 @@ export const useIndexStore = defineStore('index', {
           done
         }
       })
-      console.log(res.data)
       this.transactions = res.data
 
       await this.allTransactions()
@@ -116,7 +112,6 @@ export const useIndexStore = defineStore('index', {
           username: VITE_USERNAME
         }
       })
-      console.log(res.data)
       this.product = res.data
     },
 
