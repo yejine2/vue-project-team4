@@ -3,13 +3,13 @@
     <div class="top-grop">
       <RouterLink
         to="/admin">
-        <h2 class="main-title">
+        <h3 class="main-title">
           관리자 페이지
-        </h2>
+        </h3>
       </RouterLink>
-      <h3 class="product-title">
+      <h2 class="product-title">
         전체 제품 조회
-      </h3>
+      </h2>
       <RouterLink
         to="/admin/products/add"
         class="btn btn-outline-primary">

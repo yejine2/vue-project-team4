@@ -10,9 +10,10 @@
       </RouterLink>
       <!-- LogIn / LogOut -->
       <template v-if="authStore.logInLoading">
-        <span class="login-icon material-symbols-outlined">
-          login
-        </span>
+        <img
+          class="login-icon"
+          src="/assets/login.png"
+          alt="Login" />
       </template>
       <template v-else-if="!authStore.user">
         <RouterLink
@@ -239,7 +240,7 @@ export default {
     padding: 10px;
   }
   .login-icon {
-    font-size: 20px;
+    width: 20px;
     color: #707070;
   }
 }

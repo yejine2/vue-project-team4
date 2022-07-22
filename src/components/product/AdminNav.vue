@@ -93,35 +93,4 @@ a {
     }
   }
 }
-
-
 </style>
-
-
-
-  <!-- <div class="nav-container">
-    <div class="sub-area">
-      <ul class="nav justify-content-center">
-        <li class="nav-item">
-          <RouterLink
-            to="/admin"
-            class="admin nav-link">
-            관리자 페이지
-          </RouterLink>
-          <RouterLink
-            to="/admin/products"
-            class="nav-link">
-            제품 조회
-          </RouterLink>
-        </li>
-        <li class="nav-item">
-          <RouterLink
-            to="/admin/saleshistory"
-            class="nav-link"
-            href="#">
-            판매 내역
-          </RouterLink>
-        </li>
-      </ul>
-    </div>
-  </div> -->
