@@ -129,6 +129,7 @@ export default {
   methods: {
     search_product() {
       this.$emit('search_text', this.search_text)
+      this.search_text = ''
     },
     async input_init() {
       this.$refs.search_input.value = null

@@ -40,6 +40,8 @@ export const useSearchStore = defineStore('search', {
     async searchProducts(payload) {
       if(payload) {
         this.searchText = payload  // 검색어가 날라옴
+      } else {
+        this.searchText = ''
       }
       const res = await axios({
         url: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/search',
