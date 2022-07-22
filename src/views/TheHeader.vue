@@ -75,7 +75,7 @@
               type="text"
               class="search_input"
               placeholder="모델명"
-              @keypress.enter="recent($event.target.value)" />
+              @keypress.enter="recent($event.currentTarget.value)" />
           </div>
           <div
             class="cancel"
@@ -185,7 +185,7 @@ export default {
         } else {
           // 사이트 첫 검색시
           this.recent_value.unshift(value)
-          this.get_recents.unshift(value)
+          this.get_recents = [ value ]
           const recent = JSON.stringify(this.recent_value)
           window.localStorage.setItem('recent_search', recent)
           // 헤더 검색인지 판단

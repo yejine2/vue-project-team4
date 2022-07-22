@@ -214,7 +214,7 @@ section {
         cursor: pointer;
       }
       .checked {
-        background: url('src/assets/search/checkbox.png') no-repeat;
+        background: url('/assets/search/checkbox.png') no-repeat;
         background-position: center;
         background-size: 22px;
       }

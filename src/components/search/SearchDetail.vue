@@ -101,7 +101,9 @@
                   </p>
                 </div>
               </button>
-              <PurchaseModal class="modal" />
+              <div clasee="banks">
+                <PurchaseModal />
+              </div>
             </div>
             <div class="interseting">
               <i class="bi bi-bookmark"></i>

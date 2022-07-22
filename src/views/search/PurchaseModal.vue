@@ -51,7 +51,21 @@
               </div>
               <div class="account_list">
                 <div
-                  v-if="not_login" 
+                  v-show="login"
+                  class="banks_box">
+                  <div
+                    v-for="bank in banks"
+                    :key="bank"
+                    ref="banks"
+                    class="banks"
+                    @click="bank.btn = !bank.btn, choose_account($event, bank.name, bank.btn)">
+                    <p ref="bank_name">
+                      {{ bank.name }}
+                    </p>
+                  </div>
+                </div>
+                <div
+                  v-show="not_login"
                   class="login_guide">
                   <p>로그인 후 확인 가능합니다.</p>
                   <router-link
@@ -59,17 +73,6 @@
                     class="login_link">
                     로그인
                   </router-link>
-                </div>
-                <div
-                  v-for="bank in banks"
-                  v-else
-                  :key="bank"
-                  ref="banks"
-                  class="banks"
-                  @click="bank.btn = !bank.btn, choose_account($event, bank.name, bank.btn)">
-                  <p ref="bank">
-                    {{ bank.name }}
-                  </p>
                 </div>
               </div>
             </div>
@@ -152,6 +155,7 @@ export default {
         '케이뱅크',
       ],
       get_bank: [],
+      login: false,
       not_login: true,
       user_payment: {
         productId: '',
@@ -164,26 +168,30 @@ export default {
     ...mapStores(useUserStore)
   },
   async created() {
-    await this.userStore.getUserAccountList()
-    this.bank_list()
+    
   },
-  mounted() {
+  async mounted() {
+    await this.userStore.getUserAccountList()    
     if(this.userStore.userAccountList !== null) {
+      this.login = true
       this.not_login = false
     }
+    this.bank_list()
   },
   methods: {
     bank_list() {
       // Store 데이터에 뱅크 이름과 textContent 문자가 같으면 클래스 추가
-      for(let i =0; i < this.userStore.userAccountList.length; i++) {
-        this.get_bank.push(this.userStore.userAccountList[i].bankName)
+      if(this.userStore.userAccountList) {
+        for(let i =0; i < this.userStore.userAccountList.length; i++) {
+          this.get_bank.push(this.userStore.userAccountList[i].bankName)
+        }
       }
       for(let i =0; i < this.get_bank.length; i++) {
         const num = this.banks_index.findIndex(item => item === this.get_bank[i])
-        this.$refs.bank[num].classList.add('account_on')
+        this.$refs.bank_name[num].classList.add('account_on')
       }
       for(let i =0; i < this.banks_index.length; i++) {
-        const classes = this.$refs.bank[i].classList
+        const classes = this.$refs.bank_name[i].classList
         if(!classes.contains('account_on')) {
           this.$refs.banks[i].classList.add('account_off')
         }
@@ -198,12 +206,10 @@ export default {
             this.user_payment.productId = this.$route.params.productId
             this.user_payment.accountId = this.userStore.userAccountList[num].id
             e.currentTarget.classList.add('btn_on')
-            console.log(this.user_payment)
           } else {
             e.currentTarget.classList.remove('btn_on')
             this.user_payment.productId = ''
             this.user_payment.accountId = ''
-            console.log(this.user_payment)
           }
         } else {
           this.$refs.banks[i].classList.remove('btn_on')
@@ -294,34 +300,41 @@ export default {
             color: rgba(34,34,34,.5);
           }
         }
-        .banks {
-          width: 208px;
-          height: 60px;
+        .banks_box {
           display: flex;
-          justify-content: center;
-          align-items: center;
-          margin: 6px auto;
-          border: 1px solid #ebebeb;
-          border-radius: 10px;
-          cursor: pointer;
-          &:last-child {
-            margin: 6px 7.5px;
+          flex-wrap: wrap;
+            align-items: center;
+          .banks {
+            width: 208px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 6px auto;
+            border: 1px solid #ebebeb;
+            border-radius: 10px;
+            font-weight: 400;
+            cursor: pointer;
+            &:last-child {
+              margin: 6px 7.5px;
+            }
+            p {
+              font-size: 16px;
+              color: rgba(34,34,34,.5);
+            }
+            .account_on {
+              color: #222;
+            }
           }
-          p {
-            font-size: 16px;
-            color: rgba(34,34,34,.5);
-          }
-          .account_on {
-            color: #222;
-          }
-        }
-        .account_off {
+          .account_off {
             pointer-events: none;
           }
-        .btn_on {
-          font-weight: 600;
-          border: 1px solid #333;
+          .btn_on {
+            font-weight: 600;
+            border: 1px solid #333;
+          }
         }
+        
       }
     }
   }
