@@ -155,13 +155,17 @@ export default {
     window.addEventListener('scroll', () => {
       if(window.scrollY > 150) {
         this.$refs.bottom.classList.add('bottom')
+      } else {
+        this.$refs.bottom.classList.remove('bottom')
       }
     })
   },
   unmounted() {
-    window.removeEventListener('scroll', () => {
+    window.addEventListener('scroll', () => {
       if(window.scrollY > 150) {
         this.$refs.bottom.classList.add('bottom')
+      } else {
+        this.$refs.bottom.classList.remove('bottom')
       }
     })
   },
