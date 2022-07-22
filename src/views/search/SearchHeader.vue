@@ -144,7 +144,6 @@ export default {
         payload.style.fontWeight = '700'
       }
       function btn_off(payload) {
-        console.log(payload)
         payload.style.backgroundColor = '#f4f4f4'
         payload.style.color = '#222'
         payload.style.fontWeight = '400'

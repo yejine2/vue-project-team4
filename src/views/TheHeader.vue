@@ -187,7 +187,6 @@ export default {
           // 사이트 첫 검색시
           this.recent_value.unshift(value)
           this.get_recents = [ value ]
-          this.get_recents.unshift(value)
           const recent = JSON.stringify(this.recent_value)
           window.localStorage.setItem('recent_search', recent)
           // 헤더 검색인지 판단
