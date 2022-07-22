@@ -2,10 +2,12 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { profileImgBase64 } from '~/store/userDefaultImg'
 
+const { VITE_API_KEY, VITE_USERNAME } = import.meta.env
+
 const headers = {
   'content-type': 'application/json',
-  'apikey': 'FcKdtJs202204',
-  'username': 'team4'
+  'apikey': VITE_API_KEY,
+  'username': VITE_USERNAME
 }
 
 
