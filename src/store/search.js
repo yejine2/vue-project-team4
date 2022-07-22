@@ -14,7 +14,14 @@ export const useSearchStore = defineStore('search', {
       category: '',
       brands: [],
       price: '',
-      results: null,
+      results: [
+        {
+        title: '',
+        description: '',
+        price: '',
+        tags: []
+        }
+      ],
       categoryInteract: false,
       brandInteract: '',
       priceInteract: '',

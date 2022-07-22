@@ -1,5 +1,7 @@
 <template>
-  <nav class="navbar">
+  <nav
+    ref="nav"
+    class="navbar">
     <div class="top-nav">
       <RouterLink
         to="/my"
@@ -45,14 +47,72 @@
       <div class="link-nav">
         <RouterLink
           to="/search"
-          class="main-nav__link">
+          class="main-nav__link"
+          @click="is_header_search">
           SHOP
         </RouterLink>
         <!-- 검색 버튼 -->
         <img
           src="/assets/search.png"
           alt="검색버튼"
-          class="search_btn" />
+          class="search_btn"
+          @click="search = true" />
+      </div>
+    </div>
+    <!-- 검색 모달 -->
+    <div
+      v-show="search"
+      class="search">
+      <div class="search_box">
+        <div class="search_text">
+          <div class="text_box">
+            <img
+              src="/assets/search.png"
+              alt="검색 아이콘"
+              class="search_icon" />
+            <input
+              ref="search_input"
+              type="text"
+              class="search_input"
+              placeholder="모델명"
+              @keypress.enter="recent($event.target.value)" />
+          </div>
+          <div
+            class="cancel"
+            @click="search = false">
+            취소
+          </div>
+        </div>
+        <div class="recent_text">
+          <div class="recent_title">
+            <strong>최근 검색어</strong>
+            <i
+              class="bi bi-x-circle"
+              @click="delete_recent"></i>
+          </div>
+          <ul class="recent_list">
+            <li
+              v-for="get_recent in get_recents"
+              :key="get_recent"
+              class="inner_list"
+              @click="recent(get_recent)">
+              {{ get_recent }}
+            </li>
+          </ul>
+        </div>
+        <div class="brand_list">
+          <router-link
+            v-for="brand in brands"
+            :key="brand.name"
+            class="brand"
+            to="#">
+            <img
+              :src="brand.num"
+              alt="인기상품"
+              class="brand_img" />
+            <p>{{ brand.name }}</p>
+          </router-link>
+        </div>
       </div>
     </div>
   </nav>
@@ -61,10 +121,34 @@
 <script>
 import { mapStores } from 'pinia'
 import { useAuthStore } from '~/store/auth'
+import { useSearchStore } from '~/store/search'
 
 export default {
+  data() {
+    return {
+      recent_value: [],
+      get_recents: [],
+      search: false,
+      brands: [
+        {num: '/assets/home/just-dropped/dropped_01.jpg', name: 'Nike'},
+        {num: '/assets/home/just-dropped/dropped_02.jpg', name: 'Asics'},
+        {num: '/assets/home/just-dropped/dropped_03.jpg', name: 'Nike'},
+        {num: '/assets/home/just-dropped/dropped_04.jpg', name: 'Jordan'},
+        {num: '/assets/home/just-dropped/dropped_05.jpg', name: 'Louis Vuitton'},
+        {num: '/assets/home/just-dropped/dropped_06.jpg', name: 'Louis Vuitton'}
+      ]
+    }
+  },
   computed: {
-    ...mapStores(useAuthStore)
+    ...mapStores(useAuthStore),
+    ...mapStores(useSearchStore)
+  },
+  watch: {
+  
+  },
+  created() {
+    const get_recent_arr = window.localStorage.getItem('recent_search')
+    this.get_recents = JSON.parse(get_recent_arr)
   },
   mounted() {
     window.addEventListener('scroll', () => {
@@ -79,11 +163,53 @@ export default {
         this.$refs.bottom.classList.add('bottom')
       }
     })
+  },
+  methods: {
+    recent(value) {
+      const get_recent_arr = window.localStorage.getItem('recent_search')
+      if(value !== '') {
+        if(get_recent_arr) {
+          this.get_recents = JSON.parse(get_recent_arr)
+          this.get_recents.unshift(value)
+          if(this.get_recents.length > 5) {
+            this.get_recents.splice(4, 1)
+          }
+          const recent = JSON.stringify(this.get_recents)
+          window.localStorage.setItem('recent_search', recent)
+          this.$refs.search_input.value = ''
+          // 헤더 검색인지 판단
+          window.sessionStorage.setItem('is_header_search', 'true')
+
+          window.location.href='/search'
+        } else {
+          // 사이트 첫 검색시
+          this.recent_value.unshift(value)
+          this.get_recents.unshift(value)
+          const recent = JSON.stringify(this.recent_value)
+          window.localStorage.setItem('recent_search', recent)
+          // 헤더 검색인지 판단
+          window.sessionStorage.setItem('is_header_search', 'true')
+          window.location.href='/search'
+        }
+      } else {
+        window.location.href='/search'
+      }
+      
+    },
+    is_header_search() {
+      window.sessionStorage.setItem('is_header_search', 'false')
+    },
+    delete_recent() {
+      this.get_recents = []
+      window.localStorage.removeItem('recent_search')
+    }
   }
 }
 </script>
 
 <style scoped lang="scss">
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css");
+@import '~/scss/SearchCommon.scss';
 
 .navbar {
   width: 100%;
@@ -131,11 +257,105 @@ export default {
       color: $color-black;
       font-size: 16px;
       text-decoration: none;
-      padding: 8px
+      padding: 8px;
+      cursor: pointer;
     }
     .search_btn {
       height: 34px;
       margin-left: 30px;
+      cursor: pointer;
+    }
+  }
+}
+.search {
+  background-color: #fff;
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  .search_box {
+    width: 704px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .search_text {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 0 19px;
+      .text_box {
+        background-color: #f4f4f4;
+        width: 88%;
+        height: 40px;
+        display: flex;
+        padding-right: 40px;
+        text-align: left;
+        border-radius: 8px;
+        .search_icon {
+          width: 28px;
+          height: 28px;
+          opacity: .2;
+          margin: auto 6px;
+          user-select: none;
+        }
+        .search_input {
+          background-color: transparent;
+          width: 100%;
+          font-size: 14px;
+        }
+        .search_input::placeholder {
+          font-size: 14px;
+        }
+      }
+      .cancel {
+
+        font-size: 14px;
+        color: rgb(34, 34, 34, .8);
+        cursor: pointer;
+      }
+    }
+    .recent_text {
+      width: 100%;
+      margin-top: 10px;
+      .recent_title {
+        strong {
+          font-size: 12px;
+          font-weight: 600;
+        }
+        .bi-x-circle {
+          margin-left: 12px;
+          font-size: 12px;
+          opacity: .5;
+          cursor: pointer;
+        }
+      }
+      .recent_list {
+        .inner_list {
+          width: 650px;
+          margin: 18px 0;
+          font-size: 13px;
+          color: rgba(34,34,34,.8);
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+    .brand_list {
+      display: flex;
+      margin-bottom: 56px;
+      .brand {
+        margin-left: 20px;
+        .brand_img {
+          width: 100px;
+          height: 100px;
+          cursor: pointer;
+        }
+        p {
+          margin-top: -12px;
+          font-size: 13px;
+        }
+      }
     }
   }
 }
