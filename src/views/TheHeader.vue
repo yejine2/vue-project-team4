@@ -193,9 +193,9 @@ export default {
           window.location.href='/search'
         }
       } else {
+        // 빈문자 검색일때
         window.location.href='/search'
       }
-      
     },
     is_header_search() {
       window.sessionStorage.setItem('is_header_search', 'false')
