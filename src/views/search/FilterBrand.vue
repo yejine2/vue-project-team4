@@ -76,7 +76,7 @@ export default {
     }
   },
   async created() {
-    // store data brands는 결과 필터 데이터임 이것과 별개
+    // store data brands는 결과 필터 데이터임 이것과 별개이다.
     const brands_list = await this.searchStore.searchProducts()
     console.log(brands_list)
     for(let i = 0; i < brands_list.length; i++) {
