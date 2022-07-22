@@ -60,9 +60,10 @@
           @click="search = true" />
       </div>
     </div>
-    <!-- 검색 모달 -->
+    <!-- 검색 -->
     <div
       v-show="search"
+      ref="search"
       class="search">
       <div class="search_box">
         <div class="search_text">
@@ -156,8 +157,10 @@ export default {
     window.addEventListener('scroll', () => {
       if(window.scrollY > 150) {
         this.$refs.bottom.classList.add('bottom')
+        this.$refs.search.classList.add('bottom')
       } else {
         this.$refs.bottom.classList.remove('bottom')
+        this.$refs.search.classList.remove('bottom')
       }
     })
   },
@@ -171,11 +174,11 @@ export default {
     })
   },
   methods: {
-    recent(value) {
+    async recent(value) {
       const get_recent_arr = window.localStorage.getItem('recent_search')
       if(value !== '') {
         if(get_recent_arr) {
-          this.get_recents = JSON.parse(get_recent_arr)
+          this.get_recents = await JSON.parse(get_recent_arr)
           this.get_recents.unshift(value)
           if(this.get_recents.length > 5) {
             this.get_recents.splice(4, 1)
@@ -224,7 +227,7 @@ export default {
   top:0;
   left: 0;
   right: 0;
-  z-index: 3;
+  z-index: 99999;
 }
 .top-nav{
   height: 32px;
@@ -344,6 +347,7 @@ export default {
           color: rgba(34,34,34,.8);
           overflow: hidden;
           text-overflow: ellipsis;
+          cursor: pointer;
         }
       }
     }
