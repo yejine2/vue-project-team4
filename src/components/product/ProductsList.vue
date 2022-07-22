@@ -37,42 +37,6 @@
       </button>
     </td>
   </tr>
-  
-
-  <!-- <div class="container">
-    <img
-      v-if="product.thumbnail"
-      style="width: 225px; height: 225px;"
-      :src="product.thumbnail"
-      :alt="product.title"
-      @click="$router.push(`/admin/products/detail/${product.id}`)" />
-    <h4>{{ product.title }}</h4>
-    <h4>{{ product.tags.join(' / ') }}</h4>
-    <h4>{{ getPrice }}원</h4>
-
-    <RouterLink
-      :to="{
-        name: 'EditProduct',
-        params: {
-          id: product.id,
-          oldTitle: product.title,
-          oldPrice: product.price,
-          oldDescription: product.description,
-          oldTags: product.tags.toString(),
-          oldThumbnailBase64: product.thumbnails,
-          oldIsSoldOut: product.isSoldOut
-        }
-      }"
-      class="btn btn-outline-secondary">
-      <i class="fa-regular fa-pen-to-square"></i>
-    </RouterLink>
-
-    <button
-      class="btn btn-outline-danger"
-      @click="deleteProduct(product.id)">
-      <i class="fa-regular fa-trash-can"></i>
-    </button>
-  </div> -->
 </template>
 
 <script>
@@ -95,7 +59,7 @@ export default {
   methods: {
     deleteProduct(id) {
       this.indexStore.deleteProduct(id)
-   }
+    }
   }
 }
 </script>
@@ -110,7 +74,7 @@ img {
 
 td {
   border: 0.5px solid $gray-200;
-   white-space: nowrap;
+  white-space: nowrap;
   vertical-align: middle;
   text-align: center;
   &:nth-child(4) {

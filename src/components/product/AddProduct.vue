@@ -1,64 +1,75 @@
 <template>
-  <div class="container">
-    <section>
-      <h3>제품 추가</h3>
+  <div class="product-container">
+    <div class="top-grop">
+      <RouterLink
+        to="/admin">
+        <h3 class="sub-title">
+          관리자 페이지
+        </h3>
+      </RouterLink>
+      <h2 class="product-title">
+        제품 추가
+      </h2>
+    </div>
+    <section class="add-container">
+      <div class="add-items">
+        <div class="input-group mb-4">
+          <label
+            class="input-group-text">썸네일 사진</label>
+          <input
+            type="file"
+            class="form-control"
+            @change="thumbnailBase64Img" />
+        </div>
+        <div class="input-group mb-4">
+          <label
+            class="input-group-text">제품 상세 사진</label>
+          <input
+            type="file"
+            class="form-control"
+            @change="photoBase64Img" />
+        </div>
 
-      <div class="input-group mb-4">
-        <label
-          class="input-group-text">썸네일 사진</label>
-        <input
-          type="file"
-          class="form-control"
-          @change="thumbnailBase64Img" />
-      </div>
-      <div class="input-group mb-4">
-        <label
-          class="input-group-text">제품 상세 사진</label>
-        <input
-          type="file"
-          class="form-control"
-          @change="photoBase64Img" />
-      </div>
+        <div class="input-group mb-4">
+          <span class="input-group-text">상품명</span>
+          <input
+            v-model="title"
+            type="text"
+            class="form-control"
+            placeholder="상품명을 입력해주세요" />
+        </div>
+        <div class="input-group mb-4">
+          <span class="input-group-text">상품가격 (원)</span>
+          <input
+            v-model.number="price"
+            type="text"
+            class="form-control" />
+        </div>
+        <div class="input-group mb-4">
+          <span class="input-group-text">상품 상세 설명</span>
+          <input
+            v-model="description"
+            type="text"
+            class="form-control"
+            placeholder="상품 상세 설명을 입력해주세요" />
+        </div>
+        <div class="input-group mb-4">
+          <span
+            class="input-group-text">태그</span>
+          <input
+            v-model="tags"
+            type="text"
+            class="form-control"
+            placeholder="쉼표(,)를 이용해서 태그를 구분 하세요" />
+        </div>
 
-      <div class="input-group mb-4">
-        <span class="input-group-text">상품명</span>
-        <input
-          v-model="title"
-          type="text"
-          class="form-control"
-          placeholder="상품명을 입력해주세요" />
+        <hr />
+        <button
+          class="btn btn-outline-primary"
+          @click="addProduct">
+          <i class="fa-solid fa-plus"></i>
+        </button>
       </div>
-      <div class="input-group mb-4">
-        <span class="input-group-text">상품가격 (원)</span>
-        <input
-          v-model.number="price"
-          type="text"
-          class="form-control" />
-      </div>
-      <div class="input-group mb-4">
-        <span class="input-group-text">상품 상세 설명</span>
-        <input
-          v-model="description"
-          type="text"
-          class="form-control"
-          placeholder="상품 상세 설명을 입력해주세요" />
-      </div>
-      <div class="input-group mb-4">
-        <span
-          class="input-group-text">태그</span>
-        <input
-          v-model="tags"
-          type="text"
-          class="form-control"
-          placeholder="쉼표(,)를 이용해서 태그를 구분 하세요" />
-      </div>
-
-      <hr />
-      <button
-        class="btn btn-outline-primary"
-        @click="addProduct">
-        <i class="fa-solid fa-plus"></i>
-      </button>
     </section>
   </div>
 </template>
@@ -118,5 +129,41 @@ export default {
 
 <style lang="scss" scoped>
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+a {
+  text-decoration: none;
+}
+.product-container {
+  margin: 0 auto;
+  padding: 40px 40px 140px;
+  position: relative;
+  .top-grop {
+    margin-bottom: 30px;
+  .sub-title {
+    line-height: 29px;
+    padding-bottom: 10px;
+    font-size: 16px;
+    font-weight: 400;
+    color: $color-black;;
+    text-align: left;
+  }
+  .product-title {
+    text-align: center;
+    font-size: 24px;
+    color: $color-black;
+    padding-bottom: 40px;
+  }
+  }
+  .add-container {
+    text-align: center; 
+    display: flex;
+    justify-content: center;
+
+    .add-items {
+      min-width: 700px;
+    }
+  }
+}
+
 
 </style>
