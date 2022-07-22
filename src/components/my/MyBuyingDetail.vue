@@ -5,30 +5,32 @@
         <h3>구매 상세 내역</h3>
       </div>
     </div>
+    <!-- <button @click="dd">
+      dd
+    </button> -->
     <div class="detail_id">
-      <h4>주문번호<span class="id">{{ list.detailId }}</span></h4>
+      <h4>주문번호<span class="id">{{ userStore.transactionDetail.detailId }}</span></h4>
     </div>
     <div class="item_list">
       <div class="item_img">
         <img
-          :src="list.product.thumbnail"
+          :src="userStore.transactionDetail.product.thumbnail"
           alt="제품 사진" />
       </div>
       <div class="item_info">
         <div class="title">
           <p class="brand">
-            {{ list.product.tags[1] }}
+            {{ userStore.transactionDetail.product.tags[1] }}
           </p>
           <p class="name">
-            {{ list.product.title }}
+            {{ userStore.transactionDetail.product.title }}
           </p>
         </div>
       </div>
       <div class="item_link">
-        <RouterLink :to="`/search/${list.product.productId}`">
+        <RouterLink :to="`/search/${userStore.transactionDetail.product.productId}`">
           <button
-            class="btn"
-            @click="list.product">
+            class="btn">
             상품 상세보기
           </button>
         </RouterLink>
@@ -43,13 +45,13 @@
           총 결제금액
         </div>
         <div class="price">
-          {{ `${list.product.price.toLocaleString()}원` }}
+          {{ `${userStore.transactionDetail.product.price.toLocaleString()}원` }}
         </div>
       </div>
       <div class="price_detail">
         <div class="purchase_price">
           <div>구매가</div>
-          <div>{{ list.product.price.toLocaleString() }}</div>
+          <div>{{ userStore.transactionDetail.product.price.toLocaleString() }}</div>
         </div>
         <div class="inspection_price">
           <div>검수비</div>
@@ -63,19 +65,19 @@
     </div>
     <div class="btn">
       <button
-        v-show="!list.isCanceled"
+        v-show="!userStore.transactionDetail.isCanceled"
         class="done"
-        :disabled="list.done"
-        :class="{ disabled: list.done}"
-        @click="done(list.detailId); $router.back()">
+        :disabled="userStore.transactionDetail.done"
+        :class="{ disabled: userStore.transactionDetail.done}"
+        @click="done(userStore.transactionDetail.detailId)">
         구매확정
       </button>
       <button
-        v-show="!list.done"
+        v-show="!userStore.transactionDetail.done"
         class="cancel"
-        :disabled="list.isCanceled"
-        :class="{ disabled: list.isCanceled}"
-        @click="cancel(list.detailId); $router.back()">
+        :disabled="userStore.transactionDetail.isCanceled"
+        :class="{ disabled: userStore.transactionDetail.isCanceled}"
+        @click="cancel(userStore.transactionDetail.detailId)">
         구매취소
       </button>
       <button
@@ -93,17 +95,15 @@ import { useUserStore } from '~/store/user'
 
 export default {
   computed: {
-    ...mapStores(useUserStore),
-    list() {
-      return this.userStore.transactionDetail
-    }
+    ...mapStores(useUserStore)
   },
   async created() {
     await this.userStore.getTransactionDetail(this.$route.params.id)
   },
   methods: {
-    done(value) {
-      this.userStore.transactionDone(value)
+    async done(value) {
+      // console.log(value)
+      await this.userStore.transactionDone(value)
     },
     cancel(value) {
       this.userStore.transactionCancel(value)

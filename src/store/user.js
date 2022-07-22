@@ -17,9 +17,25 @@ export const useUserStore = defineStore('user', {
       banks: null,
       userAccountList: null,
       totalBalance: null,
-      transactionList: [],
+      transactionList: {},
       transactionFilter: 'all',
-      transactionDetail: null,
+      transactionDetail: {
+        detailId: '',
+        done: false,
+        isCanceled: false,
+        account: {
+          bankName: '',
+          accountNumber: ''
+        },
+        product: {
+          productId: '',
+          title: '',
+          price: 0,
+          description: '',
+          tags: [],
+          thumbnail: null,
+        }
+      },
       isAll: 0,
       isWait: 0,
       isDone: 0,
@@ -144,6 +160,7 @@ export const useUserStore = defineStore('user', {
     filteredList() {
       switch (this.transactionFilter) {
         case 'all':
+          console.log(typeof this.transactionList)
           return this.transactionList
         case 'wait':
           return this.transactionList.filter(list => !list.done && !list.isCanceled)
@@ -165,8 +182,8 @@ export const useUserStore = defineStore('user', {
           detailId: id
         }
       })
-      this.readTransactionList()
-      this.getTransactionDetail()
+      await this.readTransactionList()
+      await this.getTransactionDetail(id)
       return console.log(res)
     },
     async transactionCancel(id) {
@@ -181,7 +198,7 @@ export const useUserStore = defineStore('user', {
         }
       })
       this.readTransactionList()
-      this.getTransactionDetail()
+      this.getTransactionDetail(id)
       return console.log(res)
     },
     async getTransactionDetail(id) {
@@ -195,9 +212,17 @@ export const useUserStore = defineStore('user', {
           detailId: id
         }
       })
-      this.transactionDetail = res.data
-      console.log(res.data)
-      return res.data
+      this.transactionDetail.detailId = res.data.detailId
+      this.transactionDetail.done = res.data.done
+      this.transactionDetail.isCanceled = res.data.isCanceled
+      this.transactionDetail.product.productId = res.data.product.productId
+      this.transactionDetail.product.title = res.data.product.title
+      this.transactionDetail.product.price = res.data.product.price
+      this.transactionDetail.product.description = res.data.product.description
+      this.transactionDetail.product.tags = res.data.product.tags
+      this.transactionDetail.product.thumbnail = res.data.product.thumbnail
+      this.transactionDetail.account.bankName = res.data.product.bankName
+      this.transactionDetail.account.accountNumber = res.data.product.accountNumber
     }
   }
 })
