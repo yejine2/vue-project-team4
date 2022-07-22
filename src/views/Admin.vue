@@ -18,6 +18,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+::-webkit-scrollbar {
+  width: 0;
+}
 .container {
   margin: 0 auto;
   padding: 40px 40px 160px;
