@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
+const { VITE_API_KEY, VITE_USERNAME } = import.meta.env
 const BASE_URL = 'https://asia-northeast3-heropy-api.cloudfunctions.net/api'
 
 export const useIndexStore = defineStore('index', {
@@ -33,8 +34,8 @@ export const useIndexStore = defineStore('index', {
           method: 'POST',
           headers: {
             'content-type': 'application/json',
-            apikey: 'FcKdtJs202204',
-            username: 'team4',
+            apikey: VITE_API_KEY,
+            username: VITE_USERNAME,
             masterKey: true,
           },
           data: {
@@ -60,8 +61,8 @@ export const useIndexStore = defineStore('index', {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
-          apikey: 'FcKdtJs202204',
-          username: 'team4',
+          apikey: VITE_API_KEY,
+          username: VITE_USERNAME,
           masterKey: true
         }
       })
@@ -75,8 +76,8 @@ export const useIndexStore = defineStore('index', {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
-          apikey: 'FcKdtJs202204',
-          username: 'team4',
+          apikey: VITE_API_KEY,
+          username: VITE_USERNAME,
           masterKey: true
         }
       })
@@ -91,8 +92,8 @@ export const useIndexStore = defineStore('index', {
         method: 'PUT',
         headers: {
           'content-type': 'application/json',
-          apikey: 'FcKdtJs202204',
-          username: 'team4',
+          apikey: VITE_API_KEY,
+          username: VITE_USERNAME,
           masterKey: true
         },
         data: {
@@ -111,8 +112,8 @@ export const useIndexStore = defineStore('index', {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
-          apikey: 'FcKdtJs202204',
-          username: 'team4'
+          apikey: VITE_API_KEY,
+          username: VITE_USERNAME
         }
       })
       console.log(res.data)
@@ -136,8 +137,8 @@ export const useIndexStore = defineStore('index', {
           method: 'PUT',
           headers: {
             'content-type': 'application/json',
-            apikey: 'FcKdtJs202204',
-            username: 'team4',
+            apikey: VITE_API_KEY,
+            username: VITE_USERNAME,
             masterKey: true,
           },
           data: {
@@ -162,8 +163,8 @@ export const useIndexStore = defineStore('index', {
           method: 'DELETE',
           headers: {
             'content-type': 'application/json',
-            apikey: 'FcKdtJs202204',
-            username: 'team4',
+            apikey: VITE_API_KEY,
+            username: VITE_USERNAME,
             masterKey: true,
           },
         }
