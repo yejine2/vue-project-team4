@@ -121,7 +121,7 @@
       </div>
     </div>
     <BrandList />
-    <BannerBottom />
+    <BannerBottom class="BannerBottom" />
   </div>
 </template>
 
@@ -150,14 +150,8 @@ export default {
   computed: {
     ...mapStores(useSearchStore)
   },
-  watch: {
-    onClickOutside() {
-      console.log('asdf')
-    }
-  },
   async created() {
     await this.searchStore.searchDetail(this.$route.params.productId)
-    
   },
   methods: {
     handle() {
@@ -188,7 +182,7 @@ export default {
 
 <style scoped lang="scss">
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css");
-@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../../../node_modules/bootstrap/scss/bootstrap.scss'; // 부트스트랩 기본스타일
 
 .content {
   p {
@@ -462,5 +456,8 @@ a {
 }
 .modal {
   z-index: 99999999;
+}
+.BannerBottom {
+  height: 360px;
 }
 </style>

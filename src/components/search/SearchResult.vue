@@ -69,7 +69,9 @@
           </div>
           <div class="item_info">
             <div class="title">
-              <p class="brand"></p>
+              <p class="brand">
+                {{ result.tags[1] }}
+              </p>
               <p class="name">
                 {{ result.title }}
               </p>
@@ -130,7 +132,8 @@ import { useSearchStore } from '~/store/search'
 export default {
   data() {
     return {
-      fail_result: false
+      fail_result: false,
+      get_recents: []
     }
   },
   computed: {
@@ -156,18 +159,17 @@ export default {
       }
     }
   },
-  async created() {
-    setInterval(() => {
-      const brand = document.querySelectorAll('.brand')
-      for(let i = 0; i < brand.length; i++) {
-        brand[i].textContent = this.searchStore.results[i].tags[1]
-      }
-    }, 200)
-  },
-  mounted() {
+  async mounted() {
     setTimeout(() => {
       this.random_num()
     }, 200) 
+    const is_header_search = window.sessionStorage.getItem('is_header_search')
+    // 헤더 검색어를 가져와서 검색한다.
+    if(is_header_search === 'true') {
+      const get_recent_arr = window.localStorage.getItem('recent_search')
+      this.get_recents = JSON.parse(get_recent_arr)
+      await this.searchStore.searchProducts(this.get_recents[0])
+    }
   },
   methods: {
     random_num() {
