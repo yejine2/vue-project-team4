@@ -128,6 +128,7 @@
 </template>
 
 <script>
+// test
 import { mapStores } from 'pinia'
 import { useSearchStore } from '~/store/search'
 import PurchaseModal from '~/views/search/PurchaseModal.vue'
